@@ -1,0 +1,130 @@
+﻿@model CardChequeModule.Models.CARDCHEREUISITION
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CARDCHEREUISITION</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CARDNO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CARDNO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REQUESTDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REQUESTDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATUS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LEAFNO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LEAFNO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LEAFFROM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LEAFFROM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LEAFTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LEAFTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LEAFNEXT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LEAFNEXT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REMARKS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REMARKS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ISACTIVE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ISACTIVE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATEDBY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATEDBY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATEDON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATEDON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MODIFIEDBY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MODIFIEDBY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MODIFIEDON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MODIFIEDON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHCODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BRANCHINFO.BRANCHCODE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

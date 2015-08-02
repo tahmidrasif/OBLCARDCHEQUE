@@ -1,0 +1,160 @@
+﻿@model CardChequeModule.Models.ClientDetails
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ClientDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CLIENTNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CLIENTNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REGION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REGION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COUNTRY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COUNTRY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BILLINGDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BILLINGDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATEDBY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATEDBY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CRATEDON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CRATEDON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATEMENTDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATEMENTDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PAYMENTDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PAYMENTDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CARDNO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CARDNO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURRENCY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURRENCY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MINAMNTDUE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MINAMNTDUE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURRBALANCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURRBALANCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TOTALPURCHASE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOTALPURCHASE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREDITLIMIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREDITLIMIT)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<CardChequeModule.Models.DEPOSIT>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CARDNUMBER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATEDON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISAUTHORIZED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAYMENTTYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CURRENCY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ADI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PDCBANK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PDCBRANCH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PDCCHEQUENO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PDCDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OCCUSER.EMPLOYEEID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CARDNUMBER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AMOUNT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATEDON)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISAUTHORIZED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REFERENCENUMBER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PAYMENTTYPE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRENCY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ADI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PDCBANK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PDCBRANCH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PDCCHEQUENO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PDCDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCHINFO.BRANCHCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OCCUSER.EMPLOYEEID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

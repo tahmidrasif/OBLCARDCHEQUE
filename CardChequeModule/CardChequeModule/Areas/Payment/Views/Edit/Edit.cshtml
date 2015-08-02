@@ -1,0 +1,410 @@
+﻿@model CardChequeModule.Models.DEPOSIT
+
+@{
+    ViewBag.Title = "Edit";
+    var paymentType = Model.PAYMENTTYPE;
+}
+
+
+<div align="center" style="margin-top:-30px ">
+    <h3>CREDIT/PREPAID CARD PAYMENT SLIP</h3>
+</div>
+<div class="col-lg-4">
+    @Html.TextBoxFor(model => model.PAYMENTTYPE, new { @class = "form-control col-sm-10", @type = "hidden" })
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-lg-3">
+            <img src="~/assets/img/obl.jpg" class="" alt="Responsive image">
+
+        </div>
+        <div class="col-lg-6">
+
+        </div>
+        <div class="col-lg-3" align="right">
+            <img src="~/assets/img/visa.jpg" class="" alt="Responsive image">
+        </div>
+    </div>
+</div>
+
+<form class="form-horizontal" method="POST" id="chequeForm" action="/Payment/Edit/Edit">
+    <div class="col-lg-4">
+        @Html.TextBoxFor(model => model.ID, new { @class = "form-control col-sm-10", @type = "hidden" })
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label">Branch</label>
+                <div class="col-lg-4">
+                    
+                    @Html.DropDownList("BRANCH", null, null, new { @class = "form-control" })
+                </div>
+
+                <label for="name" class="col-lg-2 control-label">Date</label>
+                <div class="col-lg-4">
+                    <div class='input-group date' id='datetimepicker1'>
+
+                        @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label">Reference Number</label>
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.REFERENCENUMBER, new { @class = "form-control col-sm-10", @readonly = "readonly" })
+                </div>
+                <label for="name" class="col-lg-2 control-label">Pending Amount</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control col-sm-10" name="pendingTxtBox" id="pendingTxtBox" style="display: none" />
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CARDHOLDERNAME, new { @class = "col-lg-2 control-label" })
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.CARDHOLDERNAME, new { @class = "form-control col-sm-10" })
+                </div>
+
+
+                @Html.LabelFor(model => model.MOBILE, new { @class = "col-lg-2 control-label" })
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.MOBILE, new { @class = "form-control col-sm-10" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CARDNUMBER, new { @class = "col-lg-2 col-sm-2 control-label" })
+                <div class="col-lg-10">
+                    @Html.TextBoxFor(model => model.CARDNUMBER, new { @class = "form-control col-sm-10" })
+                </div>
+
+            </div>
+
+
+
+            <div id="result"></div>
+            <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
+
+            <div class="form-group" id="radioError">
+                <label for="birthday" class="col-xs-3 col-sm-2 control-label">Payment Type</label>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="Cash">Cash</label>
+                </div>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="Cheque">Cheque</label>
+                </div>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="ADI">Account Debit Instruction</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-4">
+                    <label for="paymentType" class="error" id="errmsg" style="display: none"></label>
+                </div>
+            </div>
+
+
+
+            <div class="form-group" id="amountDiv">
+
+                @Html.LabelFor(model => model.AMOUNT, new { @class = "col-xs-2 col-sm-2 control-label" })
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.AMOUNT, new { @class = "form-control col-sm-10" })
+                </div>
+
+                <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
+                <div class="col-lg-4">
+                    @Html.DropDownList("CURRENCY", null,null , new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group" id="accdebitDiv">
+                <label class="col-xs-2 col-sm-2 control-label">Account Debit Instruction</label>
+                <div class="col-lg-10">
+                    @Html.TextBoxFor(model => model.ADI, new { @class = "form-control col-sm-3" })
+                </div>
+
+            </div>
+
+
+            <div class="form-group" id="pdcDiv">
+                <label for="currency" class="col-xs-2 col-sm-2 control-label">Perticulars of Deposited Cheque</label>
+                <div class="col-lg-10">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="info">BANK</th>
+                            <th class="info">BRANCH</th>
+                            <th class="info">CHEQUE NO.</th>
+                            <th class="info">DATE</th>
+
+                        </tr>
+                        <tr>
+                            <td class="active">
+
+                                @Html.TextAreaFor(model => model.PDCBANK, new { @class = "form-control col-sm-3" })
+                            </td>
+                            <td class="active">
+
+                                @Html.TextAreaFor(model => model.PDCBRANCH, new { @class = "form-control col-sm-3" })
+                            </td>
+                            <td class="active">
+
+                                @Html.TextAreaFor(model => model.PDCCHEQUENO, new { @class = "form-control col-sm-3" })
+                            </td>
+                            <td class="active">
+                                <div class='input-group date' id='datetimepicker2'>
+
+
+                                    @Html.TextBoxFor(x => Model.PDCDATE, new { @class = "form-control" })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-10">
+            <input type="submit" value="Save" class="btn btn-danger" />
+        </div>
+
+    </div>
+
+</form>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // subscribe to the keydown event
+            $('#CARDNUMBER').keydown(function (e) {
+                // when a key is pressed check if its code was 9 (TAB)
+                if (e.which == 9) {
+
+                    $.ajax({
+                        url: '/Payment/Paymentslip/GetCardInfo',
+                        type: 'POST',
+                        data: { cardNo: $(this).val() },
+                        beforeSend: function () { $('#spinner').show(); },
+                        complete: function () { $('#spinner').hide(); },
+                        success: function (result) {
+                            if (result == null) {
+                                alert("No Data Found");
+                            } else {
+                                $('#CARDHOLDERNAME').val(result.CLIENTNAME);
+                                $('#MOBILE').val(result.MOBILE);
+                                $('#pendingTxtBox').show();
+                                $('#pendingTxtBox').val(result.MINAMNTDUE);
+                            }
+
+
+                        },
+                        error: function (xhr) {
+                            alert("Something is wrong");
+                        }
+                    });
+                }
+            });
+        });
+        $("#chequeForm").validate({
+            rules: {
+                AMOUNT: {
+                    required: true,
+                    number: true
+                },
+                CREATEDON: {
+                    required: true,
+                },
+                CARDNUMBER: {
+                    required: true,
+                    digits: true
+                },
+                CURRENCY: {
+                    required: true,
+                },
+                PAYMENTTYPE: {
+                    required: true,
+                },
+                BRANCH: {
+                    required: true,
+                },
+                ADI: {
+                    required: true,
+                    digits: true
+                },
+                
+                PDCBANK: {
+                    required: true,
+                },
+                PDCBRANCH: {
+                    required: true,
+                },
+                PDCCHEQUENO: {
+                    required: true,
+
+                },
+                PDCDATE: {
+                    required: "<li>Enter a Branch</li>",
+                },
+            },
+            messages:
+            {
+                AMOUNT: {
+                    required: "<li>Please enter the amount</li>",
+                    number: "<li>Numbers only.</li>"
+                },
+                PAYMENTTYPE: {
+                    required: "<li>Select a Payment Type</li>",
+
+                },
+                BRANCH: {
+                    required: "<li>Enter a Branch</li>",
+                },
+
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("type") == "radio") {
+                    error.insertAfter("#radioError").css({ marginLeft: "200px" });
+
+                } else {
+                    error.insertAfter(element);
+                }
+
+            },
+
+        });
+
+    </script>
+    <script>
+    $(document).ready(function () {
+        var paymentType = $('#PAYMENTTYPE').val();
+        if (paymentType == 'Cash') {
+            $('#accdebitDiv *').attr('disabled', true);
+            $('#pdcDiv *').attr('disabled', true);
+            $('input[name=PAYMENTTYPE][value=Cash]').attr('checked', true);
+        }
+        if (paymentType == 'Cheque') {
+            $('#pdcDiv *').attr('disabled', false);
+            $('#accdebitDiv *').attr('disabled', true);
+            $('input[name=PAYMENTTYPE][value=Cheque]').attr('checked', true);
+        }
+        if (paymentType == 'Account Debit Instruction') {
+            $('#accdebitDiv *').attr('disabled', false);
+            $('#pdcDiv *').attr('disabled', true);
+            $('input[name=PAYMENTTYPE][value=ADI]').attr('checked', true);
+        }
+        //$('#accdebitDiv *').attr('disabled', true);
+        //$('#pdcDiv *').attr('disabled', true);
+
+
+        $("input[name$='PAYMENTTYPE']").click(function () {
+            var test = $(this).val();
+            $('.error label').text('');
+            if (test == 'Cash') {
+
+                $('#accdebitDiv *').attr('disabled', true);
+                $('#pdcDiv *').attr('disabled', true);
+
+                $("#accdebitDiv :text").val("");
+                $("#pdcDiv :text").val("");
+                $('textarea').val("");
+            }
+            if (test == 'Cheque') {
+                $('#pdcDiv *').attr('disabled', false);
+                $('#accdebitDiv *').attr('disabled', true);
+
+                  //$("#amount-error").text("");
+                $("#pdcDiv :text").val("");
+                $("#accdebitDiv :text").val("");
+                $('textarea').val("");
+            }
+            if (test == 'ADI') {
+                $('#accdebitDiv *').attr('disabled', false);
+                $('#pdcDiv *').attr('disabled', true);
+
+
+                //    $("#amount-error").text("");
+
+                $("#accdebitDiv :text").val("");
+                $('textarea').val("");
+            }
+
+        });
+
+    });
+
+    </script>
+}
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+        });
+
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

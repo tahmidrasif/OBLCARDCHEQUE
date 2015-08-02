@@ -1,0 +1,77 @@
+﻿@model CardChequeModule.Models.ClientDetails
+
+@{
+    ViewBag.Title = "SearchResult";
+
+}
+
+<h2>SearchResult</h2>
+
+<div>
+    <h4>OCCUSER</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CLIENTNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CLIENTNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COUNTRY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COUNTRY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MINAMNTDUE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MINAMNTDUE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURRBALANCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURRBALANCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TOTALPURCHASE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOTALPURCHASE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREDITLIMIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREDITLIMIT)
+        </dd>
+
+      
+
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

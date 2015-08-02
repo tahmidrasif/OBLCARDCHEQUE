@@ -1,0 +1,58 @@
+﻿@model CardChequeModule.Models.DEPOSIT
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DEPOSIT</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CARDNUMBER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CARDNUMBER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BRANCH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BRANCH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMOUNT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REFERENCENUMBER)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

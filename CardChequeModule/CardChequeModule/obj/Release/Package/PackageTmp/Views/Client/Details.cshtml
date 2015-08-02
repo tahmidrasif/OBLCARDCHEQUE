@@ -1,0 +1,154 @@
+﻿@model CardChequeModule.Models.ClientDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ClientDetails</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CLIENTNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CLIENTNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REGION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REGION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COUNTRY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COUNTRY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BILLINGDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BILLINGDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATEDBY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATEDBY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CRATEDON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CRATEDON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATEMENTDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATEMENTDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PAYMENTDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PAYMENTDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CARDNO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CARDNO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURRENCY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURRENCY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MINAMNTDUE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MINAMNTDUE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURRBALANCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURRBALANCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TOTALPURCHASE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOTALPURCHASE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREDITLIMIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREDITLIMIT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

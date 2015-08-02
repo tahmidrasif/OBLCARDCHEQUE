@@ -1,0 +1,23 @@
+﻿@using CardChequeModule.Models
+@{
+    ViewBag.Title = "_LinkPartial";
+    OCCUSER aUser = (OCCUSER)Session["User"];
+
+}
+<ul class="nav navbar-nav navbar-right">
+    @{
+        if (aUser != null)
+        {
+            <li>@Html.ActionLink("Welcome " + @aUser.USERNAME, "Index", "Home", new { area = "" }, new { @class = "logout" })</li>
+            <li>@Html.ActionLink("Log Out", "LogOut", "Home", new { area = "" }, new { @class = "logout" })</li>
+
+        }
+
+        else
+        {
+            <li>@Html.ActionLink("Log In", "LogIn", "Home")</li>
+        }
+
+    }
+
+</ul>

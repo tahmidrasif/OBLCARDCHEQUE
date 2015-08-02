@@ -1,0 +1,140 @@
+﻿@model CardChequeModule.Models.DEPOSIT
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>DEPOSIT</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CARDNUMBER, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CARDNUMBER)
+                @Html.ValidationMessageFor(model => model.CARDNUMBER)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AMOUNT, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AMOUNT)
+                @Html.ValidationMessageFor(model => model.AMOUNT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BRANCH, "BRANCH", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("BRANCH", String.Empty)
+                @Html.ValidationMessageFor(model => model.BRANCH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CREATEDBY, "CREATEDBY", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CREATEDBY", String.Empty)
+                @Html.ValidationMessageFor(model => model.CREATEDBY)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CREATEDON, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CREATEDON)
+                @Html.ValidationMessageFor(model => model.CREATEDON)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ISAUTHORIZED, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ISAUTHORIZED)
+                @Html.ValidationMessageFor(model => model.ISAUTHORIZED)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.REFERENCENUMBER, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.REFERENCENUMBER)
+                @Html.ValidationMessageFor(model => model.REFERENCENUMBER)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PAYMENTTYPE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PAYMENTTYPE)
+                @Html.ValidationMessageFor(model => model.PAYMENTTYPE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CURRENCY, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CURRENCY)
+                @Html.ValidationMessageFor(model => model.CURRENCY)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ADI, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ADI)
+                @Html.ValidationMessageFor(model => model.ADI)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PDCBANK, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PDCBANK)
+                @Html.ValidationMessageFor(model => model.PDCBANK)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PDCBRANCH, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PDCBRANCH)
+                @Html.ValidationMessageFor(model => model.PDCBRANCH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PDCCHEQUENO, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PDCCHEQUENO)
+                @Html.ValidationMessageFor(model => model.PDCCHEQUENO)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PDCDATE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PDCDATE)
+                @Html.ValidationMessageFor(model => model.PDCDATE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

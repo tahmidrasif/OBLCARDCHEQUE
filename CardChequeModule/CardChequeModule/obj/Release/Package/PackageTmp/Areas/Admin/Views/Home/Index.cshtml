@@ -1,0 +1,99 @@
+﻿@model IEnumerable<CardChequeModule.Models.OCCUSER>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EMPLOYEEID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USERNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PASSWORD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPARTMENT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DESIGNATION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCHCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISACTIVE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATEDBY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATEDON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MODIFIEDBY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MODIFIEDON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OCCROLE.ROLENAME)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMPLOYEEID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USERNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PASSWORD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPARTMENT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DESIGNATION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCHCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISACTIVE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATEDBY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATEDON)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MODIFIEDBY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MODIFIEDON)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OCCROLE.ROLENAME)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

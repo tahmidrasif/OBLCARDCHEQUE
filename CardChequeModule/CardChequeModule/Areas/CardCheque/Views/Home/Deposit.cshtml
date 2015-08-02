@@ -1,0 +1,167 @@
+﻿@using CardChequeModule.Models
+@model IEnumerable<CardChequeModule.Models.DEPOSIT>
+
+@{
+    ViewBag.Title = "Deposit";
+    string msg = (string) Session["DepositSaveMsg"];
+    int flag = 0;
+    if (!string.IsNullOrEmpty(msg))
+    {
+        flag = 1;
+       
+    }
+}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Message Box</h4>
+            </div>
+            <div class="modal-body">
+               <h3> @msg</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+    <div class="panel-body container">
+
+        @using (Html.BeginForm("Deposit", "Home", FormMethod.Post, new { @class = "form-inline", area = "CardCheque" }))
+        {
+
+            <div class="form-group">
+                <label for="cardno">Card Number</label>
+                <input type="text" class="form-control" id="cardno" name="cardno" placeholder="Enter Carnd Number">
+            </div>
+
+            <div class="form-group">
+                <label for="branch">Branch Name</label>
+                @Html.DropDownList("branch", null, "All", new { @class = "form-control" })
+            </div>
+
+
+            <div class="form-group">
+                <label for="depositDate">Deposit Date</label>
+                <div class='input-group date' id='datetimepicker1'>
+
+                    <input type='text' class="form-control" placeholder="Deposit Date" id="depositDate" name="depositDate" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-success" id="searchBtn">Search</button>
+
+
+        }
+
+    </div>
+</div>
+
+
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CARDNUMBER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCHCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CARDNUMBER)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DATE)
+            </td>
+            <td>
+             
+                @Html.DisplayFor(modelItem => item.BRANCHCODE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AMOUNT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.REFERENCENUMBER)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+
+@section scripts{
+    <script>
+            $(document).ready(function() {
+             
+                if (@flag == 1) {
+                    $('#myModal').modal('show');
+                    @flag = 0;
+                }
+                
+
+            });
+        </script>
+}
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+        });
+
+    </script>
+}
+

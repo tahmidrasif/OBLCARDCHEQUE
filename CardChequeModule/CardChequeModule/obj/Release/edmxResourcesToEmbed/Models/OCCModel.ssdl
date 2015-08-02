@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BRANCHINFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TOTALEMPLOYEE" Type="int" />
+    <Property Name="BRANCHCODE" Type="nvarchar(max)" />
+    <Property Name="BRANCHNAME" Type="nvarchar(max)" />
+    <Property Name="BRANCHMANAGER" Type="nvarchar(max)" />
+    <Property Name="BRANCHCONTACT" Type="nvarchar(max)" />
+    <Property Name="BRANCHMAIL" Type="nvarchar(max)" />
+    <Property Name="BRANCHADDRESS" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DEPOSIT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CARDNUMBER" Type="nvarchar" MaxLength="50" />
+    <Property Name="DATE" Type="datetime" />
+    <Property Name="BRANCHCODE" Type="nvarchar" MaxLength="50" />
+    <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="REFERENCENUMBER" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OCCCARDINFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CARDNO" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="CHNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BRANCHCODE" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="CHPHONE" Type="nvarchar" MaxLength="20" />
+    <Property Name="PAYMENTTYPE" Type="int" Nullable="false" />
+    <Property Name="REFERENCENO" Type="nvarchar" MaxLength="20" />
+    <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="AMOUNTINWORD" Type="nvarchar(max)" />
+    <Property Name="ACCDEBITINSTR" Type="nvarchar" MaxLength="15" />
+    <Property Name="REQUESTEDBY" Type="bigint" Nullable="false" />
+    <Property Name="REQUESTEDON" Type="datetime" Nullable="false" />
+    <Property Name="AUTHORIZEDBY" Type="bigint" />
+    <Property Name="AUTHORIZEDON" Type="datetime" />
+    <Property Name="STATUS" Type="int" Nullable="false" />
+    <Property Name="CREATEDON" Type="datetime" Nullable="false" />
+    <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
+    <Property Name="MODIFIEDON" Type="datetime" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
+    <Property Name="ISACTIVE" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OCCENUMERATION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="5" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="Value" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="OCCROLE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ROLENAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="ISACTIVE" Type="bit" />
+    <Property Name="CREATEDON" Type="datetime" />
+    <Property Name="CREATEDBY" Type="bigint" />
+    <Property Name="MODIFIEDON" Type="datetime" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
+  </EntityType>
+  <EntityType Name="OCCUSER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEEID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="USERNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DEPARTMENT" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DESIGNATION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TYPE" Type="int" Nullable="false" />
+    <Property Name="BRANCHCODE" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="PASSWORD" Type="nvarchar" MaxLength="50" />
+    <Property Name="ISACTIVE" Type="bit" />
+    <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
+    <Property Name="CREATEDON" Type="datetime" Nullable="false" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
+    <Property Name="MODIFIEDON" Type="datetime" />
+  </EntityType>
+  <EntityType Name="STATUS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="ISACTIVE" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_OCCCARDINFO_OCCUSER">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
+    <End Role="OCCCARDINFO" Type="Self.OCCCARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCCCARDINFO">
+        <PropertyRef Name="REQUESTEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OCCCARDINFO_OCCUSER1">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="OCCCARDINFO" Type="Self.OCCCARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCCCARDINFO">
+        <PropertyRef Name="AUTHORIZEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OCCCARDINFO_OCCUSER2">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
+    <End Role="OCCCARDINFO" Type="Self.OCCCARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCCCARDINFO">
+        <PropertyRef Name="CREATEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OCCCARDINFO_OCCUSER3">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="OCCCARDINFO" Type="Self.OCCCARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCCCARDINFO">
+        <PropertyRef Name="MODIFIEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OCCCARDINFO_STATUS">
+    <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+    <End Role="OCCCARDINFO" Type="Self.OCCCARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STATUS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCCCARDINFO">
+        <PropertyRef Name="STATUS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OCCUSER_OCCROLE">
+    <End Role="OCCROLE" Type="Self.OCCROLE" Multiplicity="1" />
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCROLE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCCUSER">
+        <PropertyRef Name="TYPE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OBLCARDCHEQUEModelStoreContainer">
+    <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DEPOSIT" EntityType="Self.DEPOSIT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OCCCARDINFO" EntityType="Self.OCCCARDINFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OCCENUMERATION" EntityType="Self.OCCENUMERATION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OCCROLE" EntityType="Self.OCCROLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OCCUSER" EntityType="Self.OCCUSER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STATUS" EntityType="Self.STATUS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_OCCCARDINFO_OCCUSER" Association="Self.FK_OCCCARDINFO_OCCUSER">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="OCCCARDINFO" EntitySet="OCCCARDINFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OCCCARDINFO_OCCUSER1" Association="Self.FK_OCCCARDINFO_OCCUSER1">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="OCCCARDINFO" EntitySet="OCCCARDINFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OCCCARDINFO_OCCUSER2" Association="Self.FK_OCCCARDINFO_OCCUSER2">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="OCCCARDINFO" EntitySet="OCCCARDINFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OCCCARDINFO_OCCUSER3" Association="Self.FK_OCCCARDINFO_OCCUSER3">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="OCCCARDINFO" EntitySet="OCCCARDINFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OCCCARDINFO_STATUS" Association="Self.FK_OCCCARDINFO_STATUS">
+      <End Role="STATUS" EntitySet="STATUS" />
+      <End Role="OCCCARDINFO" EntitySet="OCCCARDINFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OCCUSER_OCCROLE" Association="Self.FK_OCCUSER_OCCROLE">
+      <End Role="OCCROLE" EntitySet="OCCROLE" />
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "Cheque";
+}
+
+<div align="center" style="margin-top:-30px ">
+    <h3>CREDIT/PREPAID CARD PAYMENT SLIP</h3>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-lg-3">
+            <img src="~/assets/img/obl.jpg" class="" alt="Responsive image">
+
+        </div>
+        <div class="col-lg-6">
+
+        </div>
+        <div class="col-lg-3" align="right">
+            <img src="~/assets/img/visa.jpg" class="" alt="Responsive image">
+        </div>
+    </div>
+</div>
+<form class="form-horizontal" action="/CardCheque/Home/ChequePost" method="POST" id="chequeForm">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            @*<form class="form-horizontal">*@
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label">Branch</label>
+                <div class="col-lg-4">
+                    @Html.DropDownList("branch", null, "All", new { @class = "form-control" })
+                </div>
+
+                <label for="name" class="col-lg-2 control-label">Date</label>
+                <div class="col-lg-4">
+                    <div class='input-group date' id='datetimepicker1'>
+
+                        <input type='text' class="form-control" placeholder="Deposit Date" id="depositDate" name="depositDate" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-6">
+                </div>
+                <label for="name" class="col-lg-2 control-label">Pending Amount</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control col-sm-10" name="name" id="pendingTxtBox" style="display: none" />
+                </div>
+            </div>
+
+            @*</form>*@
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @*<form class="form-horizontal">*@
+
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label">Name</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control col-sm-10" name="name" placeholder="Client Name" id="name" />
+                </div>
+
+                <label for="name" class="col-lg-2 control-label">Mobile No</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control col-sm-10" name="mobile" placeholder="+88" id="mobile" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthday" class="col-lg-2 col-sm-2 control-label">Card Number</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control col-sm-10" placeholder="" id="cardNo" name="cardNo" />
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="birthday" class="col-xs-3 col-sm-2 control-label">Payment Type</label>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="paymentType" id="paymentType">Cash</label>
+                </div>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="paymentType" id="paymentType">Cheque</label>
+                </div>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="paymentType" id="paymentType">Account Debit Instruction</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-4">
+                    <label for="paymentType" class="error" style="display:none;"></label>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="birthday" class="col-xs-2 col-sm-2 control-label">Amount(Tk.)</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" placeholder="" id="amount" name="amount" />
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="birthday" class="col-xs-2 col-sm-2 control-label">Amount(USD)</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" placeholder="" name="usdAmount" id="usdAmount" />
+                </div>
+
+            </div>
+
+
+
+            @*</form>*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-10">
+            <input type="submit" value="Save" class="btn btn-danger" />
+        </div>
+
+    </div>
+
+</form>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // subscribe to the keydown event
+            $('#cardNo').keydown(function (e) {
+                // when a key is pressed check if its code was 9 (TAB)
+                if (e.which == 9) {
+
+                    $.ajax({
+                        url: '/CardCheque/Home/Cheque',
+                        type: 'POST',
+                        data: { cardNo: $(this).val() },
+                        success: function (result) {
+
+                            $('#name').val(result.CLIENTNAME);
+                            $('#pendingTxtBox').show();
+                            $('#pendingTxtBox').val(result.MINAMNTDUE);
+
+                        },
+                        error: function (xhr) {
+                            alert("Something is wrong");
+                        }
+                    });
+                }
+            });
+        });
+        $("#chequeForm").validate({
+            rules: {
+                amount: {
+                    required: true,
+                    number: true
+                },
+                paymentType: {
+                    required: true,
+                },
+                branch: {
+                    required: true,
+                }
+            },
+            messages:
+                {
+                    cname: {
+                        required: "<li>Please enter the amount</li>",
+                        number:  "<li>Numbers only.</li>"
+                    },
+                    paymentType: {
+                        required: "<li>Select a Payment Type</li>",
+
+                    },
+                    branch: {
+                        required: "<li>Enter a Branch</li>",
+                    }
+                },
+        });
+
+    </script>
+}
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+        });
+
+    </script>
+}
+

@@ -1,0 +1,67 @@
+﻿@using System.Web.Mvc.Html
+@model IEnumerable<CardChequeModule.Models.CARDCHEREUISITION>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Form")
+</p>
+
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.CARDNO)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.REMARKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISACTIVE)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.CARDNO)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REMARKS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISACTIVE)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCHINFO.BRANCHNAME)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Form", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

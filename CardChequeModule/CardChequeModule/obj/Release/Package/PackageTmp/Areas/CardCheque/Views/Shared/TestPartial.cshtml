@@ -1,0 +1,238 @@
+﻿@model CardChequeModule.Areas.CardCheque.Models.CardChequeViewModel
+
+<h3 style="color: red">@ViewBag.Msg</h3>
+<br />
+
+
+@using (Html.BeginForm("DepositPost", "Home", FormMethod.Post, new { area = "CardCheque", @class = "form-horizontal", id = "depositForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+
+        @Html.ValidationSummary(true)
+
+        @if (ViewBag.Flag != 1)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Client Details</h3>
+                </div>
+                <div class="panel-body" >
+                    
+                    <div class="row" style="padding-left: 15px">
+
+                        <div class="col-lg-6" style="padding: 20px">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.ClientDetails.CLIENTNAME)
+                                <br />
+                                @Html.TextBoxFor(model => model.ClientDetails.CLIENTNAME, new { @readonly = true, @class = "form-control" })
+                                @*<label>Amount</label>
+                <input class="form-control" readonly="true" placeholder="Amount" type="text" id="CLIENTNAME" name="CLIENTNAME">*@
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3" style="padding: 20px">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ClientDetails.ADDRESS)
+                                <br />
+                                @Html.TextBoxFor(model => model.ClientDetails.ADDRESS, new { @readonly = true, @class = "form-control" })
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3" style="padding: 20px; padding-top: 23px">
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.ClientDetails.COUNTRY)
+                                <br />
+                                @Html.TextBoxFor(model => model.ClientDetails.COUNTRY, new { @readonly = true, @class = "form-control" })
+
+
+                            </div>
+                        </div>
+
+                        
+                    </div>
+               
+                    <div class="row" style="padding-left: 15px">
+                        
+                        <div class="col-lg-3" style="padding: 20px">
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.ClientDetails.MINAMNTDUE)
+                                <br />
+                                @Html.TextBoxFor(model => model.ClientDetails.MINAMNTDUE, new { @readonly = true, @class = "form-control" })
+
+
+                            </div>
+                            @*<label>Amount</label>
+            <input class="form-control" readonly="true" placeholder="Amount" type="text" id="CLIENTNAME" name="CLIENTNAME">*@
+                        </div>
+
+                        <div class="col-lg-3" style="padding: 20px">
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.ClientDetails.CURRBALANCE)
+                                <br />
+                                @Html.TextBoxFor(model => model.ClientDetails.CURRBALANCE, new { @readonly = true, @class = "form-control" })
+
+
+                            </div>
+                            @*<label>Amount</label>
+            <input class="form-control" readonly="true" placeholder="Amount" type="text" id="CLIENTNAME" name="CLIENTNAME">*@
+                        </div>
+
+                        <div class="col-lg-3" style="padding: 20px">
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.ClientDetails.TOTALPURCHASE)
+                                <br />
+                                @Html.TextBoxFor(model => model.ClientDetails.TOTALPURCHASE, new { @readonly = true, @class = "form-control" })
+
+                            </div>
+                            @*<label>Amount</label>
+            <input class="form-control" readonly="true" placeholder="Amount" type="text" id="CLIENTNAME" name="CLIENTNAME">*@
+
+                        </div>
+
+                        <div class="col-lg-3" style="padding: 20px">
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.ClientDetails.CREDITLIMIT)
+                                <br />
+                                @Html.TextBoxFor(model => model.ClientDetails.CREDITLIMIT, new { @readonly = true, @class = "form-control" })
+
+
+                            </div>
+                            @*<label>Amount</label>
+            <input class="form-control" readonly="true" placeholder="Amount" type="text" id="CLIENTNAME" name="CLIENTNAME">*@
+
+                        </div>
+                    </div>
+
+                       
+
+                  
+                    </div>
+            </div>
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Deposit</h3>
+                </div>
+                <div class="panel-body">
+                    @Html.HiddenFor(model => model.Deposit.CARDNUMBER)
+
+                    <div class="col-lg-3" style="padding: 20px">
+                        <div class="form-group">
+
+                            @Html.LabelFor(model => model.Deposit.DATE)
+                            <br />
+                            @*@Html.TextBoxFor(model => model.Deposit.DATE, new { @class = "form-control" })*@
+                            <div class='input-group date' id='depsiteDateTimePicker'>
+
+                                @Html.TextBoxFor(model => model.Deposit.DATE, new { @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Deposit.DATE, String.Empty, new { style = "color:red" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3" style="padding: 20px">
+                        <div class="form-group">
+
+                            @Html.LabelFor(model => model.Deposit.BRANCHCODE)
+                            <br />
+                            @Html.DropDownListFor(x => x.Deposit.BRANCHCODE, new SelectList(ViewBag.Branch, "BRANCHCODE", "BRANCHNAME"), "--Select Branch--", new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Deposit.BRANCHCODE, String.Empty, new { style = "color:red" })
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3" style="padding: 20px">
+                        <div class="form-group">
+
+                            @Html.LabelFor(model => model.Deposit.AMOUNT)
+                            <br />
+                            @Html.TextBoxFor(model => model.Deposit.AMOUNT, new { @class = "form-control" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Deposit.AMOUNT, String.Empty, new { style = "color:red" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3" style="padding: 20px; padding-top: 23px">
+                        <div class="form-group">
+                            <br />
+                            <input type="submit" value="Save" class="btn btn-danger" />
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        }
+
+
+
+    </div>
+}
+
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+
+    $("#depositForm").validate({
+        //rules: {
+        //    CARDNUMBER: {
+        //        required: true
+        //    }
+        //}
+        });
+    $(function () {
+        $('#depsiteDateTimePicker').datetimepicker({
+            format: 'MM/DD/YYYY'
+        });
+    });
+
+
+</script>
+@*<script>
+    
+    $("#depositForm").submit(function () {
+
+        crd = $("#DATE").val();
+        var param1 = "123456";
+        //var data = { CARDNUMBER: $("#CARDNUMBER").val(), DATE: $("#DATE").val(), AMOUNT: $("#AMOUNT").val(), BRANCHCODE: $("#BRANCHCODE option:selected").val() };
+      //  var data = { CARDNUMBER: 'Hello', DATE: 'Hi', AMOUNT: 'Bye Bye', BRANCHCODE: 'MyBranch' };
+       // var json = Sys.Serialization.JavaScriptSerializer.serialize(data);
+        alert(crd);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DepositPost", "Home")',
+            contentType: "application/json; charset=utf-8",
+            data: { cardnumber: param1 },
+            dataType: "json",
+            success: function(resultdata) {
+
+                alert("Successfully Inserted");
+
+               
+            },
+            error: function(xhr) { alert("Something is wrong"); }
+        });
+        return false;
+    });
+</script>*@
+

@@ -1,0 +1,1258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://onebank.com.bd/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://onebank.com.bd/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://onebank.com.bd/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllUser">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllUserResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeNameBy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeNameByResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeNameByResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIDbyEmployeeId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIDbyEmployeeIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetIDbyEmployeeIdResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreDeptNameBy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreDeptNameByResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPreDeptNameByResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreDeptIdBy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreDeptIdByResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPreDeptIdByResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreBranchIdBy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreBranchIdByResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPreBranchIdByResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreDesigBy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmployeeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPreDesigByResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPreDesigByResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGlobalEnum">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetGlobalEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGlobalEnumResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDeptNameByDeptId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeptId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDeptNameByDeptIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDeptNameByDeptIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGlobalDept">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetGlobalDeptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGlobalDeptResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetByUserID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetByUserIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetByUserIDResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetByUserBr">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="branchCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetByUserBrResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetByUserBrResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetByUserIDCheck">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetByUserIDCheckResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetByUserIDCheckResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGlobalAllBranch">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetGlobalAllBranchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGlobalAllBranchResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="DataTable" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+            <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="long" type="s:long" />
+      <s:element name="int" type="s:int" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllUser" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeNameBySoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeNameBy" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeNameBySoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeNameByResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIDbyEmployeeIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIDbyEmployeeId" />
+  </wsdl:message>
+  <wsdl:message name="GetIDbyEmployeeIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIDbyEmployeeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptNameBySoapIn">
+    <wsdl:part name="parameters" element="tns:GetPreDeptNameBy" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptNameBySoapOut">
+    <wsdl:part name="parameters" element="tns:GetPreDeptNameByResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptIdBySoapIn">
+    <wsdl:part name="parameters" element="tns:GetPreDeptIdBy" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptIdBySoapOut">
+    <wsdl:part name="parameters" element="tns:GetPreDeptIdByResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPreBranchIdBySoapIn">
+    <wsdl:part name="parameters" element="tns:GetPreBranchIdBy" />
+  </wsdl:message>
+  <wsdl:message name="GetPreBranchIdBySoapOut">
+    <wsdl:part name="parameters" element="tns:GetPreBranchIdByResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDesigBySoapIn">
+    <wsdl:part name="parameters" element="tns:GetPreDesigBy" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDesigBySoapOut">
+    <wsdl:part name="parameters" element="tns:GetPreDesigByResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGlobalEnum" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGlobalEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDeptNameByDeptIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDeptNameByDeptId" />
+  </wsdl:message>
+  <wsdl:message name="GetDeptNameByDeptIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDeptNameByDeptIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDeptSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGlobalDept" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDeptSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGlobalDeptResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetByUserID" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetByUserIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserBrSoapIn">
+    <wsdl:part name="parameters" element="tns:GetByUserBr" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserBrSoapOut">
+    <wsdl:part name="parameters" element="tns:GetByUserBrResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDCheckSoapIn">
+    <wsdl:part name="parameters" element="tns:GetByUserIDCheck" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDCheckSoapOut">
+    <wsdl:part name="parameters" element="tns:GetByUserIDCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalAllBranchSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGlobalAllBranch" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalAllBranchSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGlobalAllBranchResponse" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldHttpGetIn" />
+  <wsdl:message name="HelloWorldHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUserHttpGetIn" />
+  <wsdl:message name="GetAllUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeNameByHttpGetIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeNameByHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIDbyEmployeeIdHttpGetIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIDbyEmployeeIdHttpGetOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptNameByHttpGetIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptNameByHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptIdByHttpGetIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptIdByHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetPreBranchIdByHttpGetIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreBranchIdByHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDesigByHttpGetIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDesigByHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalEnumHttpGetIn" />
+  <wsdl:message name="GetGlobalEnumHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetDeptNameByDeptIdHttpGetIn">
+    <wsdl:part name="DeptId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDeptNameByDeptIdHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDeptHttpGetIn" />
+  <wsdl:message name="GetGlobalDeptHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserBrHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="branchCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserBrHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDCheckHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDCheckHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalAllBranchHttpGetIn" />
+  <wsdl:message name="GetGlobalAllBranchHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldHttpPostIn" />
+  <wsdl:message name="HelloWorldHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUserHttpPostIn" />
+  <wsdl:message name="GetAllUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeNameByHttpPostIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeNameByHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIDbyEmployeeIdHttpPostIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIDbyEmployeeIdHttpPostOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptNameByHttpPostIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptNameByHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptIdByHttpPostIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDeptIdByHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetPreBranchIdByHttpPostIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreBranchIdByHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDesigByHttpPostIn">
+    <wsdl:part name="EmployeeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPreDesigByHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalEnumHttpPostIn" />
+  <wsdl:message name="GetGlobalEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetDeptNameByDeptIdHttpPostIn">
+    <wsdl:part name="DeptId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDeptNameByDeptIdHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDeptHttpPostIn" />
+  <wsdl:message name="GetGlobalDeptHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserBrHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="branchCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserBrHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDCheckHttpPostIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetByUserIDCheckHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalAllBranchHttpPostIn" />
+  <wsdl:message name="GetGlobalAllBranchHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:portType name="OBLAPPSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <wsdl:input message="tns:GetAllUserSoapIn" />
+      <wsdl:output message="tns:GetAllUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeNameBy">
+      <wsdl:input message="tns:GetEmployeeNameBySoapIn" />
+      <wsdl:output message="tns:GetEmployeeNameBySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIDbyEmployeeId">
+      <wsdl:input message="tns:GetIDbyEmployeeIdSoapIn" />
+      <wsdl:output message="tns:GetIDbyEmployeeIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptNameBy">
+      <wsdl:input message="tns:GetPreDeptNameBySoapIn" />
+      <wsdl:output message="tns:GetPreDeptNameBySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptIdBy">
+      <wsdl:input message="tns:GetPreDeptIdBySoapIn" />
+      <wsdl:output message="tns:GetPreDeptIdBySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreBranchIdBy">
+      <wsdl:input message="tns:GetPreBranchIdBySoapIn" />
+      <wsdl:output message="tns:GetPreBranchIdBySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDesigBy">
+      <wsdl:input message="tns:GetPreDesigBySoapIn" />
+      <wsdl:output message="tns:GetPreDesigBySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalEnum">
+      <wsdl:input message="tns:GetGlobalEnumSoapIn" />
+      <wsdl:output message="tns:GetGlobalEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDeptNameByDeptId">
+      <wsdl:input message="tns:GetDeptNameByDeptIdSoapIn" />
+      <wsdl:output message="tns:GetDeptNameByDeptIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDept">
+      <wsdl:input message="tns:GetGlobalDeptSoapIn" />
+      <wsdl:output message="tns:GetGlobalDeptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserID">
+      <wsdl:input message="tns:GetByUserIDSoapIn" />
+      <wsdl:output message="tns:GetByUserIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserBr">
+      <wsdl:input message="tns:GetByUserBrSoapIn" />
+      <wsdl:output message="tns:GetByUserBrSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserIDCheck">
+      <wsdl:input message="tns:GetByUserIDCheckSoapIn" />
+      <wsdl:output message="tns:GetByUserIDCheckSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalAllBranch">
+      <wsdl:input message="tns:GetGlobalAllBranchSoapIn" />
+      <wsdl:output message="tns:GetGlobalAllBranchSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="OBLAPPHttpGet">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldHttpGetIn" />
+      <wsdl:output message="tns:HelloWorldHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <wsdl:input message="tns:GetAllUserHttpGetIn" />
+      <wsdl:output message="tns:GetAllUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeNameBy">
+      <wsdl:input message="tns:GetEmployeeNameByHttpGetIn" />
+      <wsdl:output message="tns:GetEmployeeNameByHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIDbyEmployeeId">
+      <wsdl:input message="tns:GetIDbyEmployeeIdHttpGetIn" />
+      <wsdl:output message="tns:GetIDbyEmployeeIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptNameBy">
+      <wsdl:input message="tns:GetPreDeptNameByHttpGetIn" />
+      <wsdl:output message="tns:GetPreDeptNameByHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptIdBy">
+      <wsdl:input message="tns:GetPreDeptIdByHttpGetIn" />
+      <wsdl:output message="tns:GetPreDeptIdByHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreBranchIdBy">
+      <wsdl:input message="tns:GetPreBranchIdByHttpGetIn" />
+      <wsdl:output message="tns:GetPreBranchIdByHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDesigBy">
+      <wsdl:input message="tns:GetPreDesigByHttpGetIn" />
+      <wsdl:output message="tns:GetPreDesigByHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalEnum">
+      <wsdl:input message="tns:GetGlobalEnumHttpGetIn" />
+      <wsdl:output message="tns:GetGlobalEnumHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDeptNameByDeptId">
+      <wsdl:input message="tns:GetDeptNameByDeptIdHttpGetIn" />
+      <wsdl:output message="tns:GetDeptNameByDeptIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDept">
+      <wsdl:input message="tns:GetGlobalDeptHttpGetIn" />
+      <wsdl:output message="tns:GetGlobalDeptHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserID">
+      <wsdl:input message="tns:GetByUserIDHttpGetIn" />
+      <wsdl:output message="tns:GetByUserIDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserBr">
+      <wsdl:input message="tns:GetByUserBrHttpGetIn" />
+      <wsdl:output message="tns:GetByUserBrHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserIDCheck">
+      <wsdl:input message="tns:GetByUserIDCheckHttpGetIn" />
+      <wsdl:output message="tns:GetByUserIDCheckHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalAllBranch">
+      <wsdl:input message="tns:GetGlobalAllBranchHttpGetIn" />
+      <wsdl:output message="tns:GetGlobalAllBranchHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="OBLAPPHttpPost">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldHttpPostIn" />
+      <wsdl:output message="tns:HelloWorldHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <wsdl:input message="tns:GetAllUserHttpPostIn" />
+      <wsdl:output message="tns:GetAllUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeNameBy">
+      <wsdl:input message="tns:GetEmployeeNameByHttpPostIn" />
+      <wsdl:output message="tns:GetEmployeeNameByHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIDbyEmployeeId">
+      <wsdl:input message="tns:GetIDbyEmployeeIdHttpPostIn" />
+      <wsdl:output message="tns:GetIDbyEmployeeIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptNameBy">
+      <wsdl:input message="tns:GetPreDeptNameByHttpPostIn" />
+      <wsdl:output message="tns:GetPreDeptNameByHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptIdBy">
+      <wsdl:input message="tns:GetPreDeptIdByHttpPostIn" />
+      <wsdl:output message="tns:GetPreDeptIdByHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreBranchIdBy">
+      <wsdl:input message="tns:GetPreBranchIdByHttpPostIn" />
+      <wsdl:output message="tns:GetPreBranchIdByHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDesigBy">
+      <wsdl:input message="tns:GetPreDesigByHttpPostIn" />
+      <wsdl:output message="tns:GetPreDesigByHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalEnum">
+      <wsdl:input message="tns:GetGlobalEnumHttpPostIn" />
+      <wsdl:output message="tns:GetGlobalEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDeptNameByDeptId">
+      <wsdl:input message="tns:GetDeptNameByDeptIdHttpPostIn" />
+      <wsdl:output message="tns:GetDeptNameByDeptIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDept">
+      <wsdl:input message="tns:GetGlobalDeptHttpPostIn" />
+      <wsdl:output message="tns:GetGlobalDeptHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserID">
+      <wsdl:input message="tns:GetByUserIDHttpPostIn" />
+      <wsdl:output message="tns:GetByUserIDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserBr">
+      <wsdl:input message="tns:GetByUserBrHttpPostIn" />
+      <wsdl:output message="tns:GetByUserBrHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserIDCheck">
+      <wsdl:input message="tns:GetByUserIDCheckHttpPostIn" />
+      <wsdl:output message="tns:GetByUserIDCheckHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalAllBranch">
+      <wsdl:input message="tns:GetGlobalAllBranchHttpPostIn" />
+      <wsdl:output message="tns:GetGlobalAllBranchHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OBLAPPSoap" type="tns:OBLAPPSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://onebank.com.bd/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <soap:operation soapAction="http://onebank.com.bd/GetAllUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeNameBy">
+      <soap:operation soapAction="http://onebank.com.bd/GetEmployeeNameBy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIDbyEmployeeId">
+      <soap:operation soapAction="http://onebank.com.bd/GetIDbyEmployeeId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptNameBy">
+      <soap:operation soapAction="http://onebank.com.bd/GetPreDeptNameBy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptIdBy">
+      <soap:operation soapAction="http://onebank.com.bd/GetPreDeptIdBy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreBranchIdBy">
+      <soap:operation soapAction="http://onebank.com.bd/GetPreBranchIdBy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDesigBy">
+      <soap:operation soapAction="http://onebank.com.bd/GetPreDesigBy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalEnum">
+      <soap:operation soapAction="http://onebank.com.bd/GetGlobalEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeptNameByDeptId">
+      <soap:operation soapAction="http://onebank.com.bd/GetDeptNameByDeptId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDept">
+      <soap:operation soapAction="http://onebank.com.bd/GetGlobalDept" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserID">
+      <soap:operation soapAction="http://onebank.com.bd/GetByUserID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserBr">
+      <soap:operation soapAction="http://onebank.com.bd/GetByUserBr" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserIDCheck">
+      <soap:operation soapAction="http://onebank.com.bd/GetByUserIDCheck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalAllBranch">
+      <soap:operation soapAction="http://onebank.com.bd/GetGlobalAllBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OBLAPPSoap12" type="tns:OBLAPPSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://onebank.com.bd/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <soap12:operation soapAction="http://onebank.com.bd/GetAllUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeNameBy">
+      <soap12:operation soapAction="http://onebank.com.bd/GetEmployeeNameBy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIDbyEmployeeId">
+      <soap12:operation soapAction="http://onebank.com.bd/GetIDbyEmployeeId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptNameBy">
+      <soap12:operation soapAction="http://onebank.com.bd/GetPreDeptNameBy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptIdBy">
+      <soap12:operation soapAction="http://onebank.com.bd/GetPreDeptIdBy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreBranchIdBy">
+      <soap12:operation soapAction="http://onebank.com.bd/GetPreBranchIdBy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDesigBy">
+      <soap12:operation soapAction="http://onebank.com.bd/GetPreDesigBy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalEnum">
+      <soap12:operation soapAction="http://onebank.com.bd/GetGlobalEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeptNameByDeptId">
+      <soap12:operation soapAction="http://onebank.com.bd/GetDeptNameByDeptId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDept">
+      <soap12:operation soapAction="http://onebank.com.bd/GetGlobalDept" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserID">
+      <soap12:operation soapAction="http://onebank.com.bd/GetByUserID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserBr">
+      <soap12:operation soapAction="http://onebank.com.bd/GetByUserBr" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserIDCheck">
+      <soap12:operation soapAction="http://onebank.com.bd/GetByUserIDCheck" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalAllBranch">
+      <soap12:operation soapAction="http://onebank.com.bd/GetGlobalAllBranch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OBLAPPHttpGet" type="tns:OBLAPPHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="HelloWorld">
+      <http:operation location="/HelloWorld" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <http:operation location="/GetAllUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeNameBy">
+      <http:operation location="/GetEmployeeNameBy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIDbyEmployeeId">
+      <http:operation location="/GetIDbyEmployeeId" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptNameBy">
+      <http:operation location="/GetPreDeptNameBy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptIdBy">
+      <http:operation location="/GetPreDeptIdBy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreBranchIdBy">
+      <http:operation location="/GetPreBranchIdBy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDesigBy">
+      <http:operation location="/GetPreDesigBy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalEnum">
+      <http:operation location="/GetGlobalEnum" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeptNameByDeptId">
+      <http:operation location="/GetDeptNameByDeptId" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDept">
+      <http:operation location="/GetGlobalDept" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserID">
+      <http:operation location="/GetByUserID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserBr">
+      <http:operation location="/GetByUserBr" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserIDCheck">
+      <http:operation location="/GetByUserIDCheck" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalAllBranch">
+      <http:operation location="/GetGlobalAllBranch" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OBLAPPHttpPost" type="tns:OBLAPPHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="HelloWorld">
+      <http:operation location="/HelloWorld" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <http:operation location="/GetAllUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeNameBy">
+      <http:operation location="/GetEmployeeNameBy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIDbyEmployeeId">
+      <http:operation location="/GetIDbyEmployeeId" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptNameBy">
+      <http:operation location="/GetPreDeptNameBy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDeptIdBy">
+      <http:operation location="/GetPreDeptIdBy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreBranchIdBy">
+      <http:operation location="/GetPreBranchIdBy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPreDesigBy">
+      <http:operation location="/GetPreDesigBy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalEnum">
+      <http:operation location="/GetGlobalEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeptNameByDeptId">
+      <http:operation location="/GetDeptNameByDeptId" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDept">
+      <http:operation location="/GetGlobalDept" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserID">
+      <http:operation location="/GetByUserID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserBr">
+      <http:operation location="/GetByUserBr" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetByUserIDCheck">
+      <http:operation location="/GetByUserIDCheck" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalAllBranch">
+      <http:operation location="/GetGlobalAllBranch" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OBLAPP">
+    <wsdl:port name="OBLAPPSoap" binding="tns:OBLAPPSoap">
+      <soap:address location="http://10.156.2.19/OBLUser/OBLAPP.asmx" />
+    </wsdl:port>
+    <wsdl:port name="OBLAPPSoap12" binding="tns:OBLAPPSoap12">
+      <soap12:address location="http://10.156.2.19/OBLUser/OBLAPP.asmx" />
+    </wsdl:port>
+    <wsdl:port name="OBLAPPHttpGet" binding="tns:OBLAPPHttpGet">
+      <http:address location="http://10.156.2.19/OBLUser/OBLAPP.asmx" />
+    </wsdl:port>
+    <wsdl:port name="OBLAPPHttpPost" binding="tns:OBLAPPHttpPost">
+      <http:address location="http://10.156.2.19/OBLUser/OBLAPP.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

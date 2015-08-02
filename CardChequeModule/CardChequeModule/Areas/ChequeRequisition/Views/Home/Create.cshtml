@@ -1,0 +1,185 @@
+﻿@model CardChequeModule.Models.CARDCHEREUISITION
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@*<div class="alert alert-warning alert-dismissible" role="alert" id="MyAlrt">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+</div>*@
+<div id="result"></div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "chequeReqForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Cheque Requisition Form</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.CARDNO)
+                    @Html.TextBoxFor(model => model.CARDNO, new { @class = "form-control", @placeholder = "Card Number" })
+                    <label style="display: none">Email</label>
+
+                </div>
+
+
+                @Html.LabelFor(model => model.CREATEDON,"Date", new { @class = "col-sm-1" })
+                <div class="col-sm-6">
+                    <div class='input-group date' id='datetimepicker1'>
+
+                        @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "Date" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="result"></div>
+            <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BRANCHCODE, "Branch", new { @class = "col-sm-1 control-label" })
+                <div class="col-sm-5">
+                    @Html.DropDownList("BRANCH", null, null, new { @class = "form-control", disabled = "disabled" })
+                    @Html.HiddenFor(x=>x.BRANCHCODE)
+                </div>
+                @Html.LabelFor(model => model.STATUS, new { @class = "col-sm-1 control-label" })
+                <div class="col-sm-5">
+                    @Html.DropDownList("STATUSID", null, "Select Status", new { @class = "form-control", @placeholder = "Status", disabled = "disabled" })
+                    @Html.HiddenFor(x => x.STATUS)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.REMARKS)
+                    @Html.TextAreaFor(model => model.REMARKS, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label"></label>
+                <div class="col-sm-4">
+                    <button class="btn btn-info" type="submit">Save</button>
+                    <button class="btn btn-success" type="submit">Edit</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+}
+
+
+@section scripts{
+<script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+        $("#CARDNO").blur(function () {
+            
+
+            $.ajax({
+                url: '/ChequeRequisition/Home/GetCardDetails',
+                type: 'POST',
+                data: { cardNo: $(this).val() },
+                beforeSend: function () { $('#spinner').show(); },
+                complete: function () { $('#spinner').hide(); },
+                success: function (result) {
+                    if (result == null) {
+                        // alert("No Data Found");
+                       // $("#MyAlrt").show();
+                        //$("#result").html('Successfully updated record!');
+                        //$("#result").addClass("alert alert-success");
+                       
+                    } else {
+                        //$("#result").html('Successfully updated record!');
+                        //$("#result").addClass("alert alert-success");
+                     
+                          
+                    }
+
+
+                },
+                error: function (xhr) {
+                    //$("#MyAlrt").show();
+                }
+            });
+
+
+        });
+        
+        $("#chequeReqForm").validate({
+            rules: {
+               
+                CREATEDON: {
+                    required: true,
+
+                },
+                CARDNO: {
+                    required: true,
+
+                },
+              
+
+                
+            },
+            messages:
+            {
+                
+                CARDNO: {
+                    required: "Enter Card Number",
+
+                },
+                CREATEDON: {
+                    required: "Enter Date",
+
+                },
+
+            },
+            //errorPlacement: function (error, element) {
+            //    if (element.attr("type") == "radio") {
+            //        error.insertAfter("#radioError").css({ marginLeft: "200px" });
+
+            //    } else {
+            //        error.insertAfter(element);
+            //    }
+
+            //},
+
+        });
+    </script>
+}
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            //$('#datetimepicker2').datetimepicker({
+            //    format: 'MM/DD/YYYY'
+            //});
+        });
+
+
+    </script>
+}
+

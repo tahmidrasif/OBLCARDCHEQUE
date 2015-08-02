@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CardChequeModule.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CardChequeModule_WebRef_OBLAPP" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.156.2.19/OBLUser/OBLAPP.asmx</Value>
+    </Setting>
+    <Setting Name="CardChequeModule_WebReference_CCMService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.156.0.105/FirstWebService/ccmservice.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

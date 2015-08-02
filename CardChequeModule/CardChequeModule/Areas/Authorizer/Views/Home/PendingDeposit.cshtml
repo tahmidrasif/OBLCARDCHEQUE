@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CardChequeModule.Areas.Authorizer.Models.PendingViewModel>
+
+@{
+    ViewBag.Title = "PendingDeposit";
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CardNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeapositeDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardHolderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BranchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAuthorized)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeapositeDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardHolderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchName)
+        </td>
+        <td>
+            @Html.CheckBoxFor(modelItem => item.IsAuthorized)
+        </td>
+        <td>
+            <button type="button" class="btn btn-info">Save</button>
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="currency" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cardno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_numberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_numberResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cardno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_numberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_numberResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_numberSoapIn">
+    <wsdl:part name="parameters" element="tns:Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number" />
+  </wsdl:message>
+  <wsdl:message name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_numberSoapOut">
+    <wsdl:part name="parameters" element="tns:Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_numberResponse" />
+  </wsdl:message>
+  <wsdl:message name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_numberSoapIn">
+    <wsdl:part name="parameters" element="tns:Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number" />
+  </wsdl:message>
+  <wsdl:message name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_numberSoapOut">
+    <wsdl:part name="parameters" element="tns:Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_numberResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CCMServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get client details with currency and card number</wsdl:documentation>
+      <wsdl:input name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number" message="tns:Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_numberSoapIn" />
+      <wsdl:output name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number" message="tns:Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_numberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get client details with card number</wsdl:documentation>
+      <wsdl:input name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number" message="tns:Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_numberSoapIn" />
+      <wsdl:output name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number" message="tns:Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_numberSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CCMServiceSoap" type="tns:CCMServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientDetails">
+      <soap:operation soapAction="http://tempuri.org/Get client details with currency and card number" style="document" />
+      <wsdl:input name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientDetails">
+      <soap:operation soapAction="http://tempuri.org/Get client details with card number" style="document" />
+      <wsdl:input name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CCMServiceSoap12" type="tns:CCMServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientDetails">
+      <soap12:operation soapAction="http://tempuri.org/Get client details with currency and card number" style="document" />
+      <wsdl:input name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_x0020_client_x0020_details_x0020_with_x0020_currency_x0020_and_x0020_card_x0020_number">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientDetails">
+      <soap12:operation soapAction="http://tempuri.org/Get client details with card number" style="document" />
+      <wsdl:input name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Get_x0020_client_x0020_details_x0020_with_x0020_card_x0020_number">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CCMService">
+    <wsdl:port name="CCMServiceSoap" binding="tns:CCMServiceSoap">
+      <soap:address location="http://10.156.0.105/FirstWebService/ccmservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CCMServiceSoap12" binding="tns:CCMServiceSoap12">
+      <soap12:address location="http://10.156.0.105/FirstWebService/ccmservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

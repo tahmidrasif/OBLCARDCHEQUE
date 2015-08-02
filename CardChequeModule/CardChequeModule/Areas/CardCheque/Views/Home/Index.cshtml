@@ -1,0 +1,151 @@
+﻿@model CardChequeModule.Models.OCCCARDINFO
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+    <div class="panel-body container">
+
+        @using (Ajax.BeginForm("Find", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-inline", area = "CardCheque" }))
+        {
+
+            <div class="col-lg-3">
+
+                <div class="form-group">
+
+                    <label for="cardno">Card Number</label>
+                    <br />
+                    <input type="text" class="form-control" id="cardno" name="cardno" placeholder="Enter Carnd Number">
+
+
+                </div>
+
+            </div>
+            <div class="col-lg-3">
+
+
+                <div class="form-group">
+                    <label for="currency">Currency</label>
+                    <br />
+                    <input type="text" class="form-control" id="currency" name="currency" placeholder="Enter Currency">
+                </div>
+
+            </div>
+            <div class="col-lg-3">
+
+
+                <div class="form-group">
+                    <label for="billingDate">Billing Date</label>
+                    <br />
+                    <div class='input-group date' id='datetimepicker1'>
+
+                        <input type='text' class="form-control" placeholder="Billing Date" id="billingDate" name="billingDate" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3">
+                
+                .
+                <br />
+              
+                <button type="submit" class="btn btn-success" id="searchBtn">Search</button>
+
+
+            </div>
+
+
+
+
+
+            @*<div class="form-group">
+                    <label for="billingDate">Billing Date</label>
+                    <input type="text" class="form-control" id="billingDate" name="billingDate" placeholder="dd/mm/YYYY 10/11/2013 ">
+                </div>*@
+
+
+
+
+
+
+
+
+
+        }
+
+    </div>
+</div>
+
+
+
+
+@*<h4>@ViewBag.InvalidMsg</h4>*@
+
+@*<h3 style="color: red">@depositMsg</h3>*@
+
+<div id="Loading" style="display: none">
+    <img src="~/assets/img/spinner.gif" />
+</div>
+
+
+<div id="partialChange">
+
+</div>
+
+
+
+
+@section scripts{
+    @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function getSearchResults() {
+
+            var data = { cardno: $("#cardno").val(), billingDate: $("#billingDate").val(), currency: $("#currency").val() };
+            $.ajax({
+                type: "GET",
+                data: data,
+                url: '@Url.Action("Find", "Test")',
+                success: function (result) {
+
+                    $("#partialChange").html(result);
+                },
+                error: function (xhr) {
+                    alert("Something is wrong");
+                }
+            });
+        };
+
+    </script>
+
+}
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+        });
+
+    </script>
+}

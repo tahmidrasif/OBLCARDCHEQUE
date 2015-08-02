@@ -1,0 +1,165 @@
+﻿@model CardChequeModule.Models.ClientDetails
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ClientDetails</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CLIENTNAME, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CLIENTNAME)
+                @Html.ValidationMessageFor(model => model.CLIENTNAME)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ADDRESS, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ADDRESS)
+                @Html.ValidationMessageFor(model => model.ADDRESS)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.STADDRESS, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.STADDRESS)
+                @Html.ValidationMessageFor(model => model.STADDRESS)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.REGION, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.REGION)
+                @Html.ValidationMessageFor(model => model.REGION)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.COUNTRY, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.COUNTRY)
+                @Html.ValidationMessageFor(model => model.COUNTRY)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ZIP, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ZIP)
+                @Html.ValidationMessageFor(model => model.ZIP)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BILLINGDATE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BILLINGDATE)
+                @Html.ValidationMessageFor(model => model.BILLINGDATE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CREATEDBY, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CREATEDBY)
+                @Html.ValidationMessageFor(model => model.CREATEDBY)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CRATEDON, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CRATEDON)
+                @Html.ValidationMessageFor(model => model.CRATEDON)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.STATEMENTDATE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.STATEMENTDATE)
+                @Html.ValidationMessageFor(model => model.STATEMENTDATE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PAYMENTDATE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PAYMENTDATE)
+                @Html.ValidationMessageFor(model => model.PAYMENTDATE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CARDNO, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CARDNO)
+                @Html.ValidationMessageFor(model => model.CARDNO)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CURRENCY, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CURRENCY)
+                @Html.ValidationMessageFor(model => model.CURRENCY)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MINAMNTDUE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MINAMNTDUE)
+                @Html.ValidationMessageFor(model => model.MINAMNTDUE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CURRBALANCE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CURRBALANCE)
+                @Html.ValidationMessageFor(model => model.CURRBALANCE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TOTALPURCHASE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TOTALPURCHASE)
+                @Html.ValidationMessageFor(model => model.TOTALPURCHASE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CREDITLIMIT, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CREDITLIMIT)
+                @Html.ValidationMessageFor(model => model.CREDITLIMIT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

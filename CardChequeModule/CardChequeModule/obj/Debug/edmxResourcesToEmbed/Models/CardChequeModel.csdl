@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OBLCARDCHEQUEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="OCC_CARDINFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CARDNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CHNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BRANCHID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CHPHONE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PAYMENTTYPE" Type="Int32" Nullable="false" />
+    <Property Name="REFERENCENO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="AMOUNT" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="AMOUNTINWORD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ACCDEBITINSTR" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="REQUESTEDBY" Type="Int64" Nullable="false" />
+    <Property Name="REQUESTEDON" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AUTHORIZEDBY" Type="Int64" />
+    <Property Name="AUTHORIZEDON" Type="DateTime" Precision="3" />
+    <Property Name="STATUS" Type="Int32" Nullable="false" />
+    <Property Name="CREATEDON" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CREATEDBY" Type="Int64" Nullable="false" />
+    <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+    <Property Name="MODIFIEDBY" Type="Int64" />
+    <Property Name="ISACTIVE" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="OCC_USER" Relationship="Self.FK_OCC_CARDINFO_OCC_USER" FromRole="OCC_CARDINFO" ToRole="OCC_USER" />
+    <NavigationProperty Name="OCC_USER1" Relationship="Self.FK_OCC_CARDINFO_OCC_USER1" FromRole="OCC_CARDINFO" ToRole="OCC_USER" />
+  </EntityType>
+  <EntityType Name="OCC_USER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMPLOYEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DEPARTMENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DESIGNATION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TYPE" Type="Int32" Nullable="false" />
+    <Property Name="BRANCHCODE" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ISACTIVE" Type="Int32" />
+    <Property Name="CREATEDBY" Type="Int64" Nullable="false" />
+    <Property Name="CREATEDON" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MODIFIEDBY" Type="Int64" />
+    <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OCC_CARDINFO" Relationship="Self.FK_OCC_CARDINFO_OCC_USER" FromRole="OCC_USER" ToRole="OCC_CARDINFO" />
+    <NavigationProperty Name="OCC_CARDINFO1" Relationship="Self.FK_OCC_CARDINFO_OCC_USER1" FromRole="OCC_USER" ToRole="OCC_CARDINFO" />
+  </EntityType>
+  <EntityType Name="OCCEnumeration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_OCC_CARDINFO_OCC_USER">
+    <End Role="OCC_USER" Type="Self.OCC_USER" Multiplicity="1" />
+    <End Role="OCC_CARDINFO" Type="Self.OCC_CARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCC_USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCC_CARDINFO">
+        <PropertyRef Name="REQUESTEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OCC_CARDINFO_OCC_USER1">
+    <End Role="OCC_USER" Type="Self.OCC_USER" Multiplicity="0..1" />
+    <End Role="OCC_CARDINFO" Type="Self.OCC_CARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCC_USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCC_CARDINFO">
+        <PropertyRef Name="AUTHORIZEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OBLCARDCHEQUEEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="OCC_CARDINFO" EntityType="Self.OCC_CARDINFO" />
+    <EntitySet Name="OCC_USER" EntityType="Self.OCC_USER" />
+    <EntitySet Name="OCCEnumeration" EntityType="Self.OCCEnumeration" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_OCC_CARDINFO_OCC_USER" Association="Self.FK_OCC_CARDINFO_OCC_USER">
+      <End Role="OCC_USER" EntitySet="OCC_USER" />
+      <End Role="OCC_CARDINFO" EntitySet="OCC_CARDINFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OCC_CARDINFO_OCC_USER1" Association="Self.FK_OCC_CARDINFO_OCC_USER1">
+      <End Role="OCC_USER" EntitySet="OCC_USER" />
+      <End Role="OCC_CARDINFO" EntitySet="OCC_CARDINFO" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(OBLCARDCHEQUEModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(OBLCARDCHEQUEModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

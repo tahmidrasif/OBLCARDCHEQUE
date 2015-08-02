@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OBLCARDCHEQUEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BRANCHINFO" EntityType="OBLCARDCHEQUEModel.BRANCHINFO" />
+    <EntitySet Name="DEPOSIT" EntityType="OBLCARDCHEQUEModel.DEPOSIT" />
+    <EntitySet Name="OCCCARDINFO" EntityType="OBLCARDCHEQUEModel.OCCCARDINFO" />
+    <EntitySet Name="OCCENUMERATION" EntityType="OBLCARDCHEQUEModel.OCCENUMERATION" />
+    <EntitySet Name="OCCROLE" EntityType="OBLCARDCHEQUEModel.OCCROLE" />
+    <EntitySet Name="OCCUSER" EntityType="OBLCARDCHEQUEModel.OCCUSER" />
+    <EntitySet Name="STATUS" EntityType="OBLCARDCHEQUEModel.STATUS" />
+    <EntitySet Name="sysdiagrams" EntityType="OBLCARDCHEQUEModel.sysdiagrams" />
+    <AssociationSet Name="FK_OCCUSER_OCCROLE" Association="OBLCARDCHEQUEModel.FK_OCCUSER_OCCROLE">
+      <End Role="OCCROLE" EntitySet="OCCROLE" />
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BRANCHINFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TOTALEMPLOYEE" Type="Int32" />
+    <Property Name="BRANCHCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BRANCHNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BRANCHMANAGER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BRANCHCONTACT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BRANCHMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BRANCHADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="DEPOSIT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CARDNUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DATE" Type="DateTime" Precision="3" />
+    <Property Name="BRANCHCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AMOUNT" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="REFERENCENUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CREATEDBY" Type="Int64" />
+    <Property Name="ISAUTHORIZED" Type="Boolean" />
+    <Property Name="AUTHORIZEDBY" Type="Int64" />
+    <Property Name="AUTHORIZEDON" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="OCCCARDINFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CARDNO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CHNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CHPHONE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PAYMENTTYPE" Type="Int32" />
+    <Property Name="REFERENCENO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OCCENUMERATION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="OCCROLE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ROLENAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ISACTIVE" Type="Boolean" />
+    <Property Name="CREATEDON" Type="DateTime" Precision="3" />
+    <Property Name="CREATEDBY" Type="Int64" />
+    <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+    <Property Name="MODIFIEDBY" Type="Int64" />
+    <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_OCCUSER_OCCROLE" FromRole="OCCROLE" ToRole="OCCUSER" />
+  </EntityType>
+  <EntityType Name="OCCUSER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMPLOYEEID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="USERNAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DEPARTMENT" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DESIGNATION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TYPE" Type="Int32" Nullable="false" />
+    <Property Name="BRANCHCODE" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ISACTIVE" Type="Boolean" />
+    <Property Name="CREATEDBY" Type="Int64" Nullable="false" />
+    <Property Name="CREATEDON" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MODIFIEDBY" Type="Int64" />
+    <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OCCROLE" Relationship="OBLCARDCHEQUEModel.FK_OCCUSER_OCCROLE" FromRole="OCCUSER" ToRole="OCCROLE" />
+  </EntityType>
+  <EntityType Name="STATUS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ISACTIVE" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_OCCUSER_OCCROLE">
+    <End Type="OBLCARDCHEQUEModel.OCCROLE" Role="OCCROLE" Multiplicity="1" />
+    <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCROLE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCCUSER">
+        <PropertyRef Name="TYPE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

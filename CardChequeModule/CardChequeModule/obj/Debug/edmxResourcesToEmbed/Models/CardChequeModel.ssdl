@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="OCC_CARDINFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CARDNO" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="CHNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BRANCHID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CHPHONE" Type="nvarchar" MaxLength="20" />
+    <Property Name="PAYMENTTYPE" Type="int" Nullable="false" />
+    <Property Name="REFERENCENO" Type="nvarchar" MaxLength="20" />
+    <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="AMOUNTINWORD" Type="nvarchar(max)" />
+    <Property Name="ACCDEBITINSTR" Type="nvarchar" MaxLength="15" />
+    <Property Name="REQUESTEDBY" Type="bigint" Nullable="false" />
+    <Property Name="REQUESTEDON" Type="datetime" Nullable="false" />
+    <Property Name="AUTHORIZEDBY" Type="bigint" />
+    <Property Name="AUTHORIZEDON" Type="datetime" />
+    <Property Name="STATUS" Type="int" Nullable="false" />
+    <Property Name="CREATEDON" Type="datetime" Nullable="false" />
+    <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
+    <Property Name="MODIFIEDON" Type="datetime" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
+    <Property Name="ISACTIVE" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OCC_USER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMPLOYEEID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="USERNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PASSWORD" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DEPARTMENT" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DESIGNATION" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TYPE" Type="int" Nullable="false" />
+    <Property Name="BRANCHCODE" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="ISACTIVE" Type="int" />
+    <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
+    <Property Name="CREATEDON" Type="datetime" Nullable="false" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
+    <Property Name="MODIFIEDON" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OCCEnumeration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="5" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="Value" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_OCC_CARDINFO_OCC_USER">
+    <End Role="OCC_USER" Type="Self.OCC_USER" Multiplicity="1" />
+    <End Role="OCC_CARDINFO" Type="Self.OCC_CARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCC_USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCC_CARDINFO">
+        <PropertyRef Name="REQUESTEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OCC_CARDINFO_OCC_USER1">
+    <End Role="OCC_USER" Type="Self.OCC_USER" Multiplicity="0..1" />
+    <End Role="OCC_CARDINFO" Type="Self.OCC_CARDINFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCC_USER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OCC_CARDINFO">
+        <PropertyRef Name="AUTHORIZEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="OBLCARDCHEQUEModelStoreContainer">
+    <EntitySet Name="OCC_CARDINFO" EntityType="Self.OCC_CARDINFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OCC_USER" EntityType="Self.OCC_USER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OCCEnumeration" EntityType="Self.OCCEnumeration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_OCC_CARDINFO_OCC_USER" Association="Self.FK_OCC_CARDINFO_OCC_USER">
+      <End Role="OCC_USER" EntitySet="OCC_USER" />
+      <End Role="OCC_CARDINFO" EntitySet="OCC_CARDINFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OCC_CARDINFO_OCC_USER1" Association="Self.FK_OCC_CARDINFO_OCC_USER1">
+      <End Role="OCC_USER" EntitySet="OCC_USER" />
+      <End Role="OCC_CARDINFO" EntitySet="OCC_CARDINFO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

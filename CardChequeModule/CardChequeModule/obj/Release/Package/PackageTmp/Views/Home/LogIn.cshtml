@@ -1,0 +1,41 @@
+﻿@using System.Web.UI.WebControls
+@model CardChequeModule.Models.OCCUSER
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.Title = "Log In";
+}
+
+
+
+<div id="login-page">
+    <div class="container">
+
+        <form class="form-login" action="~/Home/LogIn" method="POST">
+            <h2 class="form-login-heading">sign in now</h2>
+            <div class="login-wrap">
+                @Html.TextBoxFor(model => model.EMPLOYEEID,new {@class="form-control", @placeholder="Employee Id"})
+                <br>
+
+                @Html.PasswordFor(model => model.PASSWORD, new { @class = "form-control", @placeholder = "Password" })
+                <label class="checkbox">
+                    <span class="pull-right">
+                        <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
+
+                    </span>
+                </label>
+                <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> Log In</button>
+                <hr>
+                @*<div class="alert alert-warning" role="alert">@ViewBag.flag</div>*@
+                <p><h3 style="color: red">@ViewBag.flag</h3></p>
+               
+
+            </div>
+
+           
+            <!-- modal -->
+
+        </form>
+
+    </div>
+</div>

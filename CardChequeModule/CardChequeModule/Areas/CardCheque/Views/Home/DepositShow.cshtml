@@ -1,0 +1,177 @@
+﻿@model IEnumerable<CardChequeModule.Areas.CardCheque.Models.DepositeViewModel>
+
+@{
+    ViewBag.Title = "DepositShow";
+    string msg2 = "";
+    string msg = (string)Session["DepositSaveMsg"];
+    if (msg != null)
+    {
+        if (!msg.Contains("not"))
+        {
+            var a = msg.Split('\n');
+            msg = a[0];
+            msg2 = a[1];
+        }
+    }
+   
+    //string msg = ViewBag.DepositSaveMsg;
+    int flag = 0;
+    if (!string.IsNullOrEmpty(msg))
+    {
+        flag = 1;
+
+    }
+}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Card Cheque Management</h4>
+            </div>
+            <div class="modal-body">
+                <h4>
+                    <p>@msg</p>
+                    <p style="color: green">@msg2</p>
+                </h4> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+    <div class="panel-body container">
+
+        @using (Html.BeginForm("DepositShow", "Home", FormMethod.Post, new { @class = "form-inline", area = "CardCheque" }))
+        {
+
+            <div class="form-group">
+                <label for="cardno">Card Number</label>
+                <input type="text" class="form-control" id="cardno" name="cardno" placeholder="Enter Carnd Number">
+            </div>
+
+            <div class="form-group">
+                <label for="branch">Branch Name</label>
+                @Html.DropDownList("branch", null, "All", new { @class = "form-control" })
+            </div>
+
+
+            <div class="form-group">
+                <label for="depositDate">Deposit Date</label>
+                <div class='input-group date' id='datetimepicker1'>
+
+                    <input type='text' class="form-control" placeholder="Deposit Date" id="depositDate" name="depositDate" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-success" id="searchBtn">Search</button>
+
+
+        }
+
+    </div>
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CardNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardHolderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeapositeDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BranchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RefarenceNo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @*<a href="javascript:void(0);" data-id="@item.Name" class="OpenDialog">Download</a>*@
+            @Html.DisplayFor(modelItem => item.CardNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardHolderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeapositeDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RefarenceNo)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>*@
+    </tr>
+}
+
+</table>
+
+@section scripts{
+    <script>
+            $(document).ready(function() {
+                //alert("Test");
+                if (@flag == 1) {
+                    $('#myModal').modal('show');
+                    $.ajax('/CardCheque/Home/DestroySession');
+                }
+
+            });
+    </script>
+}
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+        });
+
+    </script>
+}
+

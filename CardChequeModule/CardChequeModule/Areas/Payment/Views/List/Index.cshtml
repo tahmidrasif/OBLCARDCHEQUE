@@ -1,0 +1,155 @@
+﻿@model IEnumerable<CardChequeModule.Models.DEPOSIT>
+
+@{
+    ViewBag.Title = "Index";
+
+    string msg2 = "";
+    string msg = (string)Session["DepositSaveMsg"];
+    //if (msg != null)
+    //{
+    //    if (!msg.Contains("not"))
+    //    {
+    //        var a = msg.Split('\n');
+    //        msg = a[0];
+    //        msg2 = a[1];
+    //    }
+    //}
+
+    //string msg = ViewBag.DepositSaveMsg;
+    int flag = 0;
+    if (!string.IsNullOrEmpty(msg))
+    {
+        flag = 1;
+
+    }
+}
+
+
+<h2>Index</h2>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Card Cheque Management</h4>
+            </div>
+            <div class="modal-body">
+                <h4>
+                    <p>@msg</p>
+                </h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="panel panel-default pre-scrollable">
+    <table class="table table-striped">
+        <tr class="success">
+            <th>
+                Serial Number
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CARDNUMBER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AMOUNT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CREATEDON)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
+            </th>
+
+            @*<th></th>*@
+        </tr>
+
+        @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+        {
+
+            <tr class="active">
+                <td> 
+                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Details", "Detail", new { Area = "Payment", id = item.Data.ID }, new{@id= item.Data.ID})
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.CARDNUMBER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.AMOUNT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.CREATEDON)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.REFERENCENUMBER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.BRANCHINFO.BRANCHNAME)
+                </td>
+
+                <td>
+
+                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Details
+                    </button>*@
+                    @Html.ActionLink("Edit", "Edit","Edit",new { Area = "Payment", id = item.Data.ID }, new{@id= item.Data.ID}) 
+
+                </td>
+            </tr>
+
+        }
+
+
+    </table>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            //alert("Test");
+            if (@flag == 1) {
+                $('#myModal').modal('show');
+                $.ajax('/Payment/PaymentSlip/DestroySession');
+            }
+            
+            //$('a').click(function(){
+            //    var listitemId=this.id;
+                
+            //    $.ajax({
+            //        url: '/Payment/Detail/Details',
+            //        type: 'POST',
+            //        data: { id: listitemId },
+
+            //        success: function (result) {
+            //            if (result == null) {
+            //                alert("No Data Found");
+            //            } else {
+            //                $('#name').val(result.CLIENTNAME);
+            //                $('#pendingTxtBox').show();
+            //                $('#pendingTxtBox').val(result.MINAMNTDUE);
+            //            }
+
+
+            //        },
+            //        error: function (xhr) {
+            //            alert("Something is wrong");
+            //        }
+            //    });
+            //});
+        });
+    </script>
+}

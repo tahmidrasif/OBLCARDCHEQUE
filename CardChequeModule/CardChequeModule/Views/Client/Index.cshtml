@@ -1,0 +1,129 @@
+﻿@model IEnumerable<CardChequeModule.Models.ClientDetails>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CLIENTNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ADDRESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STADDRESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REGION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COUNTRY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ZIP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BILLINGDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATEDBY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CRATEDON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATEMENTDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAYMENTDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CARDNO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CURRENCY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MINAMNTDUE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CURRBALANCE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TOTALPURCHASE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREDITLIMIT)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CLIENTNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ADDRESS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STADDRESS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REGION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COUNTRY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ZIP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BILLINGDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATEDBY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CRATEDON)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATEMENTDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PAYMENTDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CARDNO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRENCY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MINAMNTDUE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRBALANCE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TOTALPURCHASE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREDITLIMIT)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

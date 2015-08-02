@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OBLCARDCHEQUEModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="BRANCHINFO">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.BRANCHINFO">
+        <MappingFragment StoreEntitySet="BRANCHINFO">
+          <ScalarProperty Name="BRANCHADDRESS" ColumnName="BRANCHADDRESS" />
+          <ScalarProperty Name="BRANCHMAIL" ColumnName="BRANCHMAIL" />
+          <ScalarProperty Name="BRANCHCONTACT" ColumnName="BRANCHCONTACT" />
+          <ScalarProperty Name="BRANCHMANAGER" ColumnName="BRANCHMANAGER" />
+          <ScalarProperty Name="BRANCHNAME" ColumnName="BRANCHNAME" />
+          <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
+          <ScalarProperty Name="TOTALEMPLOYEE" ColumnName="TOTALEMPLOYEE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEPOSIT">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.DEPOSIT">
+        <MappingFragment StoreEntitySet="DEPOSIT">
+          <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
+          <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
+          <ScalarProperty Name="ISAUTHORIZED" ColumnName="ISAUTHORIZED" />
+          <ScalarProperty Name="CREATEDBY" ColumnName="CREATEDBY" />
+          <ScalarProperty Name="REFERENCENUMBER" ColumnName="REFERENCENUMBER" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="CARDNUMBER" ColumnName="CARDNUMBER" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OCCCARDINFO">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCCARDINFO">
+        <MappingFragment StoreEntitySet="OCCCARDINFO">
+          <ScalarProperty Name="REFERENCENO" ColumnName="REFERENCENO" />
+          <ScalarProperty Name="PAYMENTTYPE" ColumnName="PAYMENTTYPE" />
+          <ScalarProperty Name="CHPHONE" ColumnName="CHPHONE" />
+          <ScalarProperty Name="CHNAME" ColumnName="CHNAME" />
+          <ScalarProperty Name="CARDNO" ColumnName="CARDNO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OCCENUMERATION">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCENUMERATION">
+        <MappingFragment StoreEntitySet="OCCENUMERATION">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OCCROLE">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCROLE">
+        <MappingFragment StoreEntitySet="OCCROLE">
+          <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
+          <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
+          <ScalarProperty Name="CREATEDBY" ColumnName="CREATEDBY" />
+          <ScalarProperty Name="CREATEDON" ColumnName="CREATEDON" />
+          <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
+          <ScalarProperty Name="ROLENAME" ColumnName="ROLENAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OCCUSER">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCUSER">
+        <MappingFragment StoreEntitySet="OCCUSER">
+          <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
+          <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
+          <ScalarProperty Name="CREATEDON" ColumnName="CREATEDON" />
+          <ScalarProperty Name="CREATEDBY" ColumnName="CREATEDBY" />
+          <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
+          <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="EMPLOYEEID" ColumnName="EMPLOYEEID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STATUS">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.STATUS">
+        <MappingFragment StoreEntitySet="STATUS">
+          <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

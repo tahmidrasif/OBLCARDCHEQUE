@@ -1,0 +1,90 @@
+﻿@using System.Web.UI.WebControls
+@model CardChequeModule.Models.ClientDetails
+
+@{
+    ViewBag.Title = "SearchResult";
+
+}
+
+<h3 style="color: red">@ViewBag.Msg</h3>
+<br />
+
+@if (ViewBag.Flag == 1)
+{
+
+}
+else
+{
+
+    <div class="container">
+        <form role="form" class="form-horizontal" action="">
+            <div class="form-group">
+
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.CLIENTNAME)
+
+                    @Html.TextBoxFor(model => model.CLIENTNAME, new { @readonly = true, @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.LabelFor(model => model.ADDRESS)
+
+                    @Html.TextBoxFor(model => model.ADDRESS, new { @readonly = true, @class = "form-control" })
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.COUNTRY)
+
+                    @Html.TextBoxFor(model => model.COUNTRY, new { @readonly = true, @class = "form-control" })
+
+
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.MINAMNTDUE)
+
+                    @Html.TextBoxFor(model => model.MINAMNTDUE, new { @readonly = true, @class = "form-control" })
+
+
+                </div>
+
+            </div>
+            <div class="form-group">
+
+
+                <div class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.CURRBALANCE)
+
+                    @Html.TextBoxFor(model => model.CURRBALANCE, new { @readonly = true, @class = "form-control" })
+
+
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.TOTALPURCHASE)
+
+                    @Html.TextBoxFor(model => model.TOTALPURCHASE, new { @readonly = true, @class = "form-control" })
+
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.CREDITLIMIT)
+
+                    @Html.TextBoxFor(model => model.CREDITLIMIT, new { @readonly = true, @class = "form-control" })
+
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3"><label>Branch Name</label><input class="form-control" placeholder="Branch Name" type="text"></div>
+                <div class="col-sm-3"><label>Date</label><input class="form-control" placeholder="Date" type="text"></div>
+                <div class="col-sm-3"><label>Amount</label><input class="form-control" placeholder="Amount" type="text"></div>
+                <div class="col-sm-3"><label>.</label><button type="submit" class="btn btn-twitter form-control" id="saveBrn">Save</button></div>
+            </div>
+        </form>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    
+}
+

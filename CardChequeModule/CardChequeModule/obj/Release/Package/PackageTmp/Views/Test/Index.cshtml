@@ -1,0 +1,69 @@
+﻿@model CardChequeModule.Models.OCCCARDINFO
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+@*<form class="form-inline border-head" method="POST" action="/Test/SearchResult">*@
+
+@*@Html.BeginForm("SearchResult","Test",FormMethod.Post)
+    {*@
+
+@using (Ajax.BeginForm("Find", "Test", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange" }, new { @class = "form-inline" }))
+{
+
+    <div class="form-group">
+        <label for="cardno">Card Number</label>
+        <input type="text" class="form-control" id="cardno" name="cardno" placeholder="Enter Carnd Number">
+    </div>
+    <div class="form-group">
+        <label for="billingDate">Billing Date</label>
+        <input type="text" class="form-control" id="billingDate" name="billingDate" placeholder="dd/mm/YYYY 10/11/2013 ">
+    </div>
+    <div class="form-group">
+        <label for="currency">Currency</label>
+        <input type="text" class="form-control" id="currency" name="currency" placeholder="Enter Currency">
+    </div>
+
+    <button type="submit" class="btn btn-success" id="searchBtn">Search</button>
+
+}
+
+
+
+<div id="partialChange">
+    @*@Html.Partial("_CardNoResultPartial", Model)*@
+</div>
+
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function getSearchResults() {
+
+
+            var data = { cardno: $("#cardno").val(), billingDate: $("#billingDate").val(), currency: $("#currency").val() };
+            $.ajax({
+                type: "GET",
+                data: data,
+                url: '@Url.Action("Find", "Test")',
+                success: function (result) {
+                    alert("INSuccess");
+                    $("#partialChange").html(result);
+                },
+                error: function (xhr) {
+                    alert("Something is wrong");
+                }
+            });
+        };
+
+
+    </script>
+}
