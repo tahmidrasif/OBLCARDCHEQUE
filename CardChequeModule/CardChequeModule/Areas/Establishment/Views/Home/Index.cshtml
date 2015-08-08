@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CardChequeModule.Models.CARDCHEREUISITION>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+    </div>
+    <div class="panel-body">
+        @using (Ajax.BeginForm("SearchResult", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Establishment" }))
+        {
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">Status</label>
+                <div class="col-sm-3">
+
+                    @Html.DropDownList("BRANCH", null, "Select Branch", new { @class = "form-control" })
+                </div>
+                <label class="col-sm-1 control-label">Card Number</label>
+                <div class="col-sm-3">
+                    <input type="text" id="CARDNO" name="CARDNO" class="form-control" />
+                </div>
+                <label class="col-sm-1 control-label">Date</label>
+                <div class="col-sm-3">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" />
+                        @*  @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "Date" })*@
+                        @*@Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control" })*@
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-11 control-label"></label>
+                <div class="col-sm-1">
+                    <button class="btn btn-info" type="submit">Search</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<div id="partialChange">
+    @Html.Partial("_AuthorizedList", Model)
+</div>
+
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+}
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+
+        });
+
+
+    </script>
+}

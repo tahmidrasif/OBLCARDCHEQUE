@@ -26,11 +26,13 @@ namespace CardChequeModule.Models
         public int STATUS { get; set; }
         public string APPROVALNO { get; set; }
         public bool ISACTIVE { get; set; }
-        public string CREATEDBY { get; set; }
+        public Nullable<long> CREATEDBY { get; set; }
         public System.DateTime CREATEDON { get; set; }
-        public string MODIFIEDBY { get; set; }
+        public Nullable<long> MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
     
         public virtual CARDCHLEAF CARDCHLEAF { get; set; }
+        public virtual OCCUSER OCCUSER { get; set; }
+        public virtual OCCUSER OCCUSER1 { get; set; }
     }
 }

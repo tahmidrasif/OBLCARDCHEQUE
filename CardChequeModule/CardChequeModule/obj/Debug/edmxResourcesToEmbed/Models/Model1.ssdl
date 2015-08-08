@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="BRANCHINFO">
     <Key>
       <PropertyRef Name="ID" />
@@ -29,8 +29,9 @@
     <Property Name="ISACTIVE" Type="bit" Nullable="false" />
     <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
     <Property Name="CREATEDON" Type="datetime" Nullable="false" />
-    <Property Name="MODIFIEDBY" Type="nvarchar" MaxLength="20" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
     <Property Name="MODIFIEDON" Type="datetime" />
+    <Property Name="REFERENCENO" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="CARDCHLEAF">
     <Key>
@@ -42,9 +43,9 @@
     <Property Name="LEAFSTATUS" Type="int" Nullable="false" />
     <Property Name="REMARKS" Type="nvarchar(max)" />
     <Property Name="ISACTIVE" Type="bit" Nullable="false" />
-    <Property Name="CREATEDBY" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
     <Property Name="CREATEDON" Type="datetime" Nullable="false" />
-    <Property Name="MODIFIEDBY" Type="nvarchar" MaxLength="20" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
     <Property Name="MODIFIEDON" Type="datetime" />
   </EntityType>
   <EntityType Name="CARDCHTRAN">
@@ -63,9 +64,9 @@
     <Property Name="STATUS" Type="int" Nullable="false" />
     <Property Name="APPROVALNO" Type="nvarchar" MaxLength="50" />
     <Property Name="ISACTIVE" Type="bit" Nullable="false" />
-    <Property Name="CREATEDBY" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="CREATEDBY" Type="bigint" />
     <Property Name="CREATEDON" Type="datetime" Nullable="false" />
-    <Property Name="MODIFIEDBY" Type="nvarchar" MaxLength="20" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
     <Property Name="MODIFIEDON" Type="datetime" />
   </EntityType>
   <EntityType Name="DEPOSIT">
@@ -176,6 +177,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHEREUISITION">
+        <PropertyRef Name="MODIFIEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHLEAF_OCCUSER">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
+    <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHLEAF">
+        <PropertyRef Name="CREATEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHLEAF_OCCUSER1">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHLEAF">
+        <PropertyRef Name="MODIFIEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHTRAN_OCCUSER">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHTRAN">
+        <PropertyRef Name="CREATEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHTRAN_OCCUSER1">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHTRAN">
+        <PropertyRef Name="MODIFIEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CHEQUETRAN_OBLCHEQUELEAF">
     <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="1" />
     <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
@@ -248,37 +309,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="OBLCARDCHEQUEModelStoreContainer">
     <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CARDCHEREUISITION" EntityType="Self.CARDCHEREUISITION" Schema="dbo" store:Type="Tables" />
@@ -300,6 +330,26 @@
     <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER" Association="Self.FK_CARDCHEREUISITION_OCCUSER">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER1" Association="Self.FK_CARDCHEREUISITION_OCCUSER1">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHLEAF_OCCUSER" Association="Self.FK_CARDCHLEAF_OCCUSER">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHLEAF_OCCUSER1" Association="Self.FK_CARDCHLEAF_OCCUSER1">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHTRAN_OCCUSER" Association="Self.FK_CARDCHTRAN_OCCUSER">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHTRAN_OCCUSER1" Association="Self.FK_CARDCHTRAN_OCCUSER1">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
     </AssociationSet>
     <AssociationSet Name="FK_CHEQUETRAN_OBLCHEQUELEAF" Association="Self.FK_CHEQUETRAN_OBLCHEQUELEAF">
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />

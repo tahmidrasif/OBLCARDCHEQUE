@@ -45,9 +45,10 @@ namespace CardChequeModule.Controllers
             WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
-                var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, aUser.PASSWORD);
-                if (isValid == "Valid")
-                {
+                //Tahmid
+               // var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, aUser.PASSWORD);
+                //if (isValid == "Valid")
+                //{
                     ViewBag.flag = "";
                     if (IsUserInSystem(aUser.EMPLOYEEID))
                     {
@@ -58,17 +59,19 @@ namespace CardChequeModule.Controllers
                             Session["User"] = user;
                             if (user.TYPE == 1)
                             {
-                                return RedirectToAction("DepositShow", "Home", new { Area = "CardCheque" });
-                                //return RedirectToAction("Index", "Home");
-                                //return Redirect("~/CardCheque/Home/Index");
-                            }
-                            if (user.TYPE == 2)
-                            {
-                                return RedirectToAction("Index", "Home", new { Area = "Payment" });
+                                return RedirectToAction("Index", "Home", new { Area = "Admin" });
                             }
                             if (user.TYPE == 3)
                             {
-                                return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Index", "Home", new { Area = "Authorizer" });
+                            }
+                            if (user.TYPE == 2)
+                            {
+                                return RedirectToAction("Index", "Home", new { Area = "Taler" });
+                            }
+                            if (user.TYPE == 9)
+                            {
+                                return RedirectToAction("Index", "Home",new {Area="Establishment"});
                             }
                         }
 
@@ -79,17 +82,17 @@ namespace CardChequeModule.Controllers
                     }
 
 
-                }
-                else if (isValid == "Invalid")
-                {
-                    ViewBag.flag = "Invalid User";
-                    return View();
-                }
-                else if (isValid == "NotFound")
-                {
-                    ViewBag.flag = "User Not Found";
-                    return View();
-                }
+                //}
+                //else if (isValid == "Invalid")
+                //{
+                //    ViewBag.flag = "Invalid User";
+                //    return View();
+                //}
+                //else if (isValid == "NotFound")
+                //{
+                //    ViewBag.flag = "User Not Found";
+                //    return View();
+                //}
                 return View();
             }
             catch (Exception exception)

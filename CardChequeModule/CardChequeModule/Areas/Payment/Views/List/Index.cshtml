@@ -5,15 +5,7 @@
 
     string msg2 = "";
     string msg = (string)Session["DepositSaveMsg"];
-    //if (msg != null)
-    //{
-    //    if (!msg.Contains("not"))
-    //    {
-    //        var a = msg.Split('\n');
-    //        msg = a[0];
-    //        msg2 = a[1];
-    //    }
-    //}
+
 
     //string msg = ViewBag.DepositSaveMsg;
     int flag = 0;
@@ -121,35 +113,13 @@
     <script>
         $(document).ready(function() {
             //alert("Test");
-            if (@flag == 1) {
+            @*if (@flag == 1) {
                 $('#myModal').modal('show');
-                $.ajax('/Payment/PaymentSlip/DestroySession');
-            }
-            
-            //$('a').click(function(){
-            //    var listitemId=this.id;
                 
-            //    $.ajax({
-            //        url: '/Payment/Detail/Details',
-            //        type: 'POST',
-            //        data: { id: listitemId },
+                $.ajax('/Payment/PaymentSlip/DestroySession');
 
-            //        success: function (result) {
-            //            if (result == null) {
-            //                alert("No Data Found");
-            //            } else {
-            //                $('#name').val(result.CLIENTNAME);
-            //                $('#pendingTxtBox').show();
-            //                $('#pendingTxtBox').val(result.MINAMNTDUE);
-            //            }
-
-
-            //        },
-            //        error: function (xhr) {
-            //            alert("Something is wrong");
-            //        }
-            //    });
-            //});
+            }*@
+        
         });
     </script>
 }

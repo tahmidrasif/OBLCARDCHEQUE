@@ -1,41 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CardChequeModule.Areas.Authorizer.Models;
+
 using CardChequeModule.Models;
 
 namespace CardChequeModule.Areas.Authorizer.Controllers
 {
     public class HomeController : Controller
     {
-        //Entities db=new Entities();
-      
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-        //public ActionResult PendingDeposit()
-        //{
-        //    var list=db.DEPOSIT.Where(x => x.ISAUTHORIZED == false).ToList();
-            
-        //    List<PendingViewModel> vmlist=new List<PendingViewModel>();
-        //    foreach (var deposit in list)
-        //    {
-        //        PendingViewModel vm = new PendingViewModel();
-        //        vm.Amount = (decimal) deposit.AMOUNT;
-        //        string branchName = db.BRANCHINFO.Where(x => x.BRANCHCODE == deposit.BRANCHCODE).Select(x => x.BRANCHNAME).FirstOrDefault();
-        //        vm.BranchName = branchName;
-        //        vm.CardHolderName =
-        //          db.OCCCARDINFO.Where(x => x.CARDNO == deposit.CARDNUMBER).Select(x => x.CHNAME).FirstOrDefault();
+        private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-        //        vm.CardNumber = deposit.CARDNUMBER;
-        //        vm.DeapositeDate = (DateTime) deposit.DATE;
-        //        vmlist.Add(vm);
+        public ActionResult RequisitionRequest()
+        {
+            Dictionary<int, string> statusID = new Dictionary<int, string>()
+            {
+                {4,"applied"},{5,"authorized"}
+            };
+            ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
+            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER);
+            List = List.Where(x => x.STATUS == 4);
+            return View(List);
+        }
 
-        //    }
-        //    return View(vmlist);
-        //}
+        [HttpPost]
+        public PartialViewResult GetAuthListPartial(int? STATUS, string CARDNO, DateTime? CREATEDON)
+        {
+            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).ToList();
+            if (STATUS != null)
+            {
+                List = List.Where(x => x.STATUS == STATUS).ToList();
+            }
+            if (!String.IsNullOrEmpty(CARDNO))
+            {
+                CARDNO = CARDNO.Trim();
+                List = List.Where(x => x.CARDNO == CARDNO).ToList();
+            }
+            if (CREATEDON != null)
+            {
+                List = List.Where(x => x.CREATEDON == CREATEDON).ToList();
+            }
+
+            return PartialView("_AppliedList", List);
+        }
+
+
+        [HttpPost]
+        public ActionResult PostAuthList(IEnumerable<long> idList)
+        {
+            List<CARDCHEREUISITION> UpdatedList = new List<CARDCHEREUISITION>();
+            long count = 1;
+            OCCUSER user = (OCCUSER)Session["User"];
+            try
+            {
+
+                foreach (var id in idList)
+                {
+                    var cheueReq = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
+                    cheueReq.STATUS = 5;
+                    cheueReq.MODIFIEDBY = user.ID;
+                    cheueReq.MODIFIEDON = DateTime.Now.Date;
+                    UpdatedList.Add(cheueReq);
+                }
+
+                foreach (var editedChqRq in UpdatedList)
+                {
+                    db.Entry(editedChqRq).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                // var authorizedList = db.CARDCHEREUISITION.Where(x => x.STATUS == 4).ToList();
+                return RedirectToAction("RequisitionRequest");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 	}
 }

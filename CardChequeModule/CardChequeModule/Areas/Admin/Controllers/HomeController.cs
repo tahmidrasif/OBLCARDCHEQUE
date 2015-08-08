@@ -13,6 +13,10 @@ namespace CardChequeModule.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
+        public ActionResult Index()
+        {
+          return View();
+        }
         //private MyDbContext db = new MyDbContext();
 
         //// GET: /Admin/Home/

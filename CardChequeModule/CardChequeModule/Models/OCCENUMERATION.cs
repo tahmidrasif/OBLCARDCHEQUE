@@ -16,8 +16,8 @@ namespace CardChequeModule.Models
     {
         public OCCENUMERATION()
         {
-            this.OCCUSER = new HashSet<OCCUSER>();
             this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
+            this.OCCUSER = new HashSet<OCCUSER>();
         }
     
         public long ID { get; set; }
@@ -26,7 +26,7 @@ namespace CardChequeModule.Models
         public string Value { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        public virtual ICollection<OCCUSER> OCCUSER { get; set; }
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
+        public virtual ICollection<OCCUSER> OCCUSER { get; set; }
     }
 }

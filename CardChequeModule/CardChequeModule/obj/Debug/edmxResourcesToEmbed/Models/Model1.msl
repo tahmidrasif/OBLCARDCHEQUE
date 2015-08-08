@@ -15,6 +15,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CARDCHEREUISITION">
+      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHEREUISITION">
+        <MappingFragment StoreEntitySet="CARDCHEREUISITION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CARDNO" ColumnName="CARDNO" />
+          <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="LEAFNO" ColumnName="LEAFNO" />
+          <ScalarProperty Name="LEAFFROM" ColumnName="LEAFFROM" />
+          <ScalarProperty Name="LEAFTO" ColumnName="LEAFTO" />
+          <ScalarProperty Name="LEAFNEXT" ColumnName="LEAFNEXT" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+          <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
+          <ScalarProperty Name="CREATEDBY" ColumnName="CREATEDBY" />
+          <ScalarProperty Name="CREATEDON" ColumnName="CREATEDON" />
+          <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
+          <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
+          <ScalarProperty Name="REFERENCENO" ColumnName="REFERENCENO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CARDCHLEAF">
       <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHLEAF">
         <MappingFragment StoreEntitySet="CARDCHLEAF">
@@ -127,50 +148,6 @@
           <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="OBLCARDCHEQUEModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="OBLCARDCHEQUEModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="OBLCARDCHEQUEModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="OBLCARDCHEQUEModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OBLCARDCHEQUEModel.Store.sp_upgraddiagrams" />
-    <EntitySetMapping Name="CARDCHEREUISITION">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHEREUISITION">
-        <MappingFragment StoreEntitySet="CARDCHEREUISITION">
-          <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
-          <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
-          <ScalarProperty Name="CREATEDON" ColumnName="CREATEDON" />
-          <ScalarProperty Name="CREATEDBY" ColumnName="CREATEDBY" />
-          <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
-          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
-          <ScalarProperty Name="LEAFNEXT" ColumnName="LEAFNEXT" />
-          <ScalarProperty Name="LEAFTO" ColumnName="LEAFTO" />
-          <ScalarProperty Name="LEAFFROM" ColumnName="LEAFFROM" />
-          <ScalarProperty Name="LEAFNO" ColumnName="LEAFNO" />
-          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-          <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
-          <ScalarProperty Name="CARDNO" ColumnName="CARDNO" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

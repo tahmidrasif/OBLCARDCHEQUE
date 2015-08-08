@@ -16,8 +16,8 @@ namespace CardChequeModule.Models
     {
         public BRANCHINFO()
         {
-            this.DEPOSIT = new HashSet<DEPOSIT>();
             this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
+            this.DEPOSIT = new HashSet<DEPOSIT>();
         }
     
         public long ID { get; set; }
@@ -29,7 +29,7 @@ namespace CardChequeModule.Models
         public string BRANCHMAIL { get; set; }
         public string BRANCHADDRESS { get; set; }
     
-        public virtual ICollection<DEPOSIT> DEPOSIT { get; set; }
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
+        public virtual ICollection<DEPOSIT> DEPOSIT { get; set; }
     }
 }

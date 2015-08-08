@@ -16,9 +16,14 @@ namespace CardChequeModule.Models
     {
         public OCCUSER()
         {
+            this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
+            this.CARDCHEREUISITION1 = new HashSet<CARDCHEREUISITION>();
+            this.CARDCHLEAF = new HashSet<CARDCHLEAF>();
+            this.CARDCHLEAF1 = new HashSet<CARDCHLEAF>();
+            this.CARDCHTRAN = new HashSet<CARDCHTRAN>();
+            this.CARDCHTRAN1 = new HashSet<CARDCHTRAN>();
             this.DEPOSIT = new HashSet<DEPOSIT>();
             this.OCCEVENTLOG = new HashSet<OCCEVENTLOG>();
-            this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
         }
     
         public long ID { get; set; }
@@ -35,9 +40,14 @@ namespace CardChequeModule.Models
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
         public Nullable<long> TYPE { get; set; }
     
+        public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
+        public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION1 { get; set; }
+        public virtual ICollection<CARDCHLEAF> CARDCHLEAF { get; set; }
+        public virtual ICollection<CARDCHLEAF> CARDCHLEAF1 { get; set; }
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN1 { get; set; }
         public virtual ICollection<DEPOSIT> DEPOSIT { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
         public virtual ICollection<OCCEVENTLOG> OCCEVENTLOG { get; set; }
-        public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace CardChequeModule.Models.MetaData
 
         [Required(ErrorMessage = "Enter Date")]
         [DisplayName("Deposit Date")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> CREATEDON { get; set; }
 
         [Required(ErrorMessage = "Enter the branch")]

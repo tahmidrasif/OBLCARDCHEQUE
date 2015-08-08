@@ -22,8 +22,10 @@
     </div>
 </div>
 
-<form class="form-horizontal" method="POST" id="chequeForm">
-
+@*<form class="form-horizontal" method="POST" id="chequeForm">*@
+@using (Ajax.BeginForm("Index", "PaymentSLip",
+    new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "chequeForm", @class = "form-horizontal" }))
+{
     <div class="panel panel-default">
         <div class="panel-body">
 
@@ -44,7 +46,7 @@
                         </span>
 
                     </div>
-                    
+
                 </div>
 
             </div>
@@ -128,14 +130,9 @@
 
 
                 <label class="col-xs-2 col-sm-2 control-label">Account Debit Instruction</label>
-                <div class="col-lg-5">
-                    <input type="text" class="form-control col-sm-3" placeholder="" id="ADI1" name="ADI1" />
+                <div class="col-lg-10">
+                    <input type="text" class="form-control col-sm-3" placeholder="" id="ADI" name="ADI" />
                 </div>
-                <div class="col-lg-5">
-                    <input type="text" class="form-control col-lg-5" placeholder="" id="ADI2" name="ADI2" />
-                </div>
-
-
 
             </div>
 
@@ -151,7 +148,7 @@
                             <th class="info">DATE</th>
 
                         </tr>
-                        <tr >
+                        <tr>
                             <td class="active">
                                 <textarea class="form-control" rows="3" id="PDCBANK" name="PDCBANK"></textarea>
                             </td>
@@ -194,13 +191,19 @@
         </div>
 
     </div>
+    
+    <br/>
 
-</form>
+    @*</form>
+        }*@
+}
 @section scripts{
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script type="text/javascript">
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script type="text/javascript">
         $(function () {
-            
+
             $('#accdebitDiv *').attr('disabled', true);
             $('#pdcDiv *').attr('disabled', true);
 
@@ -246,46 +249,46 @@
             });
 
 
-
-
-
-
-
-
-
-
-
             // subscribe to the keydown event
-            $('#CARDNUMBER').keydown(function (e) {
+
+            $("#CARDNUMBER").blur(function () {
                 // when a key is pressed check if its code was 9 (TAB)
-                if (e.which == 9) {
-
-                    $.ajax({
-                        url: '/Payment/Paymentslip/GetCardInfo',
-                        type: 'POST',
-                        data: { cardNo: $(this).val() },
-                        beforeSend: function () { $('#spinner').show(); },
-                        complete: function () { $('#spinner').hide(); },
-                        success: function (result) {
-                            if (result == null) {
-                                alert("No Data Found");
-                            } else {
-                                $('#CARDHOLDERNAME').val(result.CLIENTNAME);
-                                $('#MOBILE').val(result.MOBILE);
-                                $('#pendingTxtBox').show();
-                                $('#pendingTxtBox').val(result.MINAMNTDUE);
-                            }
 
 
-                        },
-                        error: function (xhr) {
-                            alert("Something is wrong");
+                $.ajax({
+                    url: '/Payment/Paymentslip/GetCardInfo',
+                    type: 'POST',
+                    data: { cardNo: $(this).val() },
+                    beforeSend: function () { $('#spinner').show(); },
+                    complete: function () { $('#spinner').hide(); },
+                    success: function (result) {
+                        if (result == null) {
+                            alert("No Data Found");
+                        } else {
+                            $('#CARDHOLDERNAME').val(result.CLIENTNAME);
+                            $('#MOBILE').val(result.MOBILE);
+                            $('#pendingTxtBox').show();
+                            $('#pendingTxtBox').val(result.MINAMNTDUE);
                         }
-                    });
-                }
+
+
+                    },
+                    error: function (xhr) {
+                        alert("Something is wrong");
+                    }
+                });
+
             });
         });
         
+        function OnSuccess(response) {
+            alert(response);
+
+            window.location.href = '/Payment/List/Index/';
+        }
+        function OnFailure(response) {
+            alert(response);
+        }
 
         $("#chequeForm").validate({
             rules: {
@@ -309,14 +312,11 @@
                 BRANCH: {
                     required: true,
                 },
-                ADI1: {
+                ADI: {
                     required: true,
                     digits: true
                 },
-                ADI2: {
-                    required: true,
-                    digits: true
-                },
+             
                 PDCBANK: {
                     required: true,
                 },
@@ -325,7 +325,6 @@
                 },
                 PDCCHEQUENO: {
                     required: true,
-                    
                 },
                 PDCDATE: {
                     required: true,
@@ -339,77 +338,30 @@
                 },
                 PAYMENTTYPE: {
                     required: "Select a Payment Type",
-
                 },
                 BRANCH: {
                     required: "Enter a Branch",
                 },
-                
             },
             errorPlacement: function (error, element) {
-                
+
                 if (element.attr("name") == "CREATEDON") {
-                    
+
                     error.appendTo(element.closest('#myId'));
-                    
+
                 }
                 if (element.attr("type") == "radio") {
                     error.insertAfter("#radioError").css({ marginLeft: "200px" });
-                    
+
                 } else {
                     error.insertAfter(element);
                 }
 
             },
-          
-
         });
 
     </script>
-    @*<script>
-        $(document).ready(function () {
 
-            //$('#accdebitDiv *').attr('disabled', true);
-            //$('#pdcDiv *').attr('disabled', true);
-
-
-            //$("input[name$='PAYMENTTYPE']").click(function () {
-            //    var test = $(this).val();
-            //    $('.error label').text('');
-            //    if (test == 'Cash') {
-
-            //        $('#accdebitDiv *').attr('disabled', true);
-            //        $('#pdcDiv *').attr('disabled', true);
-
-            //        $("#accdebitDiv :text").val("");
-            //        $("#pdcDiv :text").val("");
-            //        $('textarea').val("");
-            //    }
-            //    if (test == 'Cheque') {
-            //        $('#pdcDiv *').attr('disabled', false);
-            //        $('#accdebitDiv *').attr('disabled', true);
-
-            //        //  $("#amount-error").text("");
-            //        $("#pdcDiv :text").val("");
-            //        $("#accdebitDiv :text").val("");
-            //        $('textarea').val("");
-            //    }
-            //    if (test == 'ADI') {
-            //        $('#accdebitDiv *').attr('disabled', false);
-            //        $('#pdcDiv *').attr('disabled', true);
-
-
-            //        //    $("#amount-error").text("");
-
-            //        $("#accdebitDiv :text").val("");
-            //        $('textarea').val("");
-            //    }
-
-            //});
-
-        });
-
-    </script>*@
 }
 
 @section DatetimeCss{

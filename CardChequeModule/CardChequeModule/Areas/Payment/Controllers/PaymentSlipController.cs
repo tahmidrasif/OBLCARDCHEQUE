@@ -35,10 +35,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
         [HttpPost]
         public ActionResult Index(DEPOSIT deposit, string ADI1, string ADI2)
         {
-            if (deposit.PAYMENTTYPE == "ADI")
-            {
-                deposit.ADI = ADI1 + ADI2;
-            }
+            
             OCCUSER user = (OCCUSER)Session["User"];
             if (ModelState.IsValid)
             {
@@ -60,13 +57,15 @@ namespace CardChequeModule.Areas.Payment.Controllers
                     deposit.REFERENCENUMBER = refNo;
                     db.DEPOSIT.Add(deposit);
                     db.SaveChanges();
-                    Session["DepositSaveMsg"] = "Data saved successfully.\nReferance Number is: ";
-                    return RedirectToAction("Index", "List");
+                  //  Session["DepositSaveMsg"] = "Data saved successfully.\nReferance Number is: "+deposit.REFERENCENUMBER;
+                    var msg="Data saved successfully.\nReferance Number is: "+deposit.REFERENCENUMBER;
+                   // return RedirectToAction("Index", "List");
+                    return Json(msg,JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception exception)
                 {
-
-                    return RedirectToAction("Error", "Home", new { Area = "" });
+                    return Json("Error", JsonRequestBehavior.DenyGet);
+                    //  return RedirectToAction("Error", "Home", new { Area = "" });
                 }
                
             }

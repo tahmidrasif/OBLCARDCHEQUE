@@ -205,8 +205,76 @@
 
 
 @section scripts{
-    <script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
+        
+
+        $(function () {
+            var paymentType = $('#PAYMENTTYPE').val();
+            if (paymentType == 'Cash') {
+                $('#accdebitDiv *').attr('disabled', true);
+                $('#pdcDiv *').attr('disabled', true);
+                $('input[name=PAYMENTTYPE][value=Cash]').attr('checked', true);
+            }
+            if (paymentType == 'Cheque') {
+                $('#pdcDiv *').attr('disabled', false);
+                $('#accdebitDiv *').attr('disabled', true);
+                $('input[name=PAYMENTTYPE][value=Cheque]').attr('checked', true);
+            }
+            if (paymentType == 'Account Debit Instruction') {
+                $('#accdebitDiv *').attr('disabled', false);
+                $('#pdcDiv *').attr('disabled', true);
+                $('input[name=PAYMENTTYPE][value=ADI]').attr('checked', true);
+            }
+
+            $("input[name$='PAYMENTTYPE']").click(function () {
+                var test = $(this).val();
+                $('.error label').text('');
+                if (test == 'Cash') {
+
+                    $('#accdebitDiv *').attr('disabled', true);
+                    $('#pdcDiv *').attr('disabled', true);
+
+                    $("#accdebitDiv :text").val("");
+                    $("#pdcDiv :text").val("");
+                    $('textarea').val("");
+                    
+                    $("#accdebitDiv label.error").text("");
+                    $("#pdcDiv label.error").text("");
+                }
+                if (test == 'Cheque') {
+                    $('#pdcDiv *').attr('disabled', false);
+                    $('#accdebitDiv *').attr('disabled', true);
+
+                    //$("#amount-error").text("");
+                    $("#pdcDiv :text").val("");
+                    $("#accdebitDiv :text").val("");
+                    $('textarea').val("");
+                    
+                    $("#accdebitDiv label.error").text("");
+                    $("#pdcDiv label.error").text("");
+                }
+                if (test == 'ADI') {
+                    $('#accdebitDiv *').attr('disabled', false);
+                    $('#pdcDiv *').attr('disabled', true);
+
+
+                    //    $("#amount-error").text("");
+
+                    $("#accdebitDiv :text").val("");
+                    $('textarea').val("");
+                    
+                    $("#accdebitDiv label.error").text("");
+                    $("#pdcDiv label.error").text("");
+                }
+                
+            });
+
+        });
+
+
         $(function () {
             // subscribe to the keydown event
             $('#CARDNUMBER').keydown(function (e) {
@@ -276,21 +344,21 @@
 
                 },
                 PDCDATE: {
-                    required: "<li>Enter a Branch</li>",
+                    required: "Enter a Branch",
                 },
             },
             messages:
             {
                 AMOUNT: {
-                    required: "<li>Please enter the amount</li>",
-                    number: "<li>Numbers only.</li>"
+                    required: "Please enter the amount",
+                    number: "Numbers only"
                 },
                 PAYMENTTYPE: {
-                    required: "<li>Select a Payment Type</li>",
+                    required: "Select a Payment Type",
 
                 },
                 BRANCH: {
-                    required: "<li>Enter a Branch</li>",
+                    required: "Enter a Branch",
                 },
 
             },
@@ -307,65 +375,7 @@
         });
 
     </script>
-    <script>
-    $(document).ready(function () {
-        var paymentType = $('#PAYMENTTYPE').val();
-        if (paymentType == 'Cash') {
-            $('#accdebitDiv *').attr('disabled', true);
-            $('#pdcDiv *').attr('disabled', true);
-            $('input[name=PAYMENTTYPE][value=Cash]').attr('checked', true);
-        }
-        if (paymentType == 'Cheque') {
-            $('#pdcDiv *').attr('disabled', false);
-            $('#accdebitDiv *').attr('disabled', true);
-            $('input[name=PAYMENTTYPE][value=Cheque]').attr('checked', true);
-        }
-        if (paymentType == 'Account Debit Instruction') {
-            $('#accdebitDiv *').attr('disabled', false);
-            $('#pdcDiv *').attr('disabled', true);
-            $('input[name=PAYMENTTYPE][value=ADI]').attr('checked', true);
-        }
-        //$('#accdebitDiv *').attr('disabled', true);
-        //$('#pdcDiv *').attr('disabled', true);
-
-
-        $("input[name$='PAYMENTTYPE']").click(function () {
-            var test = $(this).val();
-            $('.error label').text('');
-            if (test == 'Cash') {
-
-                $('#accdebitDiv *').attr('disabled', true);
-                $('#pdcDiv *').attr('disabled', true);
-
-                $("#accdebitDiv :text").val("");
-                $("#pdcDiv :text").val("");
-                $('textarea').val("");
-            }
-            if (test == 'Cheque') {
-                $('#pdcDiv *').attr('disabled', false);
-                $('#accdebitDiv *').attr('disabled', true);
-
-                  //$("#amount-error").text("");
-                $("#pdcDiv :text").val("");
-                $("#accdebitDiv :text").val("");
-                $('textarea').val("");
-            }
-            if (test == 'ADI') {
-                $('#accdebitDiv *').attr('disabled', false);
-                $('#pdcDiv *').attr('disabled', true);
-
-
-                //    $("#amount-error").text("");
-
-                $("#accdebitDiv :text").val("");
-                $('textarea').val("");
-            }
-
-        });
-
-    });
-
-    </script>
+    
 }
 
 @section DatetimeCss{

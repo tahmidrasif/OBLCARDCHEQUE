@@ -25,12 +25,14 @@ namespace CardChequeModule.Models
         public int LEAFSTATUS { get; set; }
         public string REMARKS { get; set; }
         public bool ISACTIVE { get; set; }
-        public string CREATEDBY { get; set; }
+        public long CREATEDBY { get; set; }
         public System.DateTime CREATEDON { get; set; }
-        public string MODIFIEDBY { get; set; }
+        public Nullable<long> MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
     
-        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
         public virtual CARDCHEREUISITION CARDCHEREUISITION { get; set; }
+        public virtual OCCUSER OCCUSER { get; set; }
+        public virtual OCCUSER OCCUSER1 { get; set; }
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
     }
 }
