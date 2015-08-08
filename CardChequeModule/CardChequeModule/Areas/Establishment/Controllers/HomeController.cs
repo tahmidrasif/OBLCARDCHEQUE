@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -11,6 +12,8 @@ using CardChequeModule.Models;
 using CardChequeModule.WebReference;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.Office.Interop.Excel;
+
 
 namespace CardChequeModule.Areas.Establishment.Controllers
 {
@@ -18,6 +21,11 @@ namespace CardChequeModule.Areas.Establishment.Controllers
     {
         private JsonSerializer serializer = new JsonSerializer();
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
+
+        private Application _application;
+        private Workbook _workbook;
+        private Worksheet _worksheet;
+              
 
         // GET: /Establishment/Home/
         public ActionResult Index()
@@ -32,11 +40,11 @@ namespace CardChequeModule.Areas.Establishment.Controllers
         {
             //DownloadFile();
             List<CARDCHEREUISITION> UpdatedList = new List<CARDCHEREUISITION>();
-
             OCCUSER user = (OCCUSER) Session["User"];
+
             try
             {
-
+               
                 foreach (var id in idList)
                 {
                     var cheueReq = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
@@ -52,7 +60,6 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                     db.SaveChanges();
                 }
                 
-                // var authorizedList = db.CARDCHEREUISITION.Where(x => x.STATUS == 4).ToList();
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -61,38 +68,54 @@ namespace CardChequeModule.Areas.Establishment.Controllers
             }
         }
 
-        //private void DownloadFile()
-        //{
-        //    DataTable dt = new DataTable();
-        //    dt.Columns.Add("Card Number");
-        //    dt.Columns.Add("Card Holder Name");
-        //    dt.Columns.Add("Branch Name");
-        //    dt.Columns.Add("Leaves Number");
-        //    dt.Columns.Add("RTN");
-        //    dt.Columns.Add("TN");
-        //    List<DownloadViewModel> models=new List<DownloadViewModel>();
-        //    var List=db.CARDCHEREUISITION.Where(x => x.STATUS == 7);
-        //    foreach (var cardchereuisition in List)
-        //    {
-        //        var row = dt.NewRow();
-        //        DownloadViewModel model=new DownloadViewModel();
-        //        WebReference.CCMService service=new CCMService();
-        //        var details=service.GetClientDetails(cardchereuisition.CARDNO);
+        public ActionResult DownloadFile()
+        {
+            
+            _application = new Application();
+            _workbook = _application.Workbooks.Add();
+            _worksheet = (Microsoft.Office.Interop.Excel.Worksheet)_workbook.Worksheets.get_Item(1);
+            Microsoft.Office.Interop.Excel.Range cell = (Range)_worksheet.Cells;
+            cell.EntireColumn.NumberFormat = "@";
 
-        //        if (details != "null")
-        //        {
-        //            JObject json = JObject.Parse(details);
-        //            ClientDetails clientDetails = (ClientDetails)serializer.Deserialize(new JTokenReader(json), typeof(ClientDetails));
-        //            row["Card Holder Name"] = clientDetails.CLIENTNAME;
-        //        }
-        //        row["Card Number"] = cardchereuisition.CARDNO;
-        //        row["Branch Name"] = cardchereuisition.BRANCHINFO.BRANCHNAME;
-        //        row["Leaves Number"] = "1/" + cardchereuisition.LEAFNO;
-        //        row["RTN"] = "Default";
-        //        row["TN"] = 10;
+            _worksheet.Cells[1, 1] = "Bank";
+            _worksheet.Cells[1, 2] = "Card No";
+            _worksheet.Cells[1, 3] = "Name";
+            _worksheet.Cells[1, 4] = "No of Books/Leaves";
+            _worksheet.Cells[1, 5] = "Delivery Brn/Channel";
+            _worksheet.Cells[1, 6] = "RoutingNo";
+            _worksheet.Cells[1, 7] = "Transaction Code";
 
-        //    }
-        //}
+            var list = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).ToList();
+
+            foreach (var card in list.Select((value, index) => new { value, index }))
+            {
+                _worksheet.Cells[card.index + 2, 1] = "OBL";
+                _worksheet.Cells[card.index + 2, 2] = card.value.CARDNO;
+                _worksheet.Cells[card.index + 2, 3] = "Test Name";
+                _worksheet.Cells[card.index + 2, 4] = card.value.LEAFNO;
+                _worksheet.Cells[card.index + 2, 5] = card.value.BRANCHINFO.BRANCHNAME;
+                _worksheet.Cells[card.index + 2, 6] = "Test Routing";
+                _worksheet.Cells[card.index + 2, 7] = "Test Transaction";
+
+            }
+
+           
+
+
+          
+            _application.DisplayAlerts = false;
+            string folderPath = Path.GetDirectoryName(@"E:\Temp\Cheque_Requistion_"+DateTime.Now.ToShortDateString()+".xls");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            _workbook.SaveAs(@"E:\Temp\Cheque_Requistion_" + DateTime.Now.ToShortDateString() + ".xls");
+
+            _application.Visible = true;
+            _workbook.Activate();
+
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public PartialViewResult SearchResult(string CARDNO, DateTime? CREATEDON, int? BRANCH)

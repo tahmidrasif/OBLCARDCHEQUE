@@ -12,7 +12,15 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><span class="glyphicon glyphicon-list"> List</span> </h3>
+            <div class="form-group">
+                <h3 class="panel-title col-sm-7"><span class="glyphicon glyphicon-list"> List</span> </h3>
+                <a href="/Establishment/Home/DownloadFile">
+                    <h3 class="panel-title col-sm-5 text-right"><span class="glyphicon glyphicon-download-alt"> Downlaod</span> </h3>
+                </a>
+                
+
+            </div>
+ 
         </div>
         <div class="panel-body">
 
@@ -80,38 +88,38 @@
             </table>
             @if (Model.Any())
             {
-               <div class="form-group">
-                <label class="col-sm-11 control-label"></label>
-                <div class="col-sm-1" style="margin-left: -15px">
-                    <button class="btn btn-danger" type="submit" id="Assign">Download</button>
+                <div class="form-group">
+                    <label class="col-sm-11 control-label"></label>
+                    <div class="col-sm-1" style="margin-left: -15px">
+                        <button class="btn btn-danger" type="submit" id="Assign">Download</button>
+                    </div>
+
                 </div>
-            </div>
             }
 
         </div>
     </div>
 }
 
-    <script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/jquery-2.1.4.js"></script>
 
-    <script>
-        $("#checkall").change(function () {
-            $("input:checkbox").prop('checked', $(this).prop("checked"));
-        });
-        
-        //intial button disabled
-        $('#Assign').prop("disabled", true);
-        
-        //check box click button enable disable
-        $(function () {
-            var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
-                $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
-            });
+<script>
+    $("#checkall").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
 
-            $('#checkall').click(function (event) {
-                checkboxes.prop('checked', this.checked);
-                $('#Assign').prop("disabled", !this.checked);
-            });
+    //intial button disabled
+    $('#Assign').prop("disabled", true);
+
+    //check box click button enable disable
+    $(function () {
+        var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
+            $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
         });
-    </script>
-  
+
+        $('#checkall').click(function (event) {
+            checkboxes.prop('checked', this.checked);
+            $('#Assign').prop("disabled", !this.checked);
+        });
+    });
+</script>
