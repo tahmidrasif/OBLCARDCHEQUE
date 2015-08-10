@@ -22,7 +22,7 @@ namespace CardChequeModule.Models
         public long ID { get; set; }
         public long CHEQUEID { get; set; }
         public string LEAFNO { get; set; }
-        public int LEAFSTATUS { get; set; }
+        public long LEAFSTATUS { get; set; }
         public string REMARKS { get; set; }
         public bool ISACTIVE { get; set; }
         public long CREATEDBY { get; set; }
@@ -31,6 +31,7 @@ namespace CardChequeModule.Models
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
     
         public virtual CARDCHEREUISITION CARDCHEREUISITION { get; set; }
+        public virtual OCCENUMERATION OCCENUMERATION { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }
         public virtual OCCUSER OCCUSER1 { get; set; }
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }

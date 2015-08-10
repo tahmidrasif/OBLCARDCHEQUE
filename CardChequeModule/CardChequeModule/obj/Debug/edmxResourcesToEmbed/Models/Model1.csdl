@@ -47,7 +47,7 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CHEQUEID" Type="Int64" Nullable="false" />
     <Property Name="LEAFNO" Type="String" MaxLength="7" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="LEAFSTATUS" Type="Int32" Nullable="false" />
+    <Property Name="LEAFSTATUS" Type="Int64" Nullable="false" />
     <Property Name="REMARKS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ISACTIVE" Type="Boolean" Nullable="false" />
     <Property Name="CREATEDBY" Type="Int64" Nullable="false" />
@@ -55,6 +55,7 @@
     <Property Name="MODIFIEDBY" Type="Int64" />
     <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
     <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" FromRole="CARDCHLEAF" ToRole="CARDCHEREUISITION" />
+    <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHLEAF_OCCENUMERATION" FromRole="CARDCHLEAF" ToRole="OCCENUMERATION" />
     <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHLEAF_OCCUSER" FromRole="CARDCHLEAF" ToRole="OCCUSER" />
     <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_CARDCHLEAF_OCCUSER1" FromRole="CARDCHLEAF" ToRole="OCCUSER" />
     <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CHEQUETRAN_OBLCHEQUELEAF" FromRole="CARDCHLEAF" ToRole="CARDCHTRAN" />
@@ -63,7 +64,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CHEQUELEAFID" Type="Int64" Nullable="false" />
     <Property Name="CARDNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CARDHOLDERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -72,7 +73,7 @@
     <Property Name="BENEFICIARINFO" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="AMOUNT" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="ISSIGNATUREVERIFIED" Type="Boolean" Nullable="false" />
-    <Property Name="STATUS" Type="Int32" Nullable="false" />
+    <Property Name="STATUS" Type="Int64" Nullable="false" />
     <Property Name="APPROVALNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ISACTIVE" Type="Boolean" Nullable="false" />
     <Property Name="CREATEDBY" Type="Int64" />
@@ -80,6 +81,7 @@
     <Property Name="MODIFIEDBY" Type="Int64" />
     <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
     <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CHEQUETRAN_OBLCHEQUELEAF" FromRole="CARDCHTRAN" ToRole="CARDCHLEAF" />
+    <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHTRAN_OCCENUMERATION" FromRole="CARDCHTRAN" ToRole="OCCENUMERATION" />
     <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHTRAN_OCCUSER" FromRole="CARDCHTRAN" ToRole="OCCUSER" />
     <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_CARDCHTRAN_OCCUSER1" FromRole="CARDCHTRAN" ToRole="OCCUSER" />
   </EntityType>
@@ -117,6 +119,8 @@
     <Property Name="Value" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
     <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_CARDCHEREUISITION_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="CARDCHEREUISITION" />
+    <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CARDCHLEAF_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="CARDCHLEAF" />
+    <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CARDCHTRAN_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="CARDCHTRAN" />
     <NavigationProperty Name="OCCUSER" Relationship="Self.FK_OCCUSER_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="OCCUSER" />
   </EntityType>
   <EntityType Name="OCCEVENTLOG">
@@ -241,6 +245,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CARDCHLEAF_OCCENUMERATION">
+    <End Role="OCCENUMERATION" Type="Self.OCCENUMERATION" Multiplicity="1" />
+    <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCENUMERATION">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHLEAF">
+        <PropertyRef Name="LEAFSTATUS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CARDCHLEAF_OCCUSER">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
     <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
@@ -274,6 +290,18 @@
       </Principal>
       <Dependent Role="CARDCHTRAN">
         <PropertyRef Name="CHEQUELEAFID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHTRAN_OCCENUMERATION">
+    <End Role="OCCENUMERATION" Type="Self.OCCENUMERATION" Multiplicity="1" />
+    <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCENUMERATION">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHTRAN">
+        <PropertyRef Name="STATUS" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -337,7 +365,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="OBLCARDCHEQUEEntities1" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" />
     <EntitySet Name="CARDCHEREUISITION" EntityType="Self.CARDCHEREUISITION" />
     <EntitySet Name="CARDCHLEAF" EntityType="Self.CARDCHLEAF" />
@@ -371,6 +399,10 @@
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
     </AssociationSet>
+    <AssociationSet Name="FK_CARDCHLEAF_OCCENUMERATION" Association="Self.FK_CARDCHLEAF_OCCENUMERATION">
+      <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
+      <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+    </AssociationSet>
     <AssociationSet Name="FK_CARDCHLEAF_OCCUSER" Association="Self.FK_CARDCHLEAF_OCCUSER">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
@@ -381,6 +413,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_CHEQUETRAN_OBLCHEQUELEAF" Association="Self.FK_CHEQUETRAN_OBLCHEQUELEAF">
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+      <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHTRAN_OCCENUMERATION" Association="Self.FK_CARDCHTRAN_OCCENUMERATION">
+      <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
       <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
     </AssociationSet>
     <AssociationSet Name="FK_CARDCHTRAN_OCCUSER" Association="Self.FK_CARDCHTRAN_OCCUSER">

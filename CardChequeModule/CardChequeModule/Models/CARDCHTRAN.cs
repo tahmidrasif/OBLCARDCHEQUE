@@ -23,7 +23,7 @@ namespace CardChequeModule.Models
         public string BENEFICIARINFO { get; set; }
         public decimal AMOUNT { get; set; }
         public bool ISSIGNATUREVERIFIED { get; set; }
-        public int STATUS { get; set; }
+        public long STATUS { get; set; }
         public string APPROVALNO { get; set; }
         public bool ISACTIVE { get; set; }
         public Nullable<long> CREATEDBY { get; set; }
@@ -32,6 +32,7 @@ namespace CardChequeModule.Models
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
     
         public virtual CARDCHLEAF CARDCHLEAF { get; set; }
+        public virtual OCCENUMERATION OCCENUMERATION { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }
         public virtual OCCUSER OCCUSER1 { get; set; }
     }

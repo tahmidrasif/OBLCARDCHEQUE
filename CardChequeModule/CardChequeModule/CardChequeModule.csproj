@@ -47,9 +47,28 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ExcelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Administrator\Downloads\ExcelLibrary_20110730\ExcelLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -182,8 +201,6 @@
     <Compile Include="Areas\Authorizer\Controllers\HomeController.cs" />
     <Compile Include="Areas\CardCheque\CardChequeAreaRegistration.cs" />
     <Compile Include="Areas\CardCheque\Controllers\HomeController.cs" />
-    <Compile Include="Areas\CardCheque\Models\CardChequeViewModel.cs" />
-    <Compile Include="Areas\CardCheque\Models\DepositeViewModel.cs" />
     <Compile Include="Areas\ChequeRequisition\ChequeRequisitionAreaRegistration.cs" />
     <Compile Include="Areas\ChequeRequisition\Controllers\HomeController.cs" />
     <Compile Include="Areas\Establishment\Controllers\HomeController.cs" />
@@ -208,6 +225,9 @@
     </Compile>
     <Compile Include="Models\DEPOSIT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageTable.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MetaData\ChequeRequisitionMeta.cs" />
     <Compile Include="Models\MetaData\DepositMeta.cs" />
@@ -236,6 +256,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\OCCENUMERATION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -301,6 +336,7 @@
     <Content Include="assets\img\login-bg.jpg" />
     <Content Include="assets\img\lorde.jpg" />
     <Content Include="assets\img\mask.png" />
+    <Content Include="assets\img\mastercard.png" />
     <Content Include="assets\img\ny.jpg" />
     <Content Include="assets\img\obl.jpg" />
     <Content Include="assets\img\portfolio\port01.jpg" />
@@ -446,14 +482,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\CardCheque\Views\web.config" />
-    <Content Include="Areas\CardCheque\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Home\Create.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Home\Delete.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Home\Details.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Home\Edit.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Create.cshtml" />
@@ -493,7 +521,6 @@
     <Content Include="assets\lineicons\fonts\linecons.eot" />
     <Content Include="assets\lineicons\fonts\linecons.ttf" />
     <Content Include="assets\lineicons\fonts\linecons.woff" />
-    <Content Include="Areas\CardCheque\Views\Shared\_CardNoResultPartial.cshtml" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -571,13 +598,9 @@
     <Content Include="Content\less\bootstrap-datetimepicker-build.less" />
     <Content Include="Content\less\_bootstrap-datetimepicker.less" />
     <Content Include="Content\datepicker.less" />
-    <Content Include="Areas\CardCheque\Views\Home\Deposit.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Shared\TestPartial.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Home\DepositShow.cshtml" />
     <Content Include="Areas\Authorizer\Views\web.config" />
     <Content Include="Areas\Authorizer\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Authorizer\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Home\Cheque.cshtml" />
     <Content Include="Areas\Taler\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\_ViewStart.cshtml" />
@@ -608,6 +631,31 @@
     <Content Include="Areas\Authorizer\Views\Home\RequisitionRequest.cshtml" />
     <Content Include="Areas\Authorizer\Views\Shared\_AppliedList.cshtml" />
     <Content Include="Areas\Establishment\Views\Shared\_AuthorizedList.cshtml" />
+    <Content Include="Areas\CardCheque\Views\web.config" />
+    <Content Include="Areas\CardCheque\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\CardCheque\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CardCheque\Views\Home\Create.cshtml" />
+    <Content Include="Areas\CardCheque\Views\Home\Delete.cshtml" />
+    <Content Include="Areas\CardCheque\Views\Home\Details.cshtml" />
+    <Content Include="Areas\CardCheque\Views\Home\Edit.cshtml" />
+    <Content Include="Areas\CardCheque\Views\Home\Index.cshtml" />
+    <EntityDeploy Include="Models\Model2.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model2.edmx</DependentUpon>
+      <LastGenOutput>Model2.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model2.edmx.diagram">
+      <DependentUpon>Model2.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model2.edmx</DependentUpon>
+      <LastGenOutput>Model2.cs</LastGenOutput>
+    </Content>
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -730,6 +778,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Authorizer\Models\" />
+    <Folder Include="Areas\CardCheque\Models\" />
     <Folder Include="Areas\ChequeRequisition\Models\" />
     <Folder Include="Areas\Payment\Models\" />
     <Folder Include="Areas\Taler\Models\" />

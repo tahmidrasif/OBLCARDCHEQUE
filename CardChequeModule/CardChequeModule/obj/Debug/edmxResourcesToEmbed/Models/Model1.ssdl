@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="BRANCHINFO">
     <Key>
       <PropertyRef Name="ID" />
@@ -40,7 +40,7 @@
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CHEQUEID" Type="bigint" Nullable="false" />
     <Property Name="LEAFNO" Type="nvarchar" MaxLength="7" Nullable="false" />
-    <Property Name="LEAFSTATUS" Type="int" Nullable="false" />
+    <Property Name="LEAFSTATUS" Type="bigint" Nullable="false" />
     <Property Name="REMARKS" Type="nvarchar(max)" />
     <Property Name="ISACTIVE" Type="bit" Nullable="false" />
     <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
@@ -52,7 +52,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="bigint" Nullable="false" />
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CHEQUELEAFID" Type="bigint" Nullable="false" />
     <Property Name="CARDNO" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="CARDHOLDERNAME" Type="nvarchar(max)" />
@@ -61,7 +61,7 @@
     <Property Name="BENEFICIARINFO" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="ISSIGNATUREVERIFIED" Type="bit" Nullable="false" />
-    <Property Name="STATUS" Type="int" Nullable="false" />
+    <Property Name="STATUS" Type="bigint" Nullable="false" />
     <Property Name="APPROVALNO" Type="nvarchar" MaxLength="50" />
     <Property Name="ISACTIVE" Type="bit" Nullable="false" />
     <Property Name="CREATEDBY" Type="bigint" />
@@ -189,6 +189,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CARDCHLEAF_OCCENUMERATION">
+    <End Role="OCCENUMERATION" Type="Self.OCCENUMERATION" Multiplicity="1" />
+    <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCENUMERATION">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHLEAF">
+        <PropertyRef Name="LEAFSTATUS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CARDCHLEAF_OCCUSER">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
     <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
@@ -210,6 +222,18 @@
       </Principal>
       <Dependent Role="CARDCHLEAF">
         <PropertyRef Name="MODIFIEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHTRAN_OCCENUMERATION">
+    <End Role="OCCENUMERATION" Type="Self.OCCENUMERATION" Multiplicity="1" />
+    <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCENUMERATION">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHTRAN">
+        <PropertyRef Name="STATUS" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -335,6 +359,10 @@
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
     </AssociationSet>
+    <AssociationSet Name="FK_CARDCHLEAF_OCCENUMERATION" Association="Self.FK_CARDCHLEAF_OCCENUMERATION">
+      <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
+      <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+    </AssociationSet>
     <AssociationSet Name="FK_CARDCHLEAF_OCCUSER" Association="Self.FK_CARDCHLEAF_OCCUSER">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
@@ -342,6 +370,10 @@
     <AssociationSet Name="FK_CARDCHLEAF_OCCUSER1" Association="Self.FK_CARDCHLEAF_OCCUSER1">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHTRAN_OCCENUMERATION" Association="Self.FK_CARDCHTRAN_OCCENUMERATION">
+      <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
+      <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
     </AssociationSet>
     <AssociationSet Name="FK_CARDCHTRAN_OCCUSER" Association="Self.FK_CARDCHTRAN_OCCUSER">
       <End Role="OCCUSER" EntitySet="OCCUSER" />

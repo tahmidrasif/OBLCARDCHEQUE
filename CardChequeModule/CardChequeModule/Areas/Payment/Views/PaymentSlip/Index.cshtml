@@ -39,15 +39,16 @@
                 <label for="name" class="col-lg-2 control-label">Date</label>
                 <div class="col-lg-4">
                     <div class='input-group date' id='datetimepicker1'>
-
                         <input type='text' class="form-control" placeholder="Deposit Date" id="CREATEDON" name="CREATEDON" />
+                
                         <span class="input-group-addon" id="mySpan">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
 
                     </div>
-
+                    @Html.ValidationMessageFor(m => m.CREATEDON)
                 </div>
+
 
             </div>
             <div class="form-group">
@@ -58,7 +59,7 @@
                     <input type="text" class="form-control col-sm-10" name="pendingTxtBox" id="pendingTxtBox" style="display: none" />
                 </div>
             </div>
-            <div id="myId"></div>
+      
 
         </div>
     </div>
@@ -181,9 +182,6 @@
     </div>
 
 
-
-
-
     <div class="form-group">
         <div class="col-lg-2"></div>
         <div class="col-lg-10">
@@ -191,17 +189,15 @@
         </div>
 
     </div>
-    
-    <br/>
 
-    @*</form>
-        }*@
+    <br />
+
 }
 @section scripts{
-<script src="~/Scripts/jquery.validate.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-<script type="text/javascript">
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
         $(function () {
 
             $('#accdebitDiv *').attr('disabled', true);
@@ -280,7 +276,7 @@
 
             });
         });
-        
+
         function OnSuccess(response) {
             alert(response);
 
@@ -298,6 +294,7 @@
                 },
                 CREATEDON: {
                     required: true,
+
                 },
                 CARDNUMBER: {
                     required: true,
@@ -316,7 +313,7 @@
                     required: true,
                     digits: true
                 },
-             
+
                 PDCBANK: {
                     required: true,
                 },

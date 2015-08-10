@@ -17,7 +17,7 @@ namespace CardChequeModule.Areas.CardCheque
             context.MapRoute(
                 "CardCheque_default",
                 "CardCheque/{controller}/{action}/{id}",
-                new {controller= "Home", action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional }
             );
         }
     }

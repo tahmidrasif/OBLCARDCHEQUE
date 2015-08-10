@@ -58,7 +58,6 @@ D:\Projects\CardChequeModule\CardChequeModule\bin\Microsoft.Owin.Security.Twitte
 D:\Projects\CardChequeModule\CardChequeModule\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Projects\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.dll
 D:\Projects\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.pdb
-D:\Projects\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.csprojResolveAssemblyReference.cache
 E:\MVC_Projects\CardChequeModule\CardChequeModule\CardChequeModule\bin\CardChequeModule.dll.config
 E:\MVC_Projects\CardChequeModule\CardChequeModule\CardChequeModule\bin\CardChequeModule.dll
 E:\MVC_Projects\CardChequeModule\CardChequeModule\CardChequeModule\bin\CardChequeModule.pdb
@@ -120,3 +119,13 @@ E:\MVC_Projects\CardChequeModule\CardChequeModule\CardChequeModule\bin\Microsoft
 E:\MVC_Projects\CardChequeModule\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.csprojResolveAssemblyReference.cache
 E:\MVC_Projects\CardChequeModule\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.dll
 E:\MVC_Projects\CardChequeModule\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.pdb
+D:\Projects\CardChequeModule\CardChequeModule\bin\ExcelLibrary.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\ICSharpCode.SharpZipLib.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OOXML.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OpenXml4Net.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OpenXmlFormats.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.xml
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OOXML.xml
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OpenXml4Net.xml
+D:\Projects\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.csprojResolveAssemblyReference.cache
