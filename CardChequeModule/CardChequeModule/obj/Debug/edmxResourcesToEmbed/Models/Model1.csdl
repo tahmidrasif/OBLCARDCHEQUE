@@ -13,6 +13,7 @@
     <Property Name="BRANCHMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="BRANCHADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_CARDCHEREUISITION_BRANCHINFO" FromRole="BRANCHINFO" ToRole="CARDCHEREUISITION" />
+    <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO" FromRole="BRANCHINFO" ToRole="CARDCHTRAN" />
     <NavigationProperty Name="DEPOSIT" Relationship="Self.FK_DEPOSIT_BRANCHINFO" FromRole="BRANCHINFO" ToRole="DEPOSIT" />
   </EntityType>
   <EntityType Name="CARDCHEREUISITION">
@@ -68,7 +69,7 @@
     <Property Name="CHEQUELEAFID" Type="Int64" Nullable="false" />
     <Property Name="CARDNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CARDHOLDERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="BRANCHCODE" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="BRANCHCODE" Type="Int64" />
     <Property Name="REQUESTDATE" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="BENEFICIARINFO" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="AMOUNT" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
@@ -80,6 +81,7 @@
     <Property Name="CREATEDON" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="MODIFIEDBY" Type="Int64" />
     <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO" FromRole="CARDCHTRAN" ToRole="BRANCHINFO" />
     <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CHEQUETRAN_OBLCHEQUELEAF" FromRole="CARDCHTRAN" ToRole="CARDCHLEAF" />
     <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHTRAN_OCCENUMERATION" FromRole="CARDCHTRAN" ToRole="OCCENUMERATION" />
     <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHTRAN_OCCUSER" FromRole="CARDCHTRAN" ToRole="OCCUSER" />
@@ -181,6 +183,18 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="CARDCHEREUISITION">
+        <PropertyRef Name="BRANCHCODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHTRAN_BRANCHINFO">
+    <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="0..1" />
+    <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BRANCHINFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHTRAN">
         <PropertyRef Name="BRANCHCODE" />
       </Dependent>
     </ReferentialConstraint>
@@ -365,7 +379,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="OBLCARDCHEQUEEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" />
     <EntitySet Name="CARDCHEREUISITION" EntityType="Self.CARDCHEREUISITION" />
     <EntitySet Name="CARDCHLEAF" EntityType="Self.CARDCHLEAF" />
@@ -378,6 +392,10 @@
     <AssociationSet Name="FK_CARDCHEREUISITION_BRANCHINFO" Association="Self.FK_CARDCHEREUISITION_BRANCHINFO">
       <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHTRAN_BRANCHINFO" Association="Self.FK_CARDCHTRAN_BRANCHINFO">
+      <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
+      <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
     </AssociationSet>
     <AssociationSet Name="FK_DEPOSIT_BRANCHINFO" Association="Self.FK_DEPOSIT_BRANCHINFO">
       <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />

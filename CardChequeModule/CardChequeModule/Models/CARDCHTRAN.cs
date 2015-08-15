@@ -7,18 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using CardChequeModule.Models.MetaData;
+
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
     
+    [MetadataType(typeof(CardChTranMeta))]
     public partial class CARDCHTRAN
     {
         public long ID { get; set; }
         public long CHEQUELEAFID { get; set; }
         public string CARDNO { get; set; }
         public string CARDHOLDERNAME { get; set; }
-        public string BRANCHCODE { get; set; }
+        public Nullable<long> BRANCHCODE { get; set; }
         public System.DateTime REQUESTDATE { get; set; }
         public string BENEFICIARINFO { get; set; }
         public decimal AMOUNT { get; set; }
@@ -31,6 +35,7 @@ namespace CardChequeModule.Models
         public Nullable<long> MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
     
+        public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual CARDCHLEAF CARDCHLEAF { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }

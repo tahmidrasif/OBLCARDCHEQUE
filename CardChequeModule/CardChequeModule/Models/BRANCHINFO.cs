@@ -7,16 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using CardChequeModule.Models.MetaData;
+
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
     
+    [MetadataType(typeof(BranchMeta))]
     public partial class BRANCHINFO
     {
         public BRANCHINFO()
         {
             this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
+            this.CARDCHTRAN = new HashSet<CARDCHTRAN>();
             this.DEPOSIT = new HashSet<DEPOSIT>();
         }
     
@@ -30,6 +35,7 @@ namespace CardChequeModule.Models
         public string BRANCHADDRESS { get; set; }
     
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
         public virtual ICollection<DEPOSIT> DEPOSIT { get; set; }
     }
 }

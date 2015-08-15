@@ -43,21 +43,33 @@ namespace CardChequeModule.Areas.Payment.Controllers
   
         public ActionResult Edit(DEPOSIT deposit)
         {
-            if (ModelState.IsValid)
+            try
             {
-                OCCUSER user = (OCCUSER)Session["User"];
-                deposit.CREATEDBY = user.ID;
-                deposit.ISAUTHORIZED = false;
-                db.Entry(deposit).State = EntityState.Modified;
-                //db.DEPOSIT.AddOrUpdate(x=>x.ID==deposit.ID);
-                db.SaveChanges();
-                return RedirectToAction("Index","List");
-            }
-            List<string> currencyList = new List<string>() { "USD", "BDT" };
+                if (ModelState.IsValid)
+                {
+                    OCCUSER user = (OCCUSER)Session["User"];
+                    deposit.CREATEDBY = user.ID;
+                    deposit.ISAUTHORIZED = false;
+                   
+                    db.Entry(deposit).State = EntityState.Modified;
+                    //db.DEPOSIT.AddOrUpdate(x=>x.ID==deposit.ID);
+                    db.SaveChanges();
+                    var msg = "Successfully Updated";
+                    return Json(msg, JsonRequestBehavior.AllowGet);
 
-            ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME", db.DEPOSIT.Select(x => x.BRANCH));
-            ViewBag.CURRENCY = new SelectList(currencyList, null, null, db.DEPOSIT.Select(x => x.CURRENCY));
-            return View(deposit);
+                }
+                List<string> currencyList = new List<string>() { "USD", "BDT" };
+
+                ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME", db.DEPOSIT.Select(x => x.BRANCH));
+                ViewBag.CURRENCY = new SelectList(currencyList, null, null, db.DEPOSIT.Select(x => x.CURRENCY));
+                return View(deposit);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+           
         }
         //[Bind(Include = "ID,CARDNUMBER,AMOUNT,BRANCH,CREATEDBY,CREATEDON,ISAUTHORIZED,REFERENCENUMBER,PAYMENTTYPE,CURRENCY,ADI,PDCBANK,PDCBRANCH,PDCCHEQUENO,PDCDATE")] 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -47,42 +48,79 @@ namespace CardChequeModule.Areas.Establishment.Controllers
         [HttpPost]
         public ActionResult Post(IEnumerable<long> idList)
         {
-            //DownloadFile();
-            List<CARDCHEREUISITION> UpdatedList = new List<CARDCHEREUISITION>();
-            OCCUSER user = (OCCUSER)Session["User"];
 
+            OCCUSER user = (OCCUSER)Session["User"];
+           
             try
             {
-
                 foreach (var id in idList)
                 {
-                    var cheueReq = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
-                    cheueReq.STATUS = 7;
-                    cheueReq.MODIFIEDBY = user.ID;
-                    cheueReq.MODIFIEDON = DateTime.Now.Date;
-                    UpdatedList.Add(cheueReq);
-                }
 
-                foreach (var editedChqRq in UpdatedList)
-                {
-                    db.Entry(editedChqRq).State = EntityState.Modified;
+                    var cheque = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
+                    cheque.STATUS = 7;
+                    if (IsLeafNoStartsWithZero())
+                    {
+                        cheque.LEAFFROM = "0000001";
+                        cheque.LEAFTO = "0000010";
+                        cheque.LEAFNEXT = 11;
+                    }
+                   
+                    else
+                    {
+                        var lastSavedchq = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).OrderByDescending(x => x.MODIFIEDON).FirstOrDefault();
+                        var leafnext = (int)lastSavedchq.LEAFNEXT;
+                        if (leafnext + 10 > 9999999)
+                        {
+                            cheque.LEAFFROM = "0000001";
+                            cheque.LEAFTO = "0000010";
+                            cheque.LEAFNEXT = 11;
+                        }
+                        else
+                        {
+                            string leafnum = leafnext.ToString(CultureInfo.InvariantCulture);
+
+                            cheque.LEAFFROM = leafnum.PadLeft(7, '0');
+
+                            leafnext += 9;
+                            leafnum = leafnext.ToString(CultureInfo.InvariantCulture);
+
+                            cheque.LEAFTO = leafnum.PadLeft(7, '0');
+
+                            leafnext++;
+
+                            cheque.LEAFNEXT = leafnext;
+                        }                      
+                    }
+                    cheque.MODIFIEDBY = user.ID;
+                    cheque.MODIFIEDON = DateTime.Now;
+                    db.Entry(cheque).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
         }
 
+        private bool IsLeafNoStartsWithZero()
+        {
+            var downloadlist = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).ToList();
+            var savelistcount = downloadlist.Count;
+            if (savelistcount == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        
+
         public ActionResult DownloadFile()
         {
-
             try
             {
-
                 wb = new XSSFWorkbook();
                 sh = (XSSFSheet)wb.CreateSheet("Sheet1");
 
@@ -111,13 +149,11 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                     row.CreateCell(3).SetCellValue(card.value.BRANCHINFO.BRANCHNAME);
                     row.CreateCell(4).SetCellValue("Test Routing");
                     row.CreateCell(5).SetCellValue("Test Transaction");
-
-
                 }
-                //using (var fs = new FileStream(@"C:\test.xls", FileMode.Create, FileAccess.Write))
-                //{
-                //    wb.Write(fs);
-                //}
+                using (var fs = new FileStream(@"C:\test.xls", FileMode.Create, FileAccess.Write))
+                {
+                    wb.Write(fs);
+                }
                 using (var exportData = new MemoryStream())
                 {
 
@@ -133,7 +169,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
                     Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", saveAsFileName));
 
-                    
+
 
                     Response.BinaryWrite(exportData.GetBuffer());
 
@@ -173,6 +209,10 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
             return PartialView("_AuthorizedList", List);
         }
+
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -183,64 +223,3 @@ namespace CardChequeModule.Areas.Establishment.Controllers
         }
     }
 }
-
-
-//public ActionResult DownloadFile()
-//       {
-
-//           try
-//           {
-//               _application = new Application();
-//               _workbook = _application.Workbooks.Add();
-//               _worksheet = (Microsoft.Office.Interop.Excel.Worksheet)_workbook.Worksheets.get_Item(1);
-//               Microsoft.Office.Interop.Excel.Range cell = (Range)_worksheet.Cells;
-//               cell.EntireColumn.NumberFormat = "@";
-
-//               _worksheet.Cells[1, 1] = "Bank";
-//               _worksheet.Cells[1, 2] = "Card No";
-//               _worksheet.Cells[1, 3] = "Name";
-//               _worksheet.Cells[1, 4] = "No of Books/Leaves";
-//               _worksheet.Cells[1, 5] = "Delivery Brn/Channel";
-//               _worksheet.Cells[1, 6] = "RoutingNo";
-//               _worksheet.Cells[1, 7] = "Transaction Code";
-
-//               var list = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).ToList();
-
-//               foreach (var card in list.Select((value, index) => new { value, index }))
-//               {
-//                   _worksheet.Cells[card.index + 2, 1] = "OBL";
-//                   _worksheet.Cells[card.index + 2, 2] = card.value.CARDNO;
-//                   _worksheet.Cells[card.index + 2, 3] = "Test Name";
-//                   _worksheet.Cells[card.index + 2, 4] = card.value.LEAFNO;
-//                   _worksheet.Cells[card.index + 2, 5] = card.value.BRANCHINFO.BRANCHNAME;
-//                   _worksheet.Cells[card.index + 2, 6] = "Test Routing";
-//                   _worksheet.Cells[card.index + 2, 7] = "Test Transaction";
-
-//               }
-
-
-//               _application.DisplayAlerts = false;
-//               //string folderPath = Path.GetDirectoryName(@"E:\Temp\Cheque_Requistion_"+DateTime.Now.Date+".xls");
-//               string filename = @"E:\Temp\Cheque_Requistion_" + DateTime.Now.ToShortDateString() + ".xls";
-//               string targetFolder = Server.MapPath("~/Downloads");
-//               if (!Directory.Exists(targetFolder))
-//               {
-//                   Directory.CreateDirectory(targetFolder);
-//               }
-//               string targetPath = Path.Combine(targetFolder, filename);
-
-
-//               _workbook.SaveAs(targetPath);
-
-//               _application.Visible = true;
-//               _workbook.Activate();
-
-//               return RedirectToAction("Index");
-//           }
-//           catch (Exception exception)
-//           {
-
-//               return RedirectToAction("Error", "Home", new { Area = "" });
-//           }
-
-//       }

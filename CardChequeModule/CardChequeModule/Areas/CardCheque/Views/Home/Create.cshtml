@@ -217,7 +217,11 @@
                         $('#userPhoto').removeAttr('src');
                         $('#sigphoto').removeAttr('src');
                         
-                    } else {
+                    }
+                    if (result == 'used') {
+                        alert('Leaf Is Already Used');
+                    }
+                    else {
    
                         $("#userPhoto").attr("src", "data:image/png;base64," + result.userPhoto);
                         $("#sigphoto").attr("src", "data:image/png;base64," + result.signature);

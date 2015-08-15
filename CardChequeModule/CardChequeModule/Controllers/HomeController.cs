@@ -42,13 +42,13 @@ namespace CardChequeModule.Controllers
         [HttpPost]
         public ActionResult LogIn(OCCUSER aUser)
         {
-            WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
+            //WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
                 
-                var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, aUser.PASSWORD);
-                if (isValid == "Valid")
-                {
+               // var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, aUser.PASSWORD);
+             //   if (isValid == "Valid")
+             //   {
                     ViewBag.flag = "";
                     if (IsUserInSystem(aUser.EMPLOYEEID))
                     {
@@ -82,17 +82,17 @@ namespace CardChequeModule.Controllers
                     }
 
 
-                }
-                else if (isValid == "Invalid")
-                {
-                    ViewBag.flag = "Invalid User";
-                    return View();
-                }
-                else if (isValid == "NotFound")
-                {
-                    ViewBag.flag = "User Not Found";
-                    return View();
-                }
+                //}
+                //else if (isValid == "Invalid")
+                //{
+                //    ViewBag.flag = "Invalid User";
+                //    return View();
+                //}
+                //else if (isValid == "NotFound")
+                //{
+                //    ViewBag.flag = "User Not Found";
+                //    return View();
+                //}
                 return View();
             }
             catch (Exception exception)

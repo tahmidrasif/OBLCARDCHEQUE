@@ -28,7 +28,10 @@
     </div>
 </div>
 
-<form class="form-horizontal" method="POST" id="chequeForm" action="/Payment/Edit/Edit">
+@*<form class="form-horizontal" method="POST" id="chequeForm" action="/Payment/Edit/Edit">*@
+@using (Ajax.BeginForm("Edit", "Edit",
+    new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "cardchequeForm", @class = "form-horizontal" }))
+{
     <div class="col-lg-4">
         @Html.TextBoxFor(model => model.ID, new { @class = "form-control col-sm-10", @type = "hidden" })
     </div>
@@ -47,7 +50,7 @@
                 <div class="col-lg-4">
                     <div class='input-group date' id='datetimepicker1'>
 
-                        @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control" })
+                        @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "MM-DD-YYYY" })
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -65,12 +68,6 @@
                 </div>
             </div>
 
-
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-body">
 
 
             <div class="form-group">
@@ -157,15 +154,15 @@
                         <tr>
                             <td class="active">
 
-                                @Html.TextAreaFor(model => model.PDCBANK, new { @class = "form-control col-sm-3" })
+                                @Html.TextAreaFor(model => model.PDCBANK, new { @class = "form-control col-sm-3",style="width:auto" })
                             </td>
                             <td class="active">
 
-                                @Html.TextAreaFor(model => model.PDCBRANCH, new { @class = "form-control col-sm-3" })
+                                @Html.TextAreaFor(model => model.PDCBRANCH, new { @class = "form-control col-sm-3", style = "width:auto" })
                             </td>
                             <td class="active">
 
-                                @Html.TextAreaFor(model => model.PDCCHEQUENO, new { @class = "form-control col-sm-3" })
+                                @Html.TextAreaFor(model => model.PDCCHEQUENO, new { @class = "form-control col-sm-3", style = "width:auto" })
                             </td>
                             <td class="active">
                                 <div class='input-group date' id='datetimepicker2'>
@@ -185,23 +182,22 @@
 
 
             </div>
+            
+            <div class="form-group">
+                <div class="col-lg-12 col-lg-offset-10">
+                    <input type="submit" value="Edit" class="btn btn-success" />
+                </div>
 
+            </div>
         </div>
     </div>
 
+}
 
 
+   
 
-
-    <div class="form-group">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-10">
-            <input type="submit" value="Save" class="btn btn-danger" />
-        </div>
-
-    </div>
-
-</form>
+@*</form>*@
 
 
 @section scripts{
@@ -210,9 +206,18 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         
+        function OnSuccess(response) {
+            alert(response);
+
+            window.location.href = '/Payment/List/Index/';
+        }
+        function OnFailure(response) {
+            alert(response);
+        }
 
         $(function () {
             var paymentType = $('#PAYMENTTYPE').val();
+            console.log(paymentType);
             if (paymentType == 'Cash') {
                 $('#accdebitDiv *').attr('disabled', true);
                 $('#pdcDiv *').attr('disabled', true);
@@ -223,7 +228,7 @@
                 $('#accdebitDiv *').attr('disabled', true);
                 $('input[name=PAYMENTTYPE][value=Cheque]').attr('checked', true);
             }
-            if (paymentType == 'Account Debit Instruction') {
+            if (paymentType == 'ADI') {
                 $('#accdebitDiv *').attr('disabled', false);
                 $('#pdcDiv *').attr('disabled', true);
                 $('input[name=PAYMENTTYPE][value=ADI]').attr('checked', true);

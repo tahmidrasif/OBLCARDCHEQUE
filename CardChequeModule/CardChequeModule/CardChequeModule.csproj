@@ -199,6 +199,8 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Authorizer\AuthorizerAreaRegistration.cs" />
     <Compile Include="Areas\Authorizer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\CallCenter\CallCenterAreaRegistration.cs" />
+    <Compile Include="Areas\CallCenter\Controllers\HomeController.cs" />
     <Compile Include="Areas\CardCheque\CardChequeAreaRegistration.cs" />
     <Compile Include="Areas\CardCheque\Controllers\HomeController.cs" />
     <Compile Include="Areas\ChequeRequisition\ChequeRequisitionAreaRegistration.cs" />
@@ -229,6 +231,9 @@
     <Compile Include="Models\ImageTable.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MetaData\BranchMeta.cs" />
+    <Compile Include="Models\MetaData\CardChLeafMeta.cs" />
+    <Compile Include="Models\MetaData\CardChTranMeta.cs" />
     <Compile Include="Models\MetaData\ChequeRequisitionMeta.cs" />
     <Compile Include="Models\MetaData\DepositMeta.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
@@ -242,6 +247,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ClientDetails.cs" />
+    <Compile Include="Models\MetaData\UserMeta.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -639,23 +645,18 @@
     <Content Include="Areas\CardCheque\Views\Home\Details.cshtml" />
     <Content Include="Areas\CardCheque\Views\Home\Edit.cshtml" />
     <Content Include="Areas\CardCheque\Views\Home\Index.cshtml" />
-    <EntityDeploy Include="Models\Model2.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model2.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model2.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model2.edmx</DependentUpon>
-      <LastGenOutput>Model2.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model2.edmx.diagram">
-      <DependentUpon>Model2.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Model2.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model2.edmx</DependentUpon>
-      <LastGenOutput>Model2.cs</LastGenOutput>
-    </Content>
+    <Content Include="Areas\CallCenter\Views\web.config" />
+    <Content Include="Areas\CallCenter\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\CallCenter\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CallCenter\Views\Home\Create.cshtml" />
+    <Content Include="Areas\CallCenter\Views\Home\Delete.cshtml" />
+    <Content Include="Areas\CallCenter\Views\Home\Details.cshtml" />
+    <Content Include="Areas\CallCenter\Views\Home\Edit.cshtml" />
+    <Content Include="Areas\CallCenter\Views\Home\Index.cshtml" />
+    <Content Include="Areas\CallCenter\Views\Shared\_DownloadList.cshtml" />
+    <Content Include="Areas\CardCheque\Views\Shared\_CardChAppliedList.cshtml" />
+    <Content Include="Areas\Authorizer\Views\Home\CardChequePendingRequest.cshtml" />
+    <Content Include="Areas\Authorizer\Views\Shared\_AppliedCardChList.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -672,6 +673,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="Models\Model2.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model2.edmx</DependentUpon>
+      <LastGenOutput>Model2.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model2.edmx.diagram">
+      <DependentUpon>Model2.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model2.edmx</DependentUpon>
+      <LastGenOutput>Model2.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\CCM.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -778,6 +796,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Authorizer\Models\" />
+    <Folder Include="Areas\CallCenter\Models\" />
     <Folder Include="Areas\CardCheque\Models\" />
     <Folder Include="Areas\ChequeRequisition\Models\" />
     <Folder Include="Areas\Payment\Models\" />

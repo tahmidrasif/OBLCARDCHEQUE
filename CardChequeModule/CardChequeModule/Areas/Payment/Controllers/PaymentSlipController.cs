@@ -33,7 +33,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(DEPOSIT deposit, string ADI1, string ADI2)
+        public ActionResult Index(DEPOSIT deposit)
         {
             
             OCCUSER user = (OCCUSER)Session["User"];
@@ -76,26 +76,30 @@ namespace CardChequeModule.Areas.Payment.Controllers
             return View(deposit);
         }
 
-        // public ActionResult Index(string branch, DateTime? depositDate, string name, string mobile, string cardNo, decimal? amount, string paymentType)
-
+       
         public ActionResult GetCardInfo(string cardno)
         {
             try
             {
-                WebReference.CCMService ccmService = new CCMService();
-                string details = ccmService.GetClientDetails(cardno);
-
-                if (details == "null")
+                if (!String.IsNullOrEmpty(cardno))
                 {
+                    WebReference.CCMService ccmService = new CCMService();
+                    string details = ccmService.GetClientDetails(cardno);
 
-                    return Json(null, JsonRequestBehavior.AllowGet);
+                    if (details == "null")
+                    {
+
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        JObject json = JObject.Parse(details);
+                        ClientDetails clientDetails = (ClientDetails)serializer.Deserialize(new JTokenReader(json), typeof(ClientDetails));
+                        return Json(clientDetails, JsonRequestBehavior.AllowGet);
+                    }
                 }
-                else
-                {
-                    JObject json = JObject.Parse(details);
-                    ClientDetails clientDetails = (ClientDetails)serializer.Deserialize(new JTokenReader(json), typeof(ClientDetails));
-                    return Json(clientDetails, JsonRequestBehavior.AllowGet);
-                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+               
             }
             catch (Exception)
             {
@@ -103,7 +107,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
            
-           // return RedirectToAction("Index");
+           
         }
     }
 }

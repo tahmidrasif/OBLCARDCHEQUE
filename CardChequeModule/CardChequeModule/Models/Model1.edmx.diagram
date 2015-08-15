@@ -4,17 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7151a98b73c74429bddc8a928727cc69" Name="Diagram1">
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.BRANCHINFO" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHEREUISITION" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHLEAF" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHTRAN" Width="1.5" PointX="10.75" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.DEPOSIT" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCENUMERATION" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCEVENTLOG" Width="1.5" PointX="5.25" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCUSER" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+      <Diagram DiagramId="4359c52bfeab42ef85b9d63e26fe8c2f" Name="Diagram1">
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.BRANCHINFO" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHEREUISITION" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHLEAF" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHTRAN" Width="1.5" PointX="10.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.DEPOSIT" Width="1.5" PointX="8.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCENUMERATION" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCEVENTLOG" Width="1.5" PointX="5.25" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCUSER" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="OBLCARDCHEQUEModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_BRANCHINFO" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_BRANCHINFO" ManuallyRouted="false" />
         <AssociationConnector Association="OBLCARDCHEQUEModel.FK_DEPOSIT_BRANCHINFO" ManuallyRouted="false" />
         <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCENUMERATION" ManuallyRouted="false" />
         <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER" ManuallyRouted="false" />

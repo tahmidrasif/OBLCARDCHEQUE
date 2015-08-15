@@ -16,6 +16,7 @@ namespace CardChequeModule.Models.MetaData
         [Required(ErrorMessage = "Enter Date")]
         [DisplayName("Deposit Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> CREATEDON { get; set; }
 
         [Required(ErrorMessage = "Enter the branch")]

@@ -44,5 +44,8 @@ namespace CardChequeModule.Models.MetaData
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
+
+        [DisplayName("Reference Number")]
+        public string REFERENCENO { get; set; }
     }
 }

@@ -4,21 +4,98 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+    </div>
+    <div class="panel-body">
+        @using (Ajax.BeginForm("SearchResult", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "CardCheque" }))
+        {
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">Status</label>
+                <div class="col-sm-3">
+
+                    @Html.DropDownList("STATUS", null, "Select Status", new { @class = "form-control" })
+                </div>
+                <label class="col-sm-1 control-label">Card Number</label>
+                <div class="col-sm-3">
+                    <input type="text" id="CARDNO" name="CARDNO" class="form-control" />
+                </div>
+                <label class="col-sm-1 control-label">Date</label>
+                <div class="col-sm-3">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" />
+                        @*  @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "Date" })*@
+                        @*@Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control" })*@
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-11 control-label"></label>
+                <div class="col-sm-1">
+                    <button class="btn btn-info" type="submit">Search</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<div id="partialChange">
+    @Html.Partial("_CardChAppliedList", Model)
+</div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+}
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+
+        });
+
+
+    </script>
+}
+
+
+
+
+@*<p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+
+
+<table class="table table-bordered table-striped ">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.CARDNO)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CARDHOLDERNAME)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BRANCHCODE)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.REQUESTDATE)
@@ -28,35 +105,15 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AMOUNT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ISSIGNATUREVERIFIED)
-        </th>
+        </th>        
         <th>
             @Html.DisplayNameFor(model => model.STATUS)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.APPROVALNO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ISACTIVE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CREATEDON)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MODIFIEDON)
-        </th>
+              
         <th>
             @Html.DisplayNameFor(model => model.CARDCHLEAF.LEAFNO)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OCCUSER.EMPLOYEEID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OCCUSER1.EMPLOYEEID)
-        </th>
-        <th></th>
+       
     </tr>
 
 @foreach (var item in Model) {
@@ -67,9 +124,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.CARDHOLDERNAME)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BRANCHCODE)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.REQUESTDATE)
         </td>
@@ -78,40 +133,18 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AMOUNT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ISSIGNATUREVERIFIED)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.STATUS)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.APPROVALNO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ISACTIVE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CREATEDON)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MODIFIEDON)
-        </td>
+        </td>  
+        <th>
+            @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
+        </th>                
+        
+       
         <td>
             @Html.DisplayFor(modelItem => item.CARDCHLEAF.LEAFNO)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OCCUSER.EMPLOYEEID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OCCUSER1.EMPLOYEEID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
+    
+       
     </tr>
 }
 
-</table>
+</table>*@

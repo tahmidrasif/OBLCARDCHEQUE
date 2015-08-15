@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="BRANCHINFO">
     <Key>
       <PropertyRef Name="ID" />
@@ -56,7 +56,7 @@
     <Property Name="CHEQUELEAFID" Type="bigint" Nullable="false" />
     <Property Name="CARDNO" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="CARDHOLDERNAME" Type="nvarchar(max)" />
-    <Property Name="BRANCHCODE" Type="nvarchar" MaxLength="3" />
+    <Property Name="BRANCHCODE" Type="bigint" />
     <Property Name="REQUESTDATE" Type="datetime" Nullable="false" />
     <Property Name="BENEFICIARINFO" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -225,6 +225,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CARDCHTRAN_BRANCHINFO">
+    <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="0..1" />
+    <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BRANCHINFO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHTRAN">
+        <PropertyRef Name="BRANCHCODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CARDCHTRAN_OCCENUMERATION">
     <End Role="OCCENUMERATION" Type="Self.OCCENUMERATION" Multiplicity="1" />
     <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
@@ -370,6 +382,10 @@
     <AssociationSet Name="FK_CARDCHLEAF_OCCUSER1" Association="Self.FK_CARDCHLEAF_OCCUSER1">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHTRAN_BRANCHINFO" Association="Self.FK_CARDCHTRAN_BRANCHINFO">
+      <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
+      <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
     </AssociationSet>
     <AssociationSet Name="FK_CARDCHTRAN_OCCENUMERATION" Association="Self.FK_CARDCHTRAN_OCCENUMERATION">
       <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />

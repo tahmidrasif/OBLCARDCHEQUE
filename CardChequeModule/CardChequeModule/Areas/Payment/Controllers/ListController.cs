@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Models;
+using PagedList;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
@@ -13,13 +14,38 @@ namespace CardChequeModule.Areas.Payment.Controllers
         private OCCUSER user;
         //
         // GET: /Payment/List/
-        public ActionResult Index()
+        public ActionResult Index(int?BRANCH,string CARDNO,DateTime? CREATEDON,int? page)
         {
+          
+
             user = (OCCUSER) Session["User"];
             try
             {
-                var list = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).ToList();
-                return View(list);
+                var list = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x=>x.ID).ToList();
+                var branch = db.BRANCHINFO.Select(x => new {x.BRANCHNAME, x.ID});
+                ViewBag.BRANCH = new SelectList(branch, "ID", "BRANCHNAME");
+
+                if (BRANCH != null)
+                {
+                    list = list.Where(x => x.BRANCH == BRANCH).ToList();
+                    ViewBag.BRANCH = new SelectList(branch, "ID", "BRANCHNAME",BRANCH);
+                    ViewBag.currentBranch = BRANCH;
+                }
+                if (!String.IsNullOrEmpty(CARDNO))
+                {
+                    CARDNO = CARDNO.Trim();
+                    list = list.Where(x => x.CARDNUMBER == CARDNO).ToList();
+                    ViewBag.CARDNO = CARDNO;
+                }
+                if (CREATEDON != null)
+                {
+                    list = list.Where(x => x.CREATEDON == CREATEDON).ToList();
+                    ViewBag.CREATEDON = CREATEDON;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                return View(list.ToPagedList(pageNumber, pageSize));
+               // return View(list);
             }
             catch (Exception exception)
             {
