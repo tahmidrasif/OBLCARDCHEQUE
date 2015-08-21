@@ -1,0 +1,158 @@
+﻿@using PagedList
+@using PagedList.Mvc
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@model IEnumerable<CardChequeModule.Models.CARDCHEREUISITION>
+
+
+
+@using (Html.BeginForm("PostAuthList", "Home", new { area = "Authorizer" }, FormMethod.Post, new { @class = "form-horizontal", id = "chequeReqForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-list"> List</span> </h3>
+        </div>
+        <div class="panel-body">
+
+
+            <table class="table table-striped">
+                <tr>
+                    @if (Model.Any(x => x.STATUS == 4))
+                    {
+                        <th>
+                            <input type="checkbox" id="checkall" />
+                        </th>
+                    }
+                    else
+                    {
+                        <th>
+
+                        </th>
+                    }
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.CARDNO)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.STATUS)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OCCUSER.USERNAME)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CREATEDON)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.REMARKS)
+                    </th>
+
+
+                </tr>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr class="@( item.STATUS == 4  ? "danger" : "success")">
+                        @if (item.STATUS == 4)
+                        {
+                            <td>
+                                <input type="checkbox" class="checkBoxClass" name="idList" id="idList" value="@item.ID" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CARDNO)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BRANCHINFO.BRANCHNAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OCCUSER.USERNAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CREATEDON, new { @Value = item.CREATEDON.ToString("dd-MM-yyyy") })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.REMARKS)
+                        </td>
+
+
+                    </tr>
+                }
+
+            </table>
+            @if (Model.Any())
+            {
+                <div class="form-group">
+                    <label class="col-sm-11 control-label"></label>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" type="submit" id="Assign">Save</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+}
+
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("RequisitionRequest", "Home",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script>
+    //intial button disabled
+    $('#Assign').prop("disabled", true);
+
+    //select all
+    $("#checkall").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+
+    //check box click button enable disable
+    $(function () {
+        var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
+            $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
+        });
+
+        $('#checkall').click(function (event) {
+            checkboxes.prop('checked', this.checked);
+            $('#Assign').prop("disabled", !this.checked);
+        });
+    });
+
+</script>
+
+
+
+@*<script>
+
+    </script>*@

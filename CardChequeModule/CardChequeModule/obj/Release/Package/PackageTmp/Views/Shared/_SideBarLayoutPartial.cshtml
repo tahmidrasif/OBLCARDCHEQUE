@@ -1,0 +1,169 @@
+﻿@using CardChequeModule.Models
+@{
+    ViewBag.Title = "_LinkPartial";
+    OCCUSER aUser = (OCCUSER)Session["User"];
+
+}
+
+@{
+
+    if (aUser.TYPE == 2)
+    {
+        <li class="sub-menu">
+
+            <a href=@Url.Action("Index", "List", new { area = "Payment" }, null)>
+                <i class="fa fa-dashboard"></i>
+                <span>Visa Diposit Payment List</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+
+            <a href=@Url.Action("Index", "PaymentSlip", new { area = "Payment" }, null)>
+                <i class="fa fa-dashboard"></i>
+                <span>Visa Diposit Payment Slip</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("Index", "Home", new { area = "ChequeRequisition" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Card Cheque Requisition List</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("Form", "Home", new { area = "ChequeRequisition" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Cheque Requisition Form</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("Index", "Home", new { area = "CardCheque" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Cheque Payment List</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("Create", "Home", new { area = "CardCheque" }, null)>
+                <i class="fa fa-file"></i>
+                <span>Card Cheque Payment Slip</span>
+            </a>
+
+        </li>
+
+    }
+
+    else if (aUser.TYPE == 3)
+    {
+        <li class="sub-menu">
+            <a href=@Url.Action("Index", "Home", new { area = "Authorizer" }, null)>
+                <i class="fa fa-file"></i>
+                <span>Dashboard</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+
+            <a href=@Url.Action("CardChequePendingRequest", "Home", new { area = "Authorizer" }, null)>
+                <i class="fa fa-dashboard"></i>
+                <span>Pending Card Payment</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("RequisitionRequest", "Home", new { area = "Authorizer" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Pending Requisition</span>
+            </a>
+
+        </li>
+    }
+    else if (aUser.TYPE == 9)
+    {
+
+        <li class="sub-menu">
+            <a href=@Url.Action("Index", "Home", new { area = "Establishment" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Establishment</span>
+            </a>
+
+        </li>
+    }
+
+    else if (aUser.TYPE == 15)
+    {
+
+        <li class="sub-menu">
+            <a href=@Url.Action("Index", "Home", new { area = "CallCenter" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Pending List</span>
+            </a>
+
+        </li>
+    }
+    else if (aUser.TYPE == 1)
+    {
+
+        <li class="sub-menu">
+            <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Create User</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("UserList", "Home", new { area = "Admin" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>User List</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Visa Payment</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Cheque Requistion</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Cheque Payment List</span>
+            </a>
+
+        </li>
+        <li class="sub-menu">
+            <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Authorized Requistion</span>
+            </a>
+
+        </li>
+    <li class="sub-menu">
+            <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Authorized Cheque Payment</span>
+            </a>
+
+        </li>
+    }
+}
+
+
+@*<li class="sub-menu">
+        <a href=@Url.Action("Index", "Home", new { area = "CardCheque" }, null)>
+            <i class="fa fa-cogs"></i>
+            <span>Card Cheque</span>
+        </a>
+
+    </li>*@

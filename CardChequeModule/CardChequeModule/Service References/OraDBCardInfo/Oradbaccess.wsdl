@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCCardDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cardno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCCardDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCCardDetailResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaF">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sysdate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaFResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLankaBanglaFResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaFDateRange">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sysdate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="to_date" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaFDateRangeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLankaBanglaFDateRangeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strCurrency" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRateResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHBInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="stracc" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHBInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHBInfoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaFVisa">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sysdate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaFVisaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLankaBanglaFVisaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaFMoney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sysdate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLankaBanglaFMoneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLankaBanglaFMoneyResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetONEBankVisa">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetONEBankVisaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetONEBankVisaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRJSCTran">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sysdate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRJSCTranResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRJSCTranResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRJSCTranDateRange">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sysdate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="to_date" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRJSCTranDateRangeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRJSCTranDateRangeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRJSCTranDateRangeNew">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="lngData" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="sysdate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="to_date" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRJSCTranDateRangeNewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetRJSCTranDateRangeNewResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLCARTran">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLCARTranResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLCARTranResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLCMaster">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetLCMasterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLCMasterResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCifsDetail">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCifsDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCifsDetailResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPHTran">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lngData" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sysdate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPHTranResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPHTranResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRTransaction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strAcno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="dtFrom" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="dtTo" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRTransactionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCTRTransactionResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="dtFrom" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="dtTo" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="strDrCr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCTRAccountResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRAccountDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strAccno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRAccountDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCTRAccountDetailResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRSignatoryDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strAccno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRSignatoryDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCTRSignatoryDetailResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRIndividualAccDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strAccno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCTRIndividualAccDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCTRIndividualAccDetailResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustAccType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strAccno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustAccTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustAccTypeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAccountDetailForBAT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strCurrDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAccountDetailForBATResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAccountDetailForBATResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCCardDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCCardDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetCCardDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCCardDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaF" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaFResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFDateRangeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaFDateRange" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFDateRangeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaFDateRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRate" />
+  </wsdl:message>
+  <wsdl:message name="GetRateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHBInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHBInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetHBInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHBInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFVisaSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaFVisa" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFVisaSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaFVisaResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFMoneySoapIn">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaFMoney" />
+  </wsdl:message>
+  <wsdl:message name="GetLankaBanglaFMoneySoapOut">
+    <wsdl:part name="parameters" element="tns:GetLankaBanglaFMoneyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetONEBankVisaSoapIn">
+    <wsdl:part name="parameters" element="tns:GetONEBankVisa" />
+  </wsdl:message>
+  <wsdl:message name="GetONEBankVisaSoapOut">
+    <wsdl:part name="parameters" element="tns:GetONEBankVisaResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRJSCTranSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRJSCTran" />
+  </wsdl:message>
+  <wsdl:message name="GetRJSCTranSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRJSCTranResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRJSCTranDateRangeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRJSCTranDateRange" />
+  </wsdl:message>
+  <wsdl:message name="GetRJSCTranDateRangeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRJSCTranDateRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRJSCTranDateRangeNewSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRJSCTranDateRangeNew" />
+  </wsdl:message>
+  <wsdl:message name="GetRJSCTranDateRangeNewSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRJSCTranDateRangeNewResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLCARTranSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLCARTran" />
+  </wsdl:message>
+  <wsdl:message name="GetLCARTranSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLCARTranResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLCMasterSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLCMaster" />
+  </wsdl:message>
+  <wsdl:message name="GetLCMasterSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLCMasterResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCifsDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCifsDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetCifsDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCifsDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPHTranSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPHTran" />
+  </wsdl:message>
+  <wsdl:message name="GetPHTranSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPHTranResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRTransactionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCTRTransaction" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRTransactionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCTRTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCTRAccount" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCTRAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRAccountDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCTRAccountDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRAccountDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCTRAccountDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRSignatoryDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCTRSignatoryDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRSignatoryDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCTRSignatoryDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRIndividualAccDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCTRIndividualAccDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetCTRIndividualAccDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCTRIndividualAccDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustAccTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustAccType" />
+  </wsdl:message>
+  <wsdl:message name="GetCustAccTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustAccTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountDetailForBATSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAccountDetailForBAT" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountDetailForBATSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAccountDetailForBATResponse" />
+  </wsdl:message>
+  <wsdl:portType name="OradbaccessSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCCardDetail">
+      <wsdl:input message="tns:GetCCardDetailSoapIn" />
+      <wsdl:output message="tns:GetCCardDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaF">
+      <wsdl:input message="tns:GetLankaBanglaFSoapIn" />
+      <wsdl:output message="tns:GetLankaBanglaFSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFDateRange">
+      <wsdl:input message="tns:GetLankaBanglaFDateRangeSoapIn" />
+      <wsdl:output message="tns:GetLankaBanglaFDateRangeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRate">
+      <wsdl:input message="tns:GetRateSoapIn" />
+      <wsdl:output message="tns:GetRateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHBInfo">
+      <wsdl:input message="tns:GetHBInfoSoapIn" />
+      <wsdl:output message="tns:GetHBInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFVisa">
+      <wsdl:input message="tns:GetLankaBanglaFVisaSoapIn" />
+      <wsdl:output message="tns:GetLankaBanglaFVisaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFMoney">
+      <wsdl:input message="tns:GetLankaBanglaFMoneySoapIn" />
+      <wsdl:output message="tns:GetLankaBanglaFMoneySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetONEBankVisa">
+      <wsdl:input message="tns:GetONEBankVisaSoapIn" />
+      <wsdl:output message="tns:GetONEBankVisaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTran">
+      <wsdl:input message="tns:GetRJSCTranSoapIn" />
+      <wsdl:output message="tns:GetRJSCTranSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTranDateRange">
+      <wsdl:input message="tns:GetRJSCTranDateRangeSoapIn" />
+      <wsdl:output message="tns:GetRJSCTranDateRangeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTranDateRangeNew">
+      <wsdl:input message="tns:GetRJSCTranDateRangeNewSoapIn" />
+      <wsdl:output message="tns:GetRJSCTranDateRangeNewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLCARTran">
+      <wsdl:input message="tns:GetLCARTranSoapIn" />
+      <wsdl:output message="tns:GetLCARTranSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLCMaster">
+      <wsdl:input message="tns:GetLCMasterSoapIn" />
+      <wsdl:output message="tns:GetLCMasterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCifsDetail">
+      <wsdl:input message="tns:GetCifsDetailSoapIn" />
+      <wsdl:output message="tns:GetCifsDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPHTran">
+      <wsdl:input message="tns:GetPHTranSoapIn" />
+      <wsdl:output message="tns:GetPHTranSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRTransaction">
+      <wsdl:input message="tns:GetCTRTransactionSoapIn" />
+      <wsdl:output message="tns:GetCTRTransactionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRAccount">
+      <wsdl:input message="tns:GetCTRAccountSoapIn" />
+      <wsdl:output message="tns:GetCTRAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRAccountDetail">
+      <wsdl:input message="tns:GetCTRAccountDetailSoapIn" />
+      <wsdl:output message="tns:GetCTRAccountDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRSignatoryDetail">
+      <wsdl:input message="tns:GetCTRSignatoryDetailSoapIn" />
+      <wsdl:output message="tns:GetCTRSignatoryDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRIndividualAccDetail">
+      <wsdl:input message="tns:GetCTRIndividualAccDetailSoapIn" />
+      <wsdl:output message="tns:GetCTRIndividualAccDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustAccType">
+      <wsdl:input message="tns:GetCustAccTypeSoapIn" />
+      <wsdl:output message="tns:GetCustAccTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountDetailForBAT">
+      <wsdl:input message="tns:GetAccountDetailForBATSoapIn" />
+      <wsdl:output message="tns:GetAccountDetailForBATSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OradbaccessSoap" type="tns:OradbaccessSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCCardDetail">
+      <soap:operation soapAction="http://tempuri.org/GetCCardDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaF">
+      <soap:operation soapAction="http://tempuri.org/GetLankaBanglaF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFDateRange">
+      <soap:operation soapAction="http://tempuri.org/GetLankaBanglaFDateRange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRate">
+      <soap:operation soapAction="http://tempuri.org/GetRate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBInfo">
+      <soap:operation soapAction="http://tempuri.org/GetHBInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFVisa">
+      <soap:operation soapAction="http://tempuri.org/GetLankaBanglaFVisa" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFMoney">
+      <soap:operation soapAction="http://tempuri.org/GetLankaBanglaFMoney" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetONEBankVisa">
+      <soap:operation soapAction="http://tempuri.org/GetONEBankVisa" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTran">
+      <soap:operation soapAction="http://tempuri.org/GetRJSCTran" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTranDateRange">
+      <soap:operation soapAction="http://tempuri.org/GetRJSCTranDateRange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTranDateRangeNew">
+      <soap:operation soapAction="http://tempuri.org/GetRJSCTranDateRangeNew" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLCARTran">
+      <soap:operation soapAction="http://tempuri.org/GetLCARTran" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLCMaster">
+      <soap:operation soapAction="http://tempuri.org/GetLCMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCifsDetail">
+      <soap:operation soapAction="http://tempuri.org/GetCifsDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPHTran">
+      <soap:operation soapAction="http://tempuri.org/GetPHTran" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRTransaction">
+      <soap:operation soapAction="http://tempuri.org/GetCTRTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRAccount">
+      <soap:operation soapAction="http://tempuri.org/GetCTRAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRAccountDetail">
+      <soap:operation soapAction="http://tempuri.org/GetCTRAccountDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRSignatoryDetail">
+      <soap:operation soapAction="http://tempuri.org/GetCTRSignatoryDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRIndividualAccDetail">
+      <soap:operation soapAction="http://tempuri.org/GetCTRIndividualAccDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustAccType">
+      <soap:operation soapAction="http://tempuri.org/GetCustAccType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountDetailForBAT">
+      <soap:operation soapAction="http://tempuri.org/GetAccountDetailForBAT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OradbaccessSoap12" type="tns:OradbaccessSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCCardDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetCCardDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaF">
+      <soap12:operation soapAction="http://tempuri.org/GetLankaBanglaF" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFDateRange">
+      <soap12:operation soapAction="http://tempuri.org/GetLankaBanglaFDateRange" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRate">
+      <soap12:operation soapAction="http://tempuri.org/GetRate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHBInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetHBInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFVisa">
+      <soap12:operation soapAction="http://tempuri.org/GetLankaBanglaFVisa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLankaBanglaFMoney">
+      <soap12:operation soapAction="http://tempuri.org/GetLankaBanglaFMoney" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetONEBankVisa">
+      <soap12:operation soapAction="http://tempuri.org/GetONEBankVisa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTran">
+      <soap12:operation soapAction="http://tempuri.org/GetRJSCTran" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTranDateRange">
+      <soap12:operation soapAction="http://tempuri.org/GetRJSCTranDateRange" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRJSCTranDateRangeNew">
+      <soap12:operation soapAction="http://tempuri.org/GetRJSCTranDateRangeNew" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLCARTran">
+      <soap12:operation soapAction="http://tempuri.org/GetLCARTran" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLCMaster">
+      <soap12:operation soapAction="http://tempuri.org/GetLCMaster" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCifsDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetCifsDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPHTran">
+      <soap12:operation soapAction="http://tempuri.org/GetPHTran" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRTransaction">
+      <soap12:operation soapAction="http://tempuri.org/GetCTRTransaction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRAccount">
+      <soap12:operation soapAction="http://tempuri.org/GetCTRAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRAccountDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetCTRAccountDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRSignatoryDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetCTRSignatoryDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCTRIndividualAccDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetCTRIndividualAccDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustAccType">
+      <soap12:operation soapAction="http://tempuri.org/GetCustAccType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountDetailForBAT">
+      <soap12:operation soapAction="http://tempuri.org/GetAccountDetailForBAT" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Oradbaccess">
+    <wsdl:port name="OradbaccessSoap" binding="tns:OradbaccessSoap">
+      <soap:address location="http://10.156.2.19/oblmw/Oradbaccess.asmx" />
+    </wsdl:port>
+    <wsdl:port name="OradbaccessSoap12" binding="tns:OradbaccessSoap12">
+      <soap12:address location="http://10.156.2.19/oblmw/Oradbaccess.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

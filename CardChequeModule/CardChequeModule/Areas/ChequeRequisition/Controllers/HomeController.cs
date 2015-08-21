@@ -8,13 +8,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Models;
+using CardChequeModule.OraDBCardInfo;
 using PagedList;
 
 namespace CardChequeModule.Areas.ChequeRequisition.Controllers
 {
+    [Authorize(Roles = "teller")]
     public class HomeController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
+        OraDBCardInfo.OradbaccessSoapClient cardApi = new OradbaccessSoapClient();
         private OCCUSER user;
 
         // GET: /ChequeRequisition/Home/
@@ -54,7 +57,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 int pageSize = 3;
                 int pageNumber = ((page ?? 1));
                 return View(List.ToPagedList(pageNumber, pageSize));
-     
+
             }
             catch (Exception ex)
             {
@@ -65,19 +68,33 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
 
         public ActionResult GetCardDetails(string cardNo)
         {
+            string name = "";
+            string msg = "";
+            DateTime dob = DateTime.Now;
+            int flag = 0;
+            
             try
             {
-                var cardDetails = db.CARDCHEREUISITION.Last(x => x.CARDNO == cardNo);
-                if (cardDetails == null)
+                DataTable dt = cardApi.GetCCardDetail(cardNo);
+            
+                if (dt.Rows.Count>0)
                 {
-                    return Json(null, JsonRequestBehavior.AllowGet);
+
+                    foreach (DataRow dataRow in dt.Rows)
+                    {
+                        name = (string)dataRow[2];
+                        dob = (DateTime)dataRow[3];
+                    }
+                     msg = "This Card Is Valid, User Name: " + name + " and Date of Birth: " + dob.Date.ToShortDateString();
+                    return Json(new {msg,flag=1}, JsonRequestBehavior.AllowGet);
                 }
-                return Json(cardDetails, JsonRequestBehavior.AllowGet);
+                msg = "Invalid Card Number. Please Recheck";
+                return Json(new { msg, flag }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
 
-                return Json(exception, JsonRequestBehavior.DenyGet);
+                return Json(exception, JsonRequestBehavior.AllowGet);
             }
 
         }

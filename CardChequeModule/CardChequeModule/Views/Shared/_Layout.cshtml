@@ -70,7 +70,7 @@
                     <p class="centered"><a href="profile.html"><img src="~/assets/img/default.png" class="img-circle" width="60"></a></p>
    
 
-                 @*   @Html.Partial("_SideBarLayoutPartial")*@
+                    @Html.Partial("_SideBarLayoutPartial")
 
                     @*<li class="sub-menu">
 
@@ -127,13 +127,13 @@
 
 
         <section id="main-content">
-            <section class="wrapper site-min-height">
+           <section class="wrapper">
                 <div class="row mt">
                     <div class="col-lg-12">
                         @RenderBody()
                     </div>
                 </div>
-            </section><! --/wrapper -->
+            </section>
         </section>
         <!--main content end-->
         <!--footer start-->

@@ -1,97 +1,270 @@
-﻿@model CardChequeModule.Models.OCCCARDINFO
+﻿@model CardChequeModule.Models.CARDCHTRAN
 
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-lg-3 col-sm-3">
+            <img src="~/assets/img/obl.jpg" class="" alt="Responsive image">
+
+        </div>
+        <div class="col-lg-6 text-center col-sm-3">
+            <h3>CARD CHEQUE PAYMENT</h3>
+        </div>
+        <div class="col-lg-3 col-sm-3" align="right">
+            <img src="~/assets/img/visa.jpg" class="" alt="Responsive image">
+        </div>
+    </div>
+</div>
 
 
-@using (Html.BeginForm()) 
+@using (Ajax.BeginForm("Create", "Home",
+    new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "CardCheque", id = "cardchequeForm", @class = "form-horizontal" }))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>OCCCARDINFO</h4>
-        <hr />
-        @Html.ValidationSummary(true)
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label">Leaf Number</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("leafNo", null, new { @class = "form-control" })
+                </div>
+                <label for="name" class="col-lg-2 control-label">Card Number</label>
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(x => x.CARDNO, new { @class = "form-control", @readonly = true })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CARDNO, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CARDNO)
-                @Html.ValidationMessageFor(model => model.CARDNO)
             </div>
+
+
+            @Html.HiddenFor(x => x.CHEQUELEAFID)
+            <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
+            
+
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label">Pay To</label>
+                <div class="col-lg-10">
+                    @Html.TextBoxFor(x => x.BENEFICIARINFO, new { @class = "form-control" })
+                </div>
+
+
+            </div>
+
+            <div class="form-group" id="amountDiv">
+                <label for="amount" class="col-xs-2 col-sm-2 control-label">Amount</label>
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(x => x.AMOUNT, new { @class = "form-control", @placeholder = "Amount" })
+                </div>
+
+
+                <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
+                <div class="col-lg-4">
+                    @Html.DropDownList("CURRENCY", null, "Select Currency", new { @class = "form-control" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="birthday" class="col-lg-2 control-label">Card Holder Name</label>
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(x => x.CARDHOLDERNAME, new { @class = "form-control", @placeholder = "Name", @readonly = true })
+
+                </div>
+                <label for="name" class="col-lg-2 control-label">Signature Verified</label>
+                <div class="col-lg-4" id="checkerror">
+                    @Html.CheckBoxFor(x => x.ISSIGNATUREVERIFIED)
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-lg-2 control-label">Branch</label>
+                <div class="col-lg-4">
+                    @Html.DropDownList("BRANCHCODE", null, "Select Branch", new { @class = "form-control" })
+                </div>
+                <label for="name" class="col-lg-2 control-label">Date</label>
+                <div class="col-lg-4">
+                    <div class='input-group date' id='datetimepicker1'>
+                        @Html.TextBoxFor(x => x.REQUESTDATE, new { @class = "form-control", @placeholder = "Date" })
+
+                        <span class="input-group-addon" id="mySpan">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-2 col-lg-offset-10">
+                    <input type="submit" value="Save" class="btn btn-danger" />
+                </div>
+            </div>
+
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CHNAME, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CHNAME)
-                @Html.ValidationMessageFor(model => model.CHNAME)
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BRANCHCODE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BRANCHCODE)
-                @Html.ValidationMessageFor(model => model.BRANCHCODE)
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CHPHONE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CHPHONE)
-                @Html.ValidationMessageFor(model => model.CHPHONE)
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-4 col-lg-offset-1 text-center">
+                        <img id="userPhoto" alt="" style="width: 50%; height: 120px; border:1px solid black" src="~/assets/img/default.png" />
+                        
+                        <hr />
+                    </div>
+                    <div class="col-lg-4 col-lg-offset-2 text-center">
+                        <img id="sigphoto" style="width: 100%; height: 120px; border: 1px solid black" src="~/assets/img/signaturei.jpeg" />
+                        <hr />
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-4 col-lg-offset-1 text-center">
+                        <label for="birthday" class="control-label">Image</label>
+                    </div>
+                    <div class="col-lg-4 col-lg-offset-2 text-center">
+                        <label for="birthday" class=" control-label">Signature</label>
+                    </div>
+                </div>
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PAYMENTTYPE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PAYMENTTYPE)
-                @Html.ValidationMessageFor(model => model.PAYMENTTYPE)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AMOUNT, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AMOUNT)
-                @Html.ValidationMessageFor(model => model.AMOUNT)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AMOUNTINWORD, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AMOUNTINWORD)
-                @Html.ValidationMessageFor(model => model.AMOUNTINWORD)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ACCDEBITINSTR, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ACCDEBITINSTR)
-                @Html.ValidationMessageFor(model => model.ACCDEBITINSTR)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
+
+        $("#cardchequeForm").validate({
+            rules: {
+
+                leafNo: {
+                    required: true,
+
+                },
+                CARDNO: {
+                    required: true,
+
+                },
+                BENEFICIARINFO: {
+                    required: true,
+
+                },
+                AMOUNT: {
+                    required: true,
+
+                },
+                CURRENCY: {
+                    required: true,
+
+                },
+                ISSIGNATUREVERIFIED: {
+                    required: true,
+
+                },
+                BRANCHCODE: {
+                    required: true,
+
+                },
+                REQUESTDATE: {
+                    required: true,
+
+                },
+
+
+            },
+
+            errorPlacement: function (error, element) {
+                if (element.attr("type") == "checkbox") {
+                    error.insertAfter("#checkerror").css({ marginLeft: "15px" });
+
+                } else {
+                    error.insertAfter(element);
+                }
+
+            },
+
+        });
+
+
+        $('#leafNo').blur(function () {
+
+            $.ajax({
+                url: '@Url.Action("GetInfo","Home",new {area="CardCheque"})',
+                type: 'POST',
+                data: { leafno: $(this).val() },
+                beforeSend: function () { $('#spinner').show(); },
+                complete: function () { $('#spinner').hide(); },
+                success: function (result) {
+                    if (result == null) {
+                        alert("No Data Found");
+                        $('#CARDNO').val('');
+                        $('#CARDHOLDERNAME').val('');
+                        $('#userPhoto').removeAttr('src');
+                        $('#sigphoto').removeAttr('src');
+
+                    }
+                    if (result == 'used') {
+                        alert('Leaf Is Already Used');
+                    }
+                    else {
+
+                        $("#userPhoto").attr("src", "data:image/jpg;base64," + result.userPhoto);
+                        $("#sigphoto").attr("src", "data:image/jpg;base64," + result.signature);
+                        $('#CARDNO').val(result.cardno);
+                        $('#CARDHOLDERNAME').val(result.name);
+                        $('#CHEQUELEAFID').val(result.leafID);
+
+                    }
+
+
+                },
+                error: function (xhr) {
+                    alert("Something is wrong");
+                }
+            });
+        });
+
+        function OnSuccess(response) {
+            alert(response);
+
+            window.location.href = '@Url.Action("Index", "Home", new { area = "CardCheque" })';
+            
+        }
+        function OnFailure(response) {
+            alert(response);
+        }
+    </script>
 }
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+
+        });
+
+
+    </script>
+}
+

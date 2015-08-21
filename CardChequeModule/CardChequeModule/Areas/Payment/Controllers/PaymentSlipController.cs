@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using CardChequeModule.Models;
-using CardChequeModule.WebReference;
+using CardChequeModule.OraDBCardInfo;
+//using CardChequeModule.WebReference;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
+    [Authorize(Roles = "teller")]
     public class PaymentSlipController : Controller
     {
         private JsonSerializer serializer = new JsonSerializer();
@@ -78,25 +81,27 @@ namespace CardChequeModule.Areas.Payment.Controllers
 
        
         public ActionResult GetCardInfo(string cardno)
+        
         {
             try
             {
                 if (!String.IsNullOrEmpty(cardno))
                 {
-                    WebReference.CCMService ccmService = new CCMService();
-                    string details = ccmService.GetClientDetails(cardno);
 
-                    if (details == "null")
-                    {
+                    OraDBCardInfo.OradbaccessSoap client=new OradbaccessSoapClient();
+                    DataTable details = client.GetCCardDetail(cardno);
 
-                        return Json(null, JsonRequestBehavior.AllowGet);
-                    }
-                    else
+                    string clientName = "";
+
+                    if (details != null)
                     {
-                        JObject json = JObject.Parse(details);
-                        ClientDetails clientDetails = (ClientDetails)serializer.Deserialize(new JTokenReader(json), typeof(ClientDetails));
-                        return Json(clientDetails, JsonRequestBehavior.AllowGet);
+                        foreach (DataRow row in details.Rows)
+                        {
+                            clientName = (string) row[2];
+                        }
+                        return Json(clientName, JsonRequestBehavior.AllowGet);
                     }
+                    //return Json(null, JsonRequestBehavior.AllowGet);
                 }
                 return Json(null, JsonRequestBehavior.AllowGet);
                

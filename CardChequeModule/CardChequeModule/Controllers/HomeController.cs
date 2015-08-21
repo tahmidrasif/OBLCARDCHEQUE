@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -37,18 +38,20 @@ namespace CardChequeModule.Controllers
 
         public ActionResult LogIn()
         {
+           
             return View();
         }
         [HttpPost]
-        public ActionResult LogIn(OCCUSER aUser)
+        public ActionResult LogIn(OCCUSER aUser, string PASSWORD)
         {
-            //WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
+            WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
                 
-               // var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, aUser.PASSWORD);
-             //   if (isValid == "Valid")
-             //   {
+              //  var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, PASSWORD);
+                
+              //  if (isValid == "Valid")
+               // {
                     ViewBag.flag = "";
                     if (IsUserInSystem(aUser.EMPLOYEEID))
                     {
@@ -73,16 +76,20 @@ namespace CardChequeModule.Controllers
                             {
                                 return RedirectToAction("Index", "Home",new {Area="Establishment"});
                             }
+                            if (user.TYPE == 15)
+                            {
+                                return RedirectToAction("Index", "Home", new { Area = "CallCenter" });
+                            }
                         }
 
-                    }
-                    else
-                    {
-                        ViewBag.flag = "User is not in the system";
-                    }
+                  //  }
+                    //else
+                    //{
+                    //    ViewBag.flag = "User is not in the system";
+                    //}
 
 
-                //}
+                }
                 //else if (isValid == "Invalid")
                 //{
                 //    ViewBag.flag = "Invalid User";

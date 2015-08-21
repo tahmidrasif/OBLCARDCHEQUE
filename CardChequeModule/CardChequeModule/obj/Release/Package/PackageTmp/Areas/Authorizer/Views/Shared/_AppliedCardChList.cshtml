@@ -1,0 +1,184 @@
+﻿@using WebGrease.Css.Extensions
+@model IEnumerable<CardChequeModule.Models.CARDCHTRAN>
+
+
+
+@using (Html.BeginForm("CardChAuthPost", "Home", new { area = "Authorizer" }, FormMethod.Post, new { @class = "form-horizontal", id = "cardChequeAuthForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-list"> List</span> </h3>
+        </div>
+        <div class="panel-body">
+
+
+            <table class="table table-striped" id="myTable">
+                <thead>
+                    
+                    <tr>
+                        @if (Model.Any(x => x.STATUS == 13))
+                        {
+                            <th>
+                                <input type="checkbox" id="checkall" />
+                            </th>
+                        }
+                        else
+                        {
+                            <th>
+
+                            </th>
+                        }
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CARDNO)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.STATUS)
+                        </th>
+                        <th>
+                            @Html.DisplayName("Issued By")
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.REQUESTDATE)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BENEFICIARINFO)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CARDCHLEAF.LEAFNO)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.APPROVALNO)
+                        </th>
+
+
+                    </tr>
+
+                </thead>
+                
+                <tbody>
+                    
+                    @foreach (var item in Model)
+                    {
+
+                        <tr class="@( item.STATUS == 13  ? "danger" : "success")">
+                            @if (item.STATUS == 13)
+                            {
+                                <td>
+                                    <input type="checkbox" class="checkBoxClass" name="idList" id="idList" value="@item.ID" />
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CARDNO)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BRANCHINFO.BRANCHNAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OCCUSER.USERNAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.REQUESTDATE, new { @Value = item.CREATEDON.ToString("dd-MM-yyyy") })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BENEFICIARINFO)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CARDCHLEAF.LEAFNO)
+                            </td>
+
+                            @if (item.STATUS == 13)
+                            {
+                                <td>
+                                    @*@Html.TextBoxFor(x => item.APPROVALNO, new { @class = "form-control" })*@
+                                    <input type="text" class="form-control" id="APPROVALNO" />
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.DisplayFor(x => item.APPROVALNO)
+                                </td>
+                            }
+
+
+                        </tr>
+
+                    }
+
+                </tbody>
+               
+
+            </table>
+            @if (Model.Any())
+            {
+                <div class="form-group">
+                    <label class="col-sm-11 control-label"></label>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" type="submit" id="Assign">Save</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+}
+
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script>
+    //intial button disabled
+    $('#Assign').prop("disabled", true);
+
+    //select all
+    $("#checkall").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+
+    //check box click button enable disable
+    $(function () {
+        var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
+            $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
+                  
+        });
+
+        $('#checkall').click(function (event) {
+            checkboxes.prop('checked', this.checked);
+            $('#Assign').prop("disabled", !this.checked);
+        });
+    });
+
+    $("#Assign").click(function () {
+       // alert('ok');
+        $("#myTable tbody tr").each(function () {
+
+            var a = $(this).find("input:text").text();
+            alert(a);
+
+
+            return true;
+        });
+    
+    });
+
+</script>
+
+

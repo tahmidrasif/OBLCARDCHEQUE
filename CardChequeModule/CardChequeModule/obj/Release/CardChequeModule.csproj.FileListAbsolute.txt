@@ -57,3 +57,15 @@ D:\Projects\CardChequeModule\CardChequeModule\obj\Release\CardChequeModule.pdb
 D:\Projects\CardChequeModule\CardChequeModule\obj\Release\CardChequeModule.XmlSerializers.dll
 D:\Projects\CardChequeModule\CardChequeModule\bin\System.Web.Abstractions.dll
 D:\Projects\CardChequeModule\CardChequeModule\bin\System.Web.Routing.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\ICSharpCode.SharpZipLib.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OOXML.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OpenXml4Net.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OpenXmlFormats.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\PagedList.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\PagedList.Mvc.dll
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.xml
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OOXML.xml
+D:\Projects\CardChequeModule\CardChequeModule\bin\NPOI.OpenXml4Net.xml
+D:\Projects\CardChequeModule\CardChequeModule\bin\PagedList.xml
+D:\Projects\CardChequeModule\CardChequeModule\bin\PagedList.Mvc.xml

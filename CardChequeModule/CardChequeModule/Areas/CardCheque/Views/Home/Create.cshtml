@@ -12,7 +12,7 @@
 
         </div>
         <div class="col-lg-6 text-center col-sm-3">
-            <h3>CARD CHEQUE</h3>
+            <h3>CARD CHEQUE PAYMENT</h3>
         </div>
         <div class="col-lg-3 col-sm-3" align="right">
             <img src="~/assets/img/visa.jpg" class="" alt="Responsive image">
@@ -23,7 +23,6 @@
 
 @using (Ajax.BeginForm("Create", "Home",
     new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "CardCheque", id = "cardchequeForm", @class = "form-horizontal" }))
-
 {
     <div class="panel panel-default">
         <div class="panel-body">
@@ -34,18 +33,15 @@
                 </div>
                 <label for="name" class="col-lg-2 control-label">Card Number</label>
                 <div class="col-lg-4">
-                    @Html.TextBoxFor(x => x.CARDNO, new { @class = "form-control", @readonly=true })
+                    @Html.TextBoxFor(x => x.CARDNO, new { @class = "form-control", @readonly = true })
                 </div>
 
             </div>
-        </div>
-    </div>
-    @Html.HiddenFor(x => x.CHEQUELEAFID)
-    <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
 
-    <div class="panel panel-default">
 
-        <div class="panel-body">
+            @Html.HiddenFor(x => x.CHEQUELEAFID)
+            <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
+            
 
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Pay To</label>
@@ -73,7 +69,7 @@
             <div class="form-group">
                 <label for="birthday" class="col-lg-2 control-label">Card Holder Name</label>
                 <div class="col-lg-4">
-                    @Html.TextBoxFor(x => x.CARDHOLDERNAME, new { @class = "form-control", @placeholder = "Name", @readonly=true })
+                    @Html.TextBoxFor(x => x.CARDHOLDERNAME, new { @class = "form-control", @placeholder = "Name", @readonly = true })
 
                 </div>
                 <label for="name" class="col-lg-2 control-label">Signature Verified</label>
@@ -82,7 +78,7 @@
                 </div>
 
             </div>
-            <div class="form-group" >
+            <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Branch</label>
                 <div class="col-lg-4">
                     @Html.DropDownList("BRANCHCODE", null, "Select Branch", new { @class = "form-control" })
@@ -100,29 +96,28 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <div class="col-lg-2 col-lg-offset-10">
+                    <input type="submit" value="Save" class="btn btn-danger" />
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="col-lg-2 col-lg-offset-10">
-            <input type="submit" value="Save" class="btn btn-danger" />
-        </div>
 
-
-
-
-    </div>
 
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
                 <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1 text-center">
-                        <img id="userPhoto"  alt="" style="width: 40%; height: 100px" />
+                        <img id="userPhoto" alt="" style="width: 50%; height: 120px; border:1px solid black" src="~/assets/img/default.png" />
+                        
                         <hr />
                     </div>
                     <div class="col-lg-4 col-lg-offset-2 text-center">
-                        <img id="sigphoto"  style="width: 100%; height: 100px" />
+                        <img id="sigphoto" style="width: 100%; height: 120px; border: 1px solid black" src="~/assets/img/signaturei.jpeg" />
                         <hr />
                     </div>
                 </div>
@@ -148,7 +143,7 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
-        
+
         $("#cardchequeForm").validate({
             rules: {
 
@@ -187,7 +182,7 @@
 
 
             },
-           
+
             errorPlacement: function (error, element) {
                 if (element.attr("type") == "checkbox") {
                     error.insertAfter("#checkerror").css({ marginLeft: "15px" });
@@ -201,10 +196,10 @@
         });
 
 
-        $('#leafNo').blur(function() {
+        $('#leafNo').blur(function () {
 
             $.ajax({
-                url: '/CardCheque/Home/GetInfo',
+                url: '@Url.Action("GetInfo","Home",new {area="CardCheque"})',
                 type: 'POST',
                 data: { leafno: $(this).val() },
                 beforeSend: function () { $('#spinner').show(); },
@@ -216,15 +211,15 @@
                         $('#CARDHOLDERNAME').val('');
                         $('#userPhoto').removeAttr('src');
                         $('#sigphoto').removeAttr('src');
-                        
+
                     }
                     if (result == 'used') {
                         alert('Leaf Is Already Used');
                     }
                     else {
-   
-                        $("#userPhoto").attr("src", "data:image/png;base64," + result.userPhoto);
-                        $("#sigphoto").attr("src", "data:image/png;base64," + result.signature);
+
+                        $("#userPhoto").attr("src", "data:image/jpg;base64," + result.userPhoto);
+                        $("#sigphoto").attr("src", "data:image/jpg;base64," + result.signature);
                         $('#CARDNO').val(result.cardno);
                         $('#CARDHOLDERNAME').val(result.name);
                         $('#CHEQUELEAFID').val(result.leafID);
@@ -238,11 +233,12 @@
                 }
             });
         });
-        
+
         function OnSuccess(response) {
             alert(response);
 
-            window.location.href = '/CardCheque/Home/Index/';
+            window.location.href = '@Url.Action("Index", "Home", new { area = "CardCheque" })';
+            
         }
         function OnFailure(response) {
             alert(response);

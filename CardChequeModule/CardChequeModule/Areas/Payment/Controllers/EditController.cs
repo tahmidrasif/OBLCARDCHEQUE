@@ -11,6 +11,7 @@ using CardChequeModule.Models;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
+    [Authorize(Roles = "teller")]
     public class EditController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();

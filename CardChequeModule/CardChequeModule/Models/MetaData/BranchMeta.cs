@@ -13,11 +13,6 @@ namespace CardChequeModule.Models.MetaData
 
         [DisplayName("Branch Name")]
         public string BRANCHNAME { get; set; }
-        public string BRANCHMANAGER { get; set; }
-        public string BRANCHCONTACT { get; set; }
-        public string BRANCHMAIL { get; set; }
 
-        [DisplayName("Branch Address")]
-        public string BRANCHADDRESS { get; set; }
     }
 }

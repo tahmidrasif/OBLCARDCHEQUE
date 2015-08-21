@@ -36,8 +36,8 @@ namespace CardChequeModule.Models
     
         public virtual CARDCHEREUISITION CARDCHEREUISITION { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }
         public virtual OCCUSER OCCUSER1 { get; set; }
-        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
     }
 }

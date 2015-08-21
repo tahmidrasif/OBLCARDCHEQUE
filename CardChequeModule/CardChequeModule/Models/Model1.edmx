@@ -4,19 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BRANCHINFO">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TOTALEMPLOYEE" Type="int" />
           <Property Name="BRANCHCODE" Type="nvarchar" MaxLength="50" />
           <Property Name="BRANCHNAME" Type="nvarchar(max)" />
-          <Property Name="BRANCHMANAGER" Type="nvarchar(max)" />
-          <Property Name="BRANCHCONTACT" Type="nvarchar(max)" />
-          <Property Name="BRANCHMAIL" Type="nvarchar(max)" />
-          <Property Name="BRANCHADDRESS" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CARDCHEREUISITION">
           <Key>
@@ -125,9 +120,6 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EMPLOYEEID" Type="nvarchar" MaxLength="50" />
           <Property Name="USERNAME" Type="nvarchar(max)" />
-          <Property Name="PASSWORD" Type="nvarchar" MaxLength="50" />
-          <Property Name="DEPARTMENT" Type="nvarchar(max)" />
-          <Property Name="DESIGNATION" Type="nvarchar(max)" />
           <Property Name="BRANCH" Type="bigint" />
           <Property Name="ISACTIVE" Type="bit" />
           <Property Name="CREATEDBY" Type="bigint" />
@@ -145,6 +137,18 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BRANCHINFO_V">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="BRANCHCODE" />
+            <PropertyRef Name="BRANCHNAME" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BRANCHCODE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BRANCHNAME" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_CARDCHEREUISITION_BRANCHINFO">
           <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="1" />
@@ -231,6 +235,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CARDCHTRAN_BRANCHINFO">
+          <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="0..1" />
+          <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCHINFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHTRAN">
+              <PropertyRef Name="BRANCHCODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHTRAN_BRANCHINFO1">
           <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="0..1" />
           <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -338,6 +354,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OCCUSER_BRANCHINFO">
+          <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="0..1" />
+          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCHINFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OCCUSER">
+              <PropertyRef Name="BRANCH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OCCUSER_OCCENUMERATION">
           <End Role="OCCENUMERATION" Type="Self.OCCENUMERATION" Multiplicity="0..1" />
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="*" />
@@ -350,6 +378,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="OBLCARDCHEQUEModelStoreContainer">
           <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARDCHEREUISITION" EntityType="Self.CARDCHEREUISITION" Schema="dbo" store:Type="Tables" />
@@ -360,6 +419,13 @@
           <EntitySet Name="OCCEVENTLOG" EntityType="Self.OCCEVENTLOG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OCCUSER" EntityType="Self.OCCUSER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BRANCHINFO_V" EntityType="Self.BRANCHINFO_V" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BRANCHINFO_V].[ID] AS [ID], 
+    [BRANCHINFO_V].[BRANCHCODE] AS [BRANCHCODE], 
+    [BRANCHINFO_V].[BRANCHNAME] AS [BRANCHNAME]
+    FROM [dbo].[BRANCHINFO_V] AS [BRANCHINFO_V]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CARDCHEREUISITION_BRANCHINFO" Association="Self.FK_CARDCHEREUISITION_BRANCHINFO">
             <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
@@ -389,6 +455,10 @@
             <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
           </AssociationSet>
           <AssociationSet Name="FK_CARDCHTRAN_BRANCHINFO" Association="Self.FK_CARDCHTRAN_BRANCHINFO">
+            <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
+            <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHTRAN_BRANCHINFO1" Association="Self.FK_CARDCHTRAN_BRANCHINFO1">
             <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
             <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
           </AssociationSet>
@@ -424,13 +494,16 @@
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="OCCEVENTLOG" EntitySet="OCCEVENTLOG" />
           </AssociationSet>
+          <AssociationSet Name="FK_OCCUSER_BRANCHINFO" Association="Self.FK_OCCUSER_BRANCHINFO">
+            <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+          </AssociationSet>
           <AssociationSet Name="FK_OCCUSER_OCCENUMERATION" Association="Self.FK_OCCUSER_OCCENUMERATION">
             <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
             <End Role="OCCUSER" EntitySet="OCCUSER" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OBLCARDCHEQUEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -439,16 +512,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TOTALEMPLOYEE" Type="Int32" />
           <Property Name="BRANCHCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BRANCHNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BRANCHMANAGER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BRANCHCONTACT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BRANCHMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BRANCHADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_CARDCHEREUISITION_BRANCHINFO" FromRole="BRANCHINFO" ToRole="CARDCHEREUISITION" />
           <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO" FromRole="BRANCHINFO" ToRole="CARDCHTRAN" />
+          <NavigationProperty Name="CARDCHTRAN1" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO1" FromRole="BRANCHINFO" ToRole="CARDCHTRAN" />
           <NavigationProperty Name="DEPOSIT" Relationship="Self.FK_DEPOSIT_BRANCHINFO" FromRole="BRANCHINFO" ToRole="DEPOSIT" />
+          <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_OCCUSER_BRANCHINFO" FromRole="BRANCHINFO" ToRole="OCCUSER" />
         </EntityType>
         <EntityType Name="CARDCHEREUISITION">
           <Key>
@@ -471,9 +541,9 @@
           <Property Name="REFERENCENO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_CARDCHEREUISITION_BRANCHINFO" FromRole="CARDCHEREUISITION" ToRole="BRANCHINFO" />
           <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHEREUISITION_OCCENUMERATION" FromRole="CARDCHEREUISITION" ToRole="OCCENUMERATION" />
-          <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
-          <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER1" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
           <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" FromRole="CARDCHEREUISITION" ToRole="CARDCHLEAF" />
+          <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER1" Relationship="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER1" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
         </EntityType>
         <EntityType Name="CARDCHLEAF">
           <Key>
@@ -491,9 +561,9 @@
           <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" FromRole="CARDCHLEAF" ToRole="CARDCHEREUISITION" />
           <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHLEAF_OCCENUMERATION" FromRole="CARDCHLEAF" ToRole="OCCENUMERATION" />
-          <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHLEAF_OCCUSER" FromRole="CARDCHLEAF" ToRole="OCCUSER" />
-          <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_CARDCHLEAF_OCCUSER1" FromRole="CARDCHLEAF" ToRole="OCCUSER" />
           <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CHEQUETRAN_OBLCHEQUELEAF" FromRole="CARDCHLEAF" ToRole="CARDCHTRAN" />
+          <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER" FromRole="CARDCHLEAF" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER1" Relationship="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER1" FromRole="CARDCHLEAF" ToRole="OCCUSER" />
         </EntityType>
         <EntityType Name="CARDCHTRAN">
           <Key>
@@ -516,10 +586,11 @@
           <Property Name="MODIFIEDBY" Type="Int64" />
           <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO" FromRole="CARDCHTRAN" ToRole="BRANCHINFO" />
+          <NavigationProperty Name="BRANCHINFO1" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO1" FromRole="CARDCHTRAN" ToRole="BRANCHINFO" />
           <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CHEQUETRAN_OBLCHEQUELEAF" FromRole="CARDCHTRAN" ToRole="CARDCHLEAF" />
           <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHTRAN_OCCENUMERATION" FromRole="CARDCHTRAN" ToRole="OCCENUMERATION" />
-          <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHTRAN_OCCUSER" FromRole="CARDCHTRAN" ToRole="OCCUSER" />
-          <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_CARDCHTRAN_OCCUSER1" FromRole="CARDCHTRAN" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER" FromRole="CARDCHTRAN" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER1" Relationship="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER1" FromRole="CARDCHTRAN" ToRole="OCCUSER" />
         </EntityType>
         <EntityType Name="DEPOSIT">
           <Key>
@@ -543,7 +614,7 @@
           <Property Name="CARDHOLDERNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="MOBILE" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_DEPOSIT_BRANCHINFO" FromRole="DEPOSIT" ToRole="BRANCHINFO" />
-          <NavigationProperty Name="OCCUSER" Relationship="Self.FK_DEPOSIT_OCCUSER" FromRole="DEPOSIT" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_DEPOSIT_OCCUSER" FromRole="DEPOSIT" ToRole="OCCUSER" />
         </EntityType>
         <EntityType Name="OCCENUMERATION">
           <Key>
@@ -557,7 +628,7 @@
           <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_CARDCHEREUISITION_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="CARDCHEREUISITION" />
           <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CARDCHLEAF_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="CARDCHLEAF" />
           <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CARDCHTRAN_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="CARDCHTRAN" />
-          <NavigationProperty Name="OCCUSER" Relationship="Self.FK_OCCUSER_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_OCCUSER_OCCENUMERATION" FromRole="OCCENUMERATION" ToRole="OCCUSER" />
         </EntityType>
         <EntityType Name="OCCEVENTLOG">
           <Key>
@@ -570,34 +641,7 @@
           <Property Name="DateTime" Type="DateTime" Precision="3" />
           <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="Int64" />
-          <NavigationProperty Name="OCCUSER" Relationship="Self.FK_OCCEVENTLOG_OCCUSER" FromRole="OCCEVENTLOG" ToRole="OCCUSER" />
-        </EntityType>
-        <EntityType Name="OCCUSER">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EMPLOYEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="USERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DEPARTMENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DESIGNATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BRANCH" Type="Int64" />
-          <Property Name="ISACTIVE" Type="Boolean" />
-          <Property Name="CREATEDBY" Type="Int64" />
-          <Property Name="CREATEDON" Type="DateTime" Precision="3" />
-          <Property Name="MODIFIEDBY" Type="Int64" />
-          <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
-          <Property Name="TYPE" Type="Int64" />
-          <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-          <NavigationProperty Name="CARDCHEREUISITION1" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-          <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CARDCHLEAF_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
-          <NavigationProperty Name="CARDCHLEAF1" Relationship="Self.FK_CARDCHLEAF_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
-          <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CARDCHTRAN_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHTRAN" />
-          <NavigationProperty Name="CARDCHTRAN1" Relationship="Self.FK_CARDCHTRAN_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHTRAN" />
-          <NavigationProperty Name="DEPOSIT" Relationship="Self.FK_DEPOSIT_OCCUSER" FromRole="OCCUSER" ToRole="DEPOSIT" />
-          <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_OCCUSER_OCCENUMERATION" FromRole="OCCUSER" ToRole="OCCENUMERATION" />
-          <NavigationProperty Name="OCCEVENTLOG" Relationship="Self.FK_OCCEVENTLOG_OCCUSER" FromRole="OCCUSER" ToRole="OCCEVENTLOG" />
+          <NavigationProperty Name="OCCUSER" Relationship="OBLCARDCHEQUEModel.FK_OCCEVENTLOG_OCCUSER" FromRole="OCCEVENTLOG" ToRole="OCCUSER" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -608,6 +652,16 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="BRANCHINFO_V">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="BRANCHCODE" />
+            <PropertyRef Name="BRANCHNAME" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BRANCHCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BRANCHNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <Association Name="FK_CARDCHEREUISITION_BRANCHINFO">
           <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="1" />
@@ -622,6 +676,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CARDCHTRAN_BRANCHINFO">
+          <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="0..1" />
+          <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCHINFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHTRAN">
+              <PropertyRef Name="BRANCHCODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHTRAN_BRANCHINFO1">
           <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="0..1" />
           <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -657,30 +723,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
-          <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CARDCHEREUISITION">
-              <PropertyRef Name="CREATEDBY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
-          <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CARDCHEREUISITION">
-              <PropertyRef Name="MODIFIEDBY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION">
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="1" />
           <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
@@ -702,30 +744,6 @@
             </Principal>
             <Dependent Role="CARDCHLEAF">
               <PropertyRef Name="LEAFSTATUS" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CARDCHLEAF_OCCUSER">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
-          <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CARDCHLEAF">
-              <PropertyRef Name="CREATEDBY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CARDCHLEAF_OCCUSER1">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
-          <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CARDCHLEAF">
-              <PropertyRef Name="MODIFIEDBY" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -753,67 +771,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHTRAN_OCCUSER">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
-          <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CARDCHTRAN">
-              <PropertyRef Name="CREATEDBY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CARDCHTRAN_OCCUSER1">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
-          <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CARDCHTRAN">
-              <PropertyRef Name="MODIFIEDBY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DEPOSIT_OCCUSER">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
-          <End Role="DEPOSIT" Type="Self.DEPOSIT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DEPOSIT">
-              <PropertyRef Name="CREATEDBY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OCCUSER_OCCENUMERATION">
-          <End Role="OCCENUMERATION" Type="Self.OCCENUMERATION" Multiplicity="0..1" />
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCENUMERATION">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OCCUSER">
-              <PropertyRef Name="TYPE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OCCEVENTLOG_OCCUSER">
-          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
-          <End Role="OCCEVENTLOG" Type="Self.OCCEVENTLOG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OCCUSER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OCCEVENTLOG">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="OBLCARDCHEQUEEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" />
           <EntitySet Name="CARDCHEREUISITION" EntityType="Self.CARDCHEREUISITION" />
           <EntitySet Name="CARDCHLEAF" EntityType="Self.CARDCHLEAF" />
@@ -821,13 +779,17 @@
           <EntitySet Name="DEPOSIT" EntityType="Self.DEPOSIT" />
           <EntitySet Name="OCCENUMERATION" EntityType="Self.OCCENUMERATION" />
           <EntitySet Name="OCCEVENTLOG" EntityType="Self.OCCEVENTLOG" />
-          <EntitySet Name="OCCUSER" EntityType="Self.OCCUSER" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="BRANCHINFO_V" EntityType="Self.BRANCHINFO_V" />
           <AssociationSet Name="FK_CARDCHEREUISITION_BRANCHINFO" Association="Self.FK_CARDCHEREUISITION_BRANCHINFO">
             <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
           <AssociationSet Name="FK_CARDCHTRAN_BRANCHINFO" Association="Self.FK_CARDCHTRAN_BRANCHINFO">
+            <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
+            <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHTRAN_BRANCHINFO1" Association="Self.FK_CARDCHTRAN_BRANCHINFO1">
             <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
             <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
           </AssociationSet>
@@ -839,28 +801,12 @@
             <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER" Association="Self.FK_CARDCHEREUISITION_OCCUSER">
-            <End Role="OCCUSER" EntitySet="OCCUSER" />
-            <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER1" Association="Self.FK_CARDCHEREUISITION_OCCUSER1">
-            <End Role="OCCUSER" EntitySet="OCCUSER" />
-            <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
-          </AssociationSet>
           <AssociationSet Name="FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" Association="Self.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION">
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
             <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
           </AssociationSet>
           <AssociationSet Name="FK_CARDCHLEAF_OCCENUMERATION" Association="Self.FK_CARDCHLEAF_OCCENUMERATION">
             <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
-            <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CARDCHLEAF_OCCUSER" Association="Self.FK_CARDCHLEAF_OCCUSER">
-            <End Role="OCCUSER" EntitySet="OCCUSER" />
-            <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CARDCHLEAF_OCCUSER1" Association="Self.FK_CARDCHLEAF_OCCUSER1">
-            <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
           </AssociationSet>
           <AssociationSet Name="FK_CHEQUETRAN_OBLCHEQUELEAF" Association="Self.FK_CHEQUETRAN_OBLCHEQUELEAF">
@@ -871,44 +817,246 @@
             <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
             <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHTRAN_OCCUSER" Association="Self.FK_CARDCHTRAN_OCCUSER">
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(OBLCARDCHEQUEModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(OBLCARDCHEQUEModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="OCCUSER" EntityType="OBLCARDCHEQUEModel.OCCUSER" />
+          <AssociationSet Name="FK_OCCUSER_BRANCHINFO" Association="OBLCARDCHEQUEModel.FK_OCCUSER_BRANCHINFO">
+            <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER" Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER">
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+            <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER1" Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER1">
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+            <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHLEAF_OCCUSER" Association="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER">
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+            <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHLEAF_OCCUSER1" Association="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER1">
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+            <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHTRAN_OCCUSER" Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHTRAN_OCCUSER1" Association="Self.FK_CARDCHTRAN_OCCUSER1">
+          <AssociationSet Name="FK_CARDCHTRAN_OCCUSER1" Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER1">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
           </AssociationSet>
-          <AssociationSet Name="FK_DEPOSIT_OCCUSER" Association="Self.FK_DEPOSIT_OCCUSER">
+          <AssociationSet Name="FK_DEPOSIT_OCCUSER" Association="OBLCARDCHEQUEModel.FK_DEPOSIT_OCCUSER">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="DEPOSIT" EntitySet="DEPOSIT" />
           </AssociationSet>
-          <AssociationSet Name="FK_OCCUSER_OCCENUMERATION" Association="Self.FK_OCCUSER_OCCENUMERATION">
+          <AssociationSet Name="FK_OCCUSER_OCCENUMERATION" Association="OBLCARDCHEQUEModel.FK_OCCUSER_OCCENUMERATION">
             <End Role="OCCENUMERATION" EntitySet="OCCENUMERATION" />
             <End Role="OCCUSER" EntitySet="OCCUSER" />
           </AssociationSet>
-          <AssociationSet Name="FK_OCCEVENTLOG_OCCUSER" Association="Self.FK_OCCEVENTLOG_OCCUSER">
+          <AssociationSet Name="FK_OCCEVENTLOG_OCCUSER" Association="OBLCARDCHEQUEModel.FK_OCCEVENTLOG_OCCUSER">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="OCCEVENTLOG" EntitySet="OCCEVENTLOG" />
           </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="OCCUSER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMPLOYEEID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BRANCH" Type="Int64" />
+          <Property Name="ISACTIVE" Type="Boolean" />
+          <Property Name="CREATEDBY" Type="Int64" />
+          <Property Name="CREATEDON" Type="DateTime" Precision="3" />
+          <Property Name="MODIFIEDBY" Type="Int64" />
+          <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+          <Property Name="TYPE" Type="Int64" />
+          <NavigationProperty Name="BRANCHINFO" Relationship="OBLCARDCHEQUEModel.FK_OCCUSER_BRANCHINFO" FromRole="OCCUSER" ToRole="BRANCHINFO" />
+          <NavigationProperty Name="CARDCHEREUISITION" Relationship="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+          <NavigationProperty Name="CARDCHEREUISITION1" Relationship="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+          <NavigationProperty Name="CARDCHLEAF" Relationship="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
+          <NavigationProperty Name="CARDCHLEAF1" Relationship="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
+          <NavigationProperty Name="CARDCHTRAN" Relationship="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHTRAN" />
+          <NavigationProperty Name="CARDCHTRAN1" Relationship="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHTRAN" />
+          <NavigationProperty Name="DEPOSIT" Relationship="OBLCARDCHEQUEModel.FK_DEPOSIT_OCCUSER" FromRole="OCCUSER" ToRole="DEPOSIT" />
+          <NavigationProperty Name="OCCENUMERATION" Relationship="OBLCARDCHEQUEModel.FK_OCCUSER_OCCENUMERATION" FromRole="OCCUSER" ToRole="OCCENUMERATION" />
+          <NavigationProperty Name="OCCEVENTLOG" Relationship="OBLCARDCHEQUEModel.FK_OCCEVENTLOG_OCCUSER" FromRole="OCCUSER" ToRole="OCCEVENTLOG" />
+        </EntityType>
+        <Association Name="FK_OCCUSER_BRANCHINFO">
+          <End Type="OBLCARDCHEQUEModel.BRANCHINFO" Role="BRANCHINFO" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCHINFO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OCCUSER">
+              <PropertyRef Name="BRANCH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="1" />
+          <End Type="OBLCARDCHEQUEModel.CARDCHEREUISITION" Role="CARDCHEREUISITION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHEREUISITION">
+              <PropertyRef Name="CREATEDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.CARDCHEREUISITION" Role="CARDCHEREUISITION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHEREUISITION">
+              <PropertyRef Name="MODIFIEDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHLEAF_OCCUSER">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="1" />
+          <End Type="OBLCARDCHEQUEModel.CARDCHLEAF" Role="CARDCHLEAF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHLEAF">
+              <PropertyRef Name="CREATEDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHLEAF_OCCUSER1">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.CARDCHLEAF" Role="CARDCHLEAF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHLEAF">
+              <PropertyRef Name="MODIFIEDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHTRAN_OCCUSER">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.CARDCHTRAN" Role="CARDCHTRAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHTRAN">
+              <PropertyRef Name="CREATEDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHTRAN_OCCUSER1">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.CARDCHTRAN" Role="CARDCHTRAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHTRAN">
+              <PropertyRef Name="MODIFIEDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEPOSIT_OCCUSER">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.DEPOSIT" Role="DEPOSIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DEPOSIT">
+              <PropertyRef Name="CREATEDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OCCUSER_OCCENUMERATION">
+          <End Type="OBLCARDCHEQUEModel.OCCENUMERATION" Role="OCCENUMERATION" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCENUMERATION">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OCCUSER">
+              <PropertyRef Name="TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OCCEVENTLOG_OCCUSER">
+          <End Type="OBLCARDCHEQUEModel.OCCUSER" Role="OCCUSER" Multiplicity="0..1" />
+          <End Type="OBLCARDCHEQUEModel.OCCEVENTLOG" Role="OCCEVENTLOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OCCEVENTLOG">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="OBLCARDCHEQUEModelStoreContainer" CdmEntityContainer="OBLCARDCHEQUEEntities">
+        <EntityContainerMapping StorageEntityContainer="OBLCARDCHEQUEModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="BRANCHINFO">
             <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.BRANCHINFO">
               <MappingFragment StoreEntitySet="BRANCHINFO">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="TOTALEMPLOYEE" ColumnName="TOTALEMPLOYEE" />
                 <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
                 <ScalarProperty Name="BRANCHNAME" ColumnName="BRANCHNAME" />
-                <ScalarProperty Name="BRANCHMANAGER" ColumnName="BRANCHMANAGER" />
-                <ScalarProperty Name="BRANCHCONTACT" ColumnName="BRANCHCONTACT" />
-                <ScalarProperty Name="BRANCHMAIL" ColumnName="BRANCHMAIL" />
-                <ScalarProperty Name="BRANCHADDRESS" ColumnName="BRANCHADDRESS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1018,25 +1166,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OCCUSER">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCUSER">
-              <MappingFragment StoreEntitySet="OCCUSER">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="EMPLOYEEID" ColumnName="EMPLOYEEID" />
-                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
-                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-                <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
-                <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
-                <ScalarProperty Name="BRANCH" ColumnName="BRANCH" />
-                <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
-                <ScalarProperty Name="CREATEDBY" ColumnName="CREATEDBY" />
-                <ScalarProperty Name="CREATEDON" ColumnName="CREATEDON" />
-                <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
-                <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1045,6 +1174,55 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BRANCHINFO_V">
+            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.BRANCHINFO_V">
+              <MappingFragment StoreEntitySet="BRANCHINFO_V">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
+                <ScalarProperty Name="BRANCHNAME" ColumnName="BRANCHNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="OBLCARDCHEQUEModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OBLCARDCHEQUEModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="OBLCARDCHEQUEModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OBLCARDCHEQUEModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OBLCARDCHEQUEModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OBLCARDCHEQUEModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="OCCUSER">
+            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCUSER">
+              <MappingFragment StoreEntitySet="OCCUSER">
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
+                <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
+                <ScalarProperty Name="CREATEDON" ColumnName="CREATEDON" />
+                <ScalarProperty Name="CREATEDBY" ColumnName="CREATEDBY" />
+                <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
+                <ScalarProperty Name="BRANCH" ColumnName="BRANCH" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="EMPLOYEEID" ColumnName="EMPLOYEEID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

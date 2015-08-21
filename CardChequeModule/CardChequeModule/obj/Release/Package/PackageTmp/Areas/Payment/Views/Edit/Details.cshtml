@@ -1,0 +1,130 @@
+﻿@model CardChequeModule.Models.DEPOSIT
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DEPOSIT</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CARDNUMBER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CARDNUMBER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMOUNT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATEDON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATEDON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ISAUTHORIZED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ISAUTHORIZED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REFERENCENUMBER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PAYMENTTYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PAYMENTTYPE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURRENCY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURRENCY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCBANK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCBANK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCBRANCH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCBRANCH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCCHEQUENO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCCHEQUENO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHCODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BRANCHINFO.BRANCHCODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OCCUSER.EMPLOYEEID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OCCUSER.EMPLOYEEID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

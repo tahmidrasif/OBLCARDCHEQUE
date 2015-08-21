@@ -2,137 +2,194 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Models;
+using NPOI.SS.Formula.Functions;
+using PagedList;
 
 namespace CardChequeModule.Areas.Admin.Controllers
 {
     [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
+        OBLCARDCHEQUEEntities db=new OBLCARDCHEQUEEntities();
         public ActionResult Index()
         {
           return View();
         }
-        //private MyDbContext db = new MyDbContext();
 
-        //// GET: /Admin/Home/
+        public ActionResult UserCreation()
+        {
+            ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
+            ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name");
+            return View();
+        }
 
-        //public ActionResult Index()
-        //{
-        //    var occuser = db.OCCUSERS.Include(o => o.OCCROLE);
-        //    return View(occuser.ToList());
-        //}
 
-        //// GET: /Admin/Home/Details/5
-        //public ActionResult Details(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    OCCUSER occuser = db.OCCUSERS.Find(id);
-        //    if (occuser == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(occuser);
-        //}
+        public ActionResult UserInfoByEmpId(string empId)
+        {
+            string userName="";
+            string branchCode="";
+            string branchName = "";
+            try
+            {
+                WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                DataTable dt=oblApp.GetByUserID(empId);
 
-        //// GET: /Admin/Home/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.TYPE = new SelectList(db.ROLES, "ID", "ROLENAME");
-        //    return View();
-        //}
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                   userName= (string) dataRow[3];
+                   branchCode=(string) dataRow[22];
+                   branchName = (string) dataRow[21];
+                }
 
-        //// POST: /Admin/Home/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include="ID,EMPLOYEEID,USERNAME,PASSWORD,DEPARTMENT,DESIGNATION,TYPE,BRANCHCODE,ISACTIVE,CREATEDBY,CREATEDON,MODIFIEDBY,MODIFIEDON")] OCCUSER occuser)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.OCCUSERS.Add(occuser);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+                long branchId=db.BRANCHINFO.Where(x => x.BRANCHCODE == branchCode).Select(x=>x.ID).FirstOrDefault();
 
-        //    ViewBag.TYPE = new SelectList(db.ROLES, "ID", "ROLENAME", occuser.TYPE);
-        //    return View(occuser);
-        //}
+                return Json(new { userName,branchId,branchName}, JsonRequestBehavior.AllowGet);
+              
+            }
+            catch (Exception)
+            {
 
-        //// GET: /Admin/Home/Edit/5
-        //public ActionResult Edit(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    OCCUSER occuser = db.OCCUSERS.Find(id);
-        //    if (occuser == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.TYPE = new SelectList(db.ROLES, "ID", "ROLENAME", occuser.TYPE);
-        //    return View(occuser);
-        //}
+                return Json("null", JsonRequestBehavior.DenyGet);
+            }
+          
+            
+        }
 
-        //// POST: /Admin/Home/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include="ID,EMPLOYEEID,USERNAME,PASSWORD,DEPARTMENT,DESIGNATION,TYPE,BRANCHCODE,ISACTIVE,CREATEDBY,CREATEDON,MODIFIEDBY,MODIFIEDON")] OCCUSER occuser)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(occuser).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.TYPE = new SelectList(db.ROLES, "ID", "ROLENAME", occuser.TYPE);
-        //    return View(occuser);
-        //}
+        [HttpPost]
+        public ActionResult UserCreation(OCCUSER occuser, int? BranchId)
+        {
+            try
+            {
+                OCCUSER user = (OCCUSER)Session["User"];
+                occuser.CREATEDBY = user.ID;
+                occuser.CREATEDON = DateTime.Now.Date;
+                occuser.ISACTIVE = true;
+                occuser.BRANCH = BranchId;
+                if (ModelState.IsValid)
+                {
+                    db.OCCUSER.Add(occuser);
+                    db.SaveChanges();
+                    var msg = "Data saved successfully. ";
 
-        //// GET: /Admin/Home/Delete/5
-        //public ActionResult Delete(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    OCCUSER occuser = db.OCCUSERS.Find(id);
-        //    if (occuser == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(occuser);
-        //}
+                    return Json(msg, JsonRequestBehavior.AllowGet);
+                }
 
-        //// POST: /Admin/Home/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(long id)
-        //{
-        //    OCCUSER occuser = db.OCCUSERS.Find(id);
-        //    db.OCCUSERS.Remove(occuser);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+                ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME",BranchId);
+                ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name",occuser.TYPE);
+                return View();
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new {Area = ""});
+            }
+
+        }
+
+        public ActionResult UserList(int? TYPE, string EMPLOYEEID, string USERNAME, int? page)
+        {
+            ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name");
+            var List = db.OCCUSER.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Where(x=>x.ISACTIVE==true).ToList();
+
+            if (TYPE != null)
+            {
+                List = List.Where(x => x.TYPE == TYPE).ToList();
+                ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name",TYPE);
+                ViewBag.currtype = TYPE;
+                // ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
+            }
+            if (!String.IsNullOrEmpty(EMPLOYEEID))
+            {
+                EMPLOYEEID = EMPLOYEEID.Trim();
+                List = List.Where(x => x.EMPLOYEEID == EMPLOYEEID).ToList();
+                ViewBag.curEmpId = EMPLOYEEID;
+            }
+            if (!String.IsNullOrEmpty(USERNAME))
+            {
+                USERNAME = USERNAME.Trim();
+                List = List.Where(x => x.USERNAME.Contains(USERNAME)).ToList();
+                ViewBag.curUserName = USERNAME;
+            }
+            int pageSize = 3;
+            int pageNumber = ((page ?? 1));
+            return View(List.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult UserDetail(long? id)
+        {
+            try
+            {
+                var user = db.OCCUSER.FirstOrDefault(x => x.ID == id);
+                if (user != null)
+                {
+
+                    ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME",user.BRANCH);
+                    ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name",user.TYPE);
+                    return View(user);
+                }
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+          
+            
+        }
+
+        [HttpPost]
+        public ActionResult UserDetail(OCCUSER aUser, string btnName)
+        {
+            try
+            {
+                OCCUSER user = (OCCUSER)Session["User"];
+                if (String.Equals(btnName, "update"))
+                {
+                    
+                    aUser.MODIFIEDBY = user.ID;
+                    aUser.MODIFIEDON = DateTime.Now.Date;
+                    db.Entry(aUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    var msg = "Successfull Updated";
+                    return Json(msg, JsonRequestBehavior.AllowGet);
+                }
+                if (String.Equals(btnName, "delete"))
+                {
+                    aUser.MODIFIEDBY = user.ID;
+                    aUser.MODIFIEDON = DateTime.Now.Date;
+                    aUser.ISACTIVE = false;
+                    db.Entry(aUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    var msg = "Successfully Removed";
+                    return Json(msg, JsonRequestBehavior.DenyGet);
+                }
+               return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

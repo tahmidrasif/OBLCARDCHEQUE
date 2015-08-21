@@ -11,6 +11,7 @@ using CardChequeModule.Models;
 
 namespace CardChequeModule.Areas.CallCenter.Controllers
 {
+    [Authorize(Roles = "call center")]
     public class HomeController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();

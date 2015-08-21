@@ -1,0 +1,355 @@
+﻿@model CardChequeModule.Models.DEPOSIT
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DEPOSIT</h4>
+    <hr />
+
+
+    <form class="form-horizontal" method="POST" id="chequeForm">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+
+                
+
+
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <div class="form-group">
+                    
+                    <div class="col-lg-4">
+                       
+                    </div>
+                   
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control col-sm-10" name="name" placeholder="Client Name" id="name" />
+                    </div>
+
+                    <label for="name" class="col-lg-2 control-label">Referance Number</label>
+                    <div class="col-lg-4">
+                        @Html.DisplayFor(model => model.REFERENCENUMBER)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday" class="col-lg-2 col-sm-2 control-label">Card Number</label>
+                    <div class="col-lg-10">
+                        @Html.DisplayFor(model => model.CARDNUMBER)
+                    </div>
+
+                </div>
+
+                <div id="result"></div>
+                <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
+
+                <div class="form-group">
+                    <label for="birthday" class="col-lg-2 col-sm-2 control-label">PAYMENT TYPE</label>
+                    <div class="col-lg-10">
+                        @Html.DisplayFor(model => model.PAYMENTTYPE)
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="form-group" id="amountDiv">
+                    <label for="amount" class="col-xs-2 col-sm-2 control-label">Amount</label>
+                    <div class="col-lg-4">
+                        @Html.DisplayFor(model => model.AMOUNT)
+                    </div>
+
+
+                    <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
+                    <div class="col-lg-4">
+                        @Html.DisplayFor(model => model.CURRENCY)
+                    </div>
+                </div>
+
+                @if (Model.PAYMENTTYPE == "Account Debit Instruction")
+                {
+                    <div class="form-group">
+                        <label for="birthday" class="col-lg-2 col-sm-2 control-label">ADI</label>
+                        <div class="col-lg-10">
+                            @Html.DisplayFor(model => model.ADI)
+                        </div>
+
+                    </div>
+                }
+
+
+                @if (Model.PAYMENTTYPE == "Cheque")
+                {
+                    <div class="form-group" id="pdcDiv">
+                    <label for="currency" class="col-xs-2 col-sm-2 control-label">Perticulars of Deposited Cheque</label>
+                    <div class="col-lg-10">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th class="info">BANK</th>
+                                <th class="info">BRANCH</th>
+                                <th class="info">CHEQUE NO.</th>
+                                <th class="info">DATE</th>
+
+                            </tr>
+                            <tr>
+                                <td class="active">
+                                    @Html.DisplayFor(model => model.PDCBANK)
+                                </td>
+                                <td class="active">
+                                   @Html.DisplayFor(model => model.PDCBRANCH)
+                                </td>
+                                <td class="active">
+                                    @Html.DisplayFor(model => model.PDCCHEQUENO)
+                                </td>
+                                <td class="active">
+                                   @Html.DisplayFor(model => model.PDCDATE)
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+                </div>
+                }
+                
+
+            </div>
+        </div>
+
+        <table class="table table-bordered">
+            <tr>
+                <td class="active">
+                    <label class="col-lg-2 control-label">Branch</label>
+                </td>
+                <td class="success">
+                    @Html.DisplayFor(model => model.BRANCH, new { @class = "control-label" })
+                </td>
+                <td class="active">
+                    <label class="col-lg-2 control-label">Date</label>
+                    
+                </td>
+                <td class="success">
+                    @Html.DisplayFor(model => model.CREATEDON)
+                </td>
+            </tr>
+            <tr>
+                <td class="active">
+                  
+                    <label for="birthday" class="col-lg-2 col-sm-2 control-label">PAYMENT TYPE</label>
+                </td>
+                <td class="success">
+                    @Html.DisplayFor(model => model.PAYMENTTYPE)
+                </td>
+                <td class="active">
+                    <label for="name" class="col-lg-2 control-label">Referance Number</label>
+                </td>
+                <td class="success">
+                    @Html.DisplayFor(model => model.REFERENCENUMBER)
+                </td>
+            </tr>
+            
+            
+            <tr>
+                <td class="active">
+                    <label for="birthday" class="col-lg-2 col-sm-2 control-label">Amount</label>
+                </td>
+                <td class="success">
+                    @Html.DisplayFor(model => model.AMOUNT)
+                </td>
+                <td class="active">
+                    <label for="amount" class="col-xs-2 col-sm-2 control-label">Currency</label>
+                </td>
+                <td class="success">
+                   @Html.DisplayFor(model => model.CURRENCY)
+                </td>
+            </tr>
+            
+               
+
+            <tr>
+                <td class="active">...</td>
+                <td class="success">...</td>
+                <td class="active">...</td>
+                <td class="success">...</td>
+            </tr>
+        </table>
+
+
+
+
+
+    </form>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CARDNUMBER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CARDNUMBER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMOUNT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATEDON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATEDON)
+        </dd>
+
+
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REFERENCENUMBER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PAYMENTTYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PAYMENTTYPE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURRENCY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURRENCY)
+        </dd>
+        @if (Model.PAYMENTTYPE == "Account Debit Instruction")
+        {
+        <dt>
+            @Html.DisplayNameFor(model => model.ADI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADI)
+        </dd>
+        }
+
+        @if (Model.PAYMENTTYPE == "Cheque")
+        {
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCBANK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCBANK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCBRANCH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCBRANCH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCCHEQUENO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCCHEQUENO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDCDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDCDATE)
+        </dd>
+        }
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BRANCHINFO.BRANCHNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OCCUSER.USERNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OCCUSER.USERNAME)
+        </dd>
+
+    </dl>*@

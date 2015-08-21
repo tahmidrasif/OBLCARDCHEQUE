@@ -15,21 +15,17 @@ namespace CardChequeModule.Models.MetaData
         [DisplayName("User Name")]
         public string USERNAME { get; set; }
 
-        [DisplayName("Password")]
-        public string PASSWORD { get; set; }
+        public Nullable<long> BRANCH { get; set; }
 
-        [DisplayName("Department")]
-        public string DEPARTMENT { get; set; }
-
-        [DisplayName("Designation")]
-        public string DESIGNATION { get; set; }
-
+        [DisplayName("Is Active?")]
+        public Nullable<bool> ISACTIVE { get; set; }
+    
         [DisplayName("Created By")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<long> CREATEDBY { get; set; }
 
         [DisplayName("Created Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> CREATEDON { get; set; }
 
         [DisplayName("Modfied By")]
@@ -38,8 +34,9 @@ namespace CardChequeModule.Models.MetaData
         [DisplayName("Modified On")]
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
 
-        [DisplayName("type")]
+        [DisplayName("Role")]
         public Nullable<long> TYPE { get; set; }
+    
 
     }
 }

@@ -33,9 +33,6 @@ namespace CardChequeModule.Models
         public long ID { get; set; }
         public string EMPLOYEEID { get; set; }
         public string USERNAME { get; set; }
-        public string PASSWORD { get; set; }
-        public string DEPARTMENT { get; set; }
-        public string DESIGNATION { get; set; }
         public Nullable<long> BRANCH { get; set; }
         public Nullable<bool> ISACTIVE { get; set; }
         public Nullable<long> CREATEDBY { get; set; }
@@ -44,6 +41,7 @@ namespace CardChequeModule.Models
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
         public Nullable<long> TYPE { get; set; }
     
+        public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION1 { get; set; }
         public virtual ICollection<CARDCHLEAF> CARDCHLEAF { get; set; }

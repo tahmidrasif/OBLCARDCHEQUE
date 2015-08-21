@@ -17,7 +17,7 @@
                 @Html.TextBoxFor(model => model.EMPLOYEEID,new {@class="form-control", @placeholder="Employee Id"})
                 <br>
 
-                @Html.PasswordFor(model => model.PASSWORD, new { @class = "form-control", @placeholder = "Password" })
+                @Html.Password("PASSWORD",null, new { @class = "form-control", @placeholder = "Password" })
                 <label class="checkbox">
                     <span class="pull-right">
                         <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>

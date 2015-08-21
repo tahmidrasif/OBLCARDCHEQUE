@@ -8,22 +8,33 @@ using PagedList;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
+    [Authorize(Roles = "teller")]
     public class ListController : Controller
     {
         OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
         private OCCUSER user;
         //
         // GET: /Payment/List/
-        public ActionResult Index(int?BRANCH,string CARDNO,DateTime? CREATEDON,int? page)
+        public ActionResult Index(int?BRANCH,string CARDNO,DateTime? CREATEDON,int? page,int? serial)
         {
-          
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
 
             user = (OCCUSER) Session["User"];
             try
             {
                 var list = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x=>x.ID).ToList();
-                var branch = db.BRANCHINFO.Select(x => new {x.BRANCHNAME, x.ID});
+                var branch = db.BRANCHINFO.Select(x => new {x.BRANCHNAME, x.ID}).OrderBy(x=>x.BRANCHNAME);
                 ViewBag.BRANCH = new SelectList(branch, "ID", "BRANCHNAME");
+
+                if (serial != null)
+                {
+                    @ViewBag.Sln = (pageNumber*pageSize)-9;
+                }
+                else
+                {
+                    @ViewBag.Sln = 1;
+                }
 
                 if (BRANCH != null)
                 {
@@ -42,8 +53,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
                     list = list.Where(x => x.CREATEDON == CREATEDON).ToList();
                     ViewBag.CREATEDON = CREATEDON;
                 }
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
+                
                 return View(list.ToPagedList(pageNumber, pageSize));
                // return View(list);
             }

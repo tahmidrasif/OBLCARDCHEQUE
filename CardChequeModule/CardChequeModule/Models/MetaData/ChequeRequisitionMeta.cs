@@ -28,6 +28,8 @@ namespace CardChequeModule.Models.MetaData
 
         [DisplayName("Remarks")]
         public string REMARKS { get; set; }
+
+        [DisplayName("Is Active?")]
         public bool ISACTIVE { get; set; }
 
         [DisplayName("User Name")]

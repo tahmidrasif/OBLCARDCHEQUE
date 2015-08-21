@@ -9,57 +9,94 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Models;
+using CardChequeModule.OraDBCardInfo;
 
 namespace CardChequeModule.Areas.CardCheque.Controllers
 {
+    [Authorize(Roles = "teller")]
     public class HomeController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
-        TestImageEntities entities=new TestImageEntities();
+        
 
         // GET: /CardCheque/Home/
         public ActionResult Index()
         {
-            OCCUSER user = (OCCUSER) Session["User"];
-            var cardchtran = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID);
-            var status = db.OCCENUMERATION.Where(x => x.Type == "cardcheque");
-            ViewBag.STATUS = new SelectList(status, "ID", "Name");
-            return View(cardchtran.ToList());
+            try
+            {
+                OCCUSER user = (OCCUSER)Session["User"];
+                var cardchtran = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID);
+                var status = db.OCCENUMERATION.Where(x => x.Type == "cardcheque");
+                ViewBag.STATUS = new SelectList(status, "ID", "Name");
+                return View(cardchtran.ToList());
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+           
         }
 
         public ActionResult GetInfo(string leafno)
         {
-            var leafstatus = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.LEAFSTATUS).FirstOrDefault();
-            if (leafstatus == 10)
+            try
             {
-                var chequeId = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.CHEQUEID).FirstOrDefault();
-
-                var leafID = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.ID).FirstOrDefault();
-                var cardno = db.CARDCHEREUISITION.Where(x => x.ID == chequeId).Select(x => x.CARDNO).FirstOrDefault();
-                var imageEntities = entities.ImageTable.FirstOrDefault(x => x.CardNumber == cardno);
-                if (imageEntities != null)
+                var leafstatus = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.LEAFSTATUS).FirstOrDefault();
+                if (leafstatus == 10)
                 {
+                    var chequeId = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.CHEQUEID).FirstOrDefault();
 
-                    string userPhoto = Convert.ToBase64String(imageEntities.Photo);
-                    string signature = Convert.ToBase64String(imageEntities.Signature);
+                    var leafID = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.ID).FirstOrDefault();
+                    var cardno = db.CARDCHEREUISITION.Where(x => x.ID == chequeId).Select(x => x.CARDNO).FirstOrDefault();
 
-                    var model = new { leafID, cardno, userPhoto, signature, name = "XXX" };
-                    return Json(model);
+                    OradbaccessSoap service = new OradbaccessSoapClient();
+                    DataTable dt = service.GetCCardDetail(cardno);
+
+                    if (dt != null)
+                    {
+                        string userPhoto="";
+                        string signature="";
+                        string clientname = "";
+                        foreach (DataRow dataRow in dt.Rows)
+                        {
+                            userPhoto = Convert.ToBase64String((byte[]) dataRow[4]);
+                            signature = Convert.ToBase64String((byte[]) dataRow[5]);
+                            clientname = (string)dataRow[2];
+                        }
+
+
+                        var model = new { leafID, cardno, userPhoto, signature, name = clientname };
+                        return Json(model);
+                    }
+                    return Json(null);
                 }
-                return Json(null);
-            }
 
-            return Json("used");
+                return Json("used");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+           
         }
 
      
         public ActionResult Create()
         {
+            try
+            {
+                List<string> currencyList = new List<string>() { "USD", "BDT" };
+                ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
+                ViewBag.CURRENCY = new SelectList(currencyList);
+                return View();
+            }
+            catch (Exception)
+            {
 
-            List<string> currencyList = new List<string>() { "USD", "BDT" };
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
-            ViewBag.CURRENCY = new SelectList(currencyList);
-            return View();
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+            
         }
 
        
@@ -116,6 +153,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
 
         public ActionResult SearchResult(string CARDNO, int? STATUS, DateTime? CREATEDON)
         {
+
             OCCUSER user = (OCCUSER) Session["User"];
             var searchResult =
                 db.CARDCHTRAN.Include(c => c.BRANCHINFO)

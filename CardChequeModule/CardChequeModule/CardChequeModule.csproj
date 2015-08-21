@@ -47,10 +47,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="ExcelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Administrator\Downloads\ExcelLibrary_20110730\ExcelLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -199,6 +195,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Authorizer\AuthorizerAreaRegistration.cs" />
     <Compile Include="Areas\Authorizer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Authorizer\Models\CardChequeAuthorizrVM.cs" />
     <Compile Include="Areas\CallCenter\CallCenterAreaRegistration.cs" />
     <Compile Include="Areas\CallCenter\Controllers\HomeController.cs" />
     <Compile Include="Areas\CardCheque\CardChequeAreaRegistration.cs" />
@@ -216,6 +213,10 @@
     <Compile Include="Models\BRANCHINFO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BranchInformation.cs" />
+    <Compile Include="Models\BRANCHINFO_V.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CARDCHEREUISITION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -227,9 +228,6 @@
     </Compile>
     <Compile Include="Models\DEPOSIT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ImageTable.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MetaData\BranchMeta.cs" />
     <Compile Include="Models\MetaData\CardChLeafMeta.cs" />
@@ -263,21 +261,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model2.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model2.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model2.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\OCCENUMERATION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -288,6 +271,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -297,17 +286,17 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Service References\OraDBCardInfo\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Web References\WebReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="Web References\WebRef\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -356,6 +345,7 @@
     <Content Include="assets\img\profile-01.jpg" />
     <Content Include="assets\img\profile-02.jpg" />
     <Content Include="assets\img\radio-gray.png" />
+    <Content Include="assets\img\signaturei.jpeg" />
     <Content Include="assets\img\spinner.gif" />
     <Content Include="assets\img\ui-danro.jpg" />
     <Content Include="assets\img\ui-divya.jpg" />
@@ -490,11 +480,6 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <Content Include="assets\.DS_Store" />
     <Content Include="assets\css\.DS_Store" />
@@ -657,6 +642,7 @@
     <Content Include="Areas\CardCheque\Views\Shared\_CardChAppliedList.cshtml" />
     <Content Include="Areas\Authorizer\Views\Home\CardChequePendingRequest.cshtml" />
     <Content Include="Areas\Authorizer\Views\Shared\_AppliedCardChList.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -674,24 +660,11 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <EntityDeploy Include="Models\Model2.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model2.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model2.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model2.edmx</DependentUpon>
-      <LastGenOutput>Model2.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model2.edmx.diagram">
-      <DependentUpon>Model2.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Model2.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model2.edmx</DependentUpon>
-      <LastGenOutput>Model2.cs</LastGenOutput>
-    </Content>
+    <Content Include="Areas\Admin\Views\Home\UserCreation.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\UserList.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\UserDetail.cshtml" />
     <None Include="Properties\PublishProfiles\CCM.pubxml" />
+    <None Include="Properties\PublishProfiles\OblCardCheque.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -724,10 +697,18 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Service References\OraDBCardInfo\Oradbaccess.wsdl" />
     <None Include="Service References\ServiceReference\OBLAPP.disco" />
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
     <None Include="Service References\ServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\OraDBCardInfo\Oradbaccess.disco" />
+    <None Include="Service References\OraDBCardInfo\configuration91.svcinfo" />
+    <None Include="Service References\OraDBCardInfo\configuration.svcinfo" />
+    <None Include="Service References\OraDBCardInfo\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -749,13 +730,7 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\Shared\_SideBarLayoutPartial.cshtml" />
-    <None Include="Web References\WebReference\ccmservice.wsdl" />
-    <None Include="Web References\WebReference\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Web References\WebRef\OBLAPP.disco" />
-    <None Include="Web References\WebReference\ccmservice.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -795,7 +770,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Authorizer\Models\" />
     <Folder Include="Areas\CallCenter\Models\" />
     <Folder Include="Areas\CardCheque\Models\" />
     <Folder Include="Areas\ChequeRequisition\Models\" />
@@ -815,23 +789,13 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\OraDBCardInfo\" />
     <WCFMetadataStorage Include="Service References\ServiceReference\" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://10.156.0.105/FirstWebService/ccmservice.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\WebReference\</RelPath>
-      <UpdateFromURL>http://10.156.0.105/FirstWebService/ccmservice.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>CardChequeModule_WebReference_CCMService</CachedSettingsPropName>
-    </WebReferenceUrl>
     <WebReferenceUrl Include="http://10.156.2.19/OBLUser/OBLAPP.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\WebRef\</RelPath>

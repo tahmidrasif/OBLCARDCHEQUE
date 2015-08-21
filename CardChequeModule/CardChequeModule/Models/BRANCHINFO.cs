@@ -22,20 +22,19 @@ namespace CardChequeModule.Models
         {
             this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
             this.CARDCHTRAN = new HashSet<CARDCHTRAN>();
+            this.CARDCHTRAN1 = new HashSet<CARDCHTRAN>();
             this.DEPOSIT = new HashSet<DEPOSIT>();
+            this.OCCUSER = new HashSet<OCCUSER>();
         }
     
         public long ID { get; set; }
-        public Nullable<int> TOTALEMPLOYEE { get; set; }
         public string BRANCHCODE { get; set; }
         public string BRANCHNAME { get; set; }
-        public string BRANCHMANAGER { get; set; }
-        public string BRANCHCONTACT { get; set; }
-        public string BRANCHMAIL { get; set; }
-        public string BRANCHADDRESS { get; set; }
     
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN1 { get; set; }
         public virtual ICollection<DEPOSIT> DEPOSIT { get; set; }
+        public virtual ICollection<OCCUSER> OCCUSER { get; set; }
     }
 }

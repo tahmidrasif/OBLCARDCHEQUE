@@ -10,8 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Areas.Establishment.Models;
 using CardChequeModule.Models;
-using CardChequeModule.WebReference;
-using ExcelLibrary.SpreadSheet;
+//using CardChequeModule.WebReference;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 //using Microsoft.Office.Interop.Excel;
@@ -23,6 +22,7 @@ using NPOI.XSSF.UserModel;
 
 namespace CardChequeModule.Areas.Establishment.Controllers
 {
+    [Authorize(Roles = "establishment")]
     public class HomeController : Controller
     {
         private JsonSerializer serializer = new JsonSerializer();
@@ -50,7 +50,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
         {
 
             OCCUSER user = (OCCUSER)Session["User"];
-           
+
             try
             {
                 foreach (var id in idList)
@@ -64,7 +64,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                         cheque.LEAFTO = "0000010";
                         cheque.LEAFNEXT = 11;
                     }
-                   
+
                     else
                     {
                         var lastSavedchq = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).OrderByDescending(x => x.MODIFIEDON).FirstOrDefault();
@@ -89,7 +89,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                             leafnext++;
 
                             cheque.LEAFNEXT = leafnext;
-                        }                      
+                        }
                     }
                     cheque.MODIFIEDBY = user.ID;
                     cheque.MODIFIEDON = DateTime.Now;
@@ -115,7 +115,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
             return false;
         }
 
-        
+
 
         public ActionResult DownloadFile()
         {
@@ -143,8 +143,9 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                 foreach (var card in list.Select((value, index) => new { value, index }))
                 {
                     row = sh.CreateRow(card.index + 2);
-                    row.CreateCell(0).SetCellValue(card.value.CARDNO);
-                    row.CreateCell(1).SetCellValue("Test Name");
+
+                    row.CreateCell(0).SetCellValue("OBL");
+                    row.CreateCell(1).SetCellValue(card.value.CARDNO);
                     row.CreateCell(2).SetCellValue(card.value.LEAFNO);
                     row.CreateCell(3).SetCellValue(card.value.BRANCHINFO.BRANCHNAME);
                     row.CreateCell(4).SetCellValue("Test Routing");

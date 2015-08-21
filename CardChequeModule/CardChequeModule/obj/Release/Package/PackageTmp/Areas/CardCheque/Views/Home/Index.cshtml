@@ -1,54 +1,34 @@
-﻿@model CardChequeModule.Models.OCCCARDINFO
+﻿@model IEnumerable<CardChequeModule.Models.CARDCHTRAN>
 
 @{
     ViewBag.Title = "Index";
-    string depositMsg = (string)Session["DepositSaveMsg"];
-    Session["DepositSaveMsg"] = null;
 }
-
-
 
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Search</h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
     </div>
-    <div class="panel-body container">
-
-        @using (Ajax.BeginForm("Find", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-inline", area = "CardCheque" }))
+    <div class="panel-body">
+        @using (Ajax.BeginForm("SearchResult", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "CardCheque" }))
         {
 
-            <div class="col-lg-3">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">Status</label>
+                <div class="col-sm-3">
 
-                <div class="form-group">
-
-                    <label for="cardno">Card Number</label>
-                    <br />
-                    <input type="text" class="form-control" id="cardno" name="cardno" placeholder="Enter Carnd Number">
-
-
+                    @Html.DropDownList("STATUS", null, "Select Status", new { @class = "form-control" })
                 </div>
-
-            </div>
-            <div class="col-lg-3">
-
-
-                <div class="form-group">
-                    <label for="currency">Currency</label>
-                    <br />
-                    <input type="text" class="form-control" id="currency" name="currency" placeholder="Enter Currency">
+                <label class="col-sm-1 control-label">Card Number</label>
+                <div class="col-sm-3">
+                    <input type="text" id="CARDNO" name="CARDNO" class="form-control" />
                 </div>
-
-            </div>
-            <div class="col-lg-3">
-
-
-                <div class="form-group">
-                    <label for="billingDate">Billing Date</label>
-                    <br />
+                <label class="col-sm-1 control-label">Date</label>
+                <div class="col-sm-3">
                     <div class='input-group date' id='datetimepicker1'>
-
-                        <input type='text' class="form-control" placeholder="Billing Date" id="billingDate" name="billingDate" />
+                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" />
+                        @*  @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "Date" })*@
+                        @*@Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control" })*@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -56,84 +36,29 @@
                 </div>
 
             </div>
-            <div class="col-lg-3">
-                
-                .
-                <br />
-              
-                <button type="submit" class="btn btn-success" id="searchBtn">Search</button>
 
-
+            <div class="form-group">
+                <label class="col-sm-11 control-label"></label>
+                <div class="col-sm-1">
+                    <button class="btn btn-info" type="submit">Search</button>
+                </div>
             </div>
-
-
-
-
-
-            @*<div class="form-group">
-                    <label for="billingDate">Billing Date</label>
-                    <input type="text" class="form-control" id="billingDate" name="billingDate" placeholder="dd/mm/YYYY 10/11/2013 ">
-                </div>*@
-
-
-
-
-
-
-
-
-
         }
-
     </div>
 </div>
 
 
 
-
-@*<h4>@ViewBag.InvalidMsg</h4>*@
-
-<h3 style="color: red">@depositMsg</h3>
-
-<div id="Loading" style="display: none">
-    <img src="~/assets/img/spinner.gif" />
-</div>
-
-
 <div id="partialChange">
-
+    @Html.Partial("_CardChAppliedList", Model)
 </div>
-
 
 
 
 @section scripts{
-    @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    <script>
-        function getSearchResults() {
-
-            var data = { cardno: $("#cardno").val(), billingDate: $("#billingDate").val(), currency: $("#currency").val() };
-            $.ajax({
-                type: "GET",
-                data: data,
-                url: '@Url.Action("Find", "Test")',
-                success: function (result) {
-
-                    $("#partialChange").html(result);
-                },
-                error: function (xhr) {
-                    alert("Something is wrong");
-                }
-            });
-        }
-
-        ;
-
-    </script>
 
 }
-
 @section DatetimeCss{
 
     <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
@@ -149,7 +74,13 @@
             $('#datetimepicker1').datetimepicker({
                 format: 'MM/DD/YYYY'
             });
+
         });
+
 
     </script>
 }
+
+
+
+
