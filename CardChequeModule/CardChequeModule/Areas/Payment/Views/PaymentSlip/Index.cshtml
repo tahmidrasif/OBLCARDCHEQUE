@@ -22,6 +22,11 @@
     </div>
 </div>
 
+    @Html.ActionLink("Create New", "Index", "PaymentSlip", new { @class = "btn btn-primary" })
+
+<br/>
+<br/>
+
 @*<form class="form-horizontal" method="POST" id="chequeForm">*@
 @using (Ajax.BeginForm("Index", "PaymentSLip",
     new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "chequeForm", @class = "form-horizontal" }))

@@ -9,6 +9,9 @@
 
 }
 
+<!-- Modal -->
+
+
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -16,7 +19,7 @@
     </div>
     <div class="panel-body">
         @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
-        @using (Html.BeginForm("Index", "List", FormMethod.Get, new { @class = "form-horizontal", area = "Payment" }))
+        @using (Html.BeginForm("Index", "Payment", FormMethod.Get, new { @class = "form-horizontal", area = "Admin" }))
         {
 
             <div class="form-group">
@@ -57,9 +60,7 @@
 <div class="panel panel-default">
     <table class="table table-striped">
         <tr class="success">
-            <th>
-                Serial Number
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.CARDNUMBER)
             </th>
@@ -85,11 +86,9 @@
         {
 
             <tr class="active">
-                <td> 
-                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new{@id= item.Data.ID})
-                </td>
+                
                 <td>
-                    @Html.DisplayFor(modelItem => item.Data.CARDNUMBER)
+                   @Html.ActionLink(@Html.DisplayFor(modelItem => item.Data.CARDNUMBER).ToString(), "", "", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Data.AMOUNT)
@@ -116,11 +115,12 @@
 
 <br />
 
-@Html.PagedListPager((IPagedList) Model, page => Url.Action("Index",
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
             new { page, BRANCH = ViewBag.currentBranch, CARDNO = ViewBag.CARDNO, CREATEDON = ViewBag.CREATEDON, serial = ViewBag.Sln }))
 
 
 @section scripts{
+    
 }
 
 @section DatetimeCss{
@@ -144,5 +144,4 @@
 
     </script>
 }
-
 

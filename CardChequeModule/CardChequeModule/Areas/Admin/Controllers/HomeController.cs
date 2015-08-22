@@ -38,19 +38,21 @@ namespace CardChequeModule.Areas.Admin.Controllers
             string branchName = "";
             try
             {
-                WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
-                DataTable dt=oblApp.GetByUserID(empId);
+                //Tahmid
+                //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                //DataTable dt=oblApp.GetByUserID(empId);
 
-                foreach (DataRow dataRow in dt.Rows)
-                {
-                   userName= (string) dataRow[3];
-                   branchCode=(string) dataRow[22];
-                   branchName = (string) dataRow[21];
-                }
+                //foreach (DataRow dataRow in dt.Rows)
+                //{
+                //   userName= (string) dataRow[3];
+                //   branchCode=(string) dataRow[22];
+                //   branchName = (string) dataRow[21];
+                //}
 
                 long branchId=db.BRANCHINFO.Where(x => x.BRANCHCODE == branchCode).Select(x=>x.ID).FirstOrDefault();
-
-                return Json(new { userName,branchId,branchName}, JsonRequestBehavior.AllowGet);
+                return Json(new { userName = "Rasif", branchId = 5, branchName = "Khatungonj" }, JsonRequestBehavior.AllowGet);
+                
+                //return Json(new { userName,branchId,branchName}, JsonRequestBehavior.AllowGet);
               
             }
             catch (Exception)
@@ -159,7 +161,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     aUser.MODIFIEDON = DateTime.Now.Date;
                     db.Entry(aUser).State = EntityState.Modified;
                     db.SaveChanges();
-                    var msg = "Successfull Updated";
+                    var msg = "Successfully Updated";
                     return Json(msg, JsonRequestBehavior.AllowGet);
                 }
                 if (String.Equals(btnName, "delete"))

@@ -47,7 +47,7 @@ namespace CardChequeModule.Controllers
             WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
-                
+              //Tahmid
               //  var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, PASSWORD);
                 
               //  if (isValid == "Valid")
