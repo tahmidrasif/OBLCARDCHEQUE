@@ -192,8 +192,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CardChequeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PaymentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RequisitionController.cs" />
     <Compile Include="Areas\Authorizer\AuthorizerAreaRegistration.cs" />
     <Compile Include="Areas\Authorizer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Authorizer\Models\CardChequeAuthorizrVM.cs" />
@@ -227,9 +229,11 @@
     <Compile Include="Models\CARDCHTRAN.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CardInformation.cs" />
     <Compile Include="Models\DEPOSIT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConstantConfig.cs" />
     <Compile Include="Models\MetaData\BranchMeta.cs" />
     <Compile Include="Models\MetaData\CardChLeafMeta.cs" />
     <Compile Include="Models\MetaData\CardChTranMeta.cs" />
@@ -664,11 +668,18 @@
     <Content Include="Areas\Admin\Views\Home\UserCreation.cshtml" />
     <Content Include="Areas\Admin\Views\Home\UserList.cshtml" />
     <Content Include="Areas\Admin\Views\Home\UserDetail.cshtml" />
-    <Content Include="Areas\Admin\Views\Payment\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Payment\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Payment\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Payment\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Payment\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CCM.pubxml" />
     <None Include="Properties\PublishProfiles\OblCardCheque.pubxml" />
     <None Include="Properties\Settings.settings">

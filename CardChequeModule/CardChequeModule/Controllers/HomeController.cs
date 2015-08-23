@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using CardChequeModule.Models;
+using CardChequeModule.OraDBCardInfo;
 using CardChequeModule.WebRef;
 using TestTemplate.Models;
 
@@ -14,6 +15,7 @@ namespace CardChequeModule.Controllers
     public class HomeController : Controller
     {
         OBLCARDCHEQUEEntities db=new OBLCARDCHEQUEEntities();
+        OraDBCardInfo.OradbaccessSoapClient cardApi = new OradbaccessSoapClient();
         private int flag;
 
         [Authorize(Roles = "admin")]
@@ -36,6 +38,38 @@ namespace CardChequeModule.Controllers
             return View();
         }
 
+        public ActionResult GetCardDetails(string cardNo)
+        {
+            string name = "";
+            string msg = "";
+            DateTime dob = DateTime.Now;
+            int flag = 0;
+
+            try
+            {
+                DataTable dt = cardApi.GetCCardDetail(cardNo);
+
+                if (dt.Rows.Count > 0)
+                {
+
+                    foreach (DataRow dataRow in dt.Rows)
+                    {
+                        name = (string)dataRow[2];
+                        dob = (DateTime)dataRow[3];
+                    }
+                    msg = "This Card Is Valid, User Name: " + name + " and Date of Birth: " + dob.Date.ToShortDateString();
+                    return Json(new { msg, flag = 1 }, JsonRequestBehavior.AllowGet);
+                }
+                msg = "Invalid Card Number. Please Recheck";
+                return Json(new { msg, flag }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+
+                return Json(exception, JsonRequestBehavior.AllowGet);
+            }
+
+        }
         public ActionResult LogIn()
         {
            

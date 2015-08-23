@@ -13,7 +13,7 @@ using PagedList;
 
 namespace CardChequeModule.Areas.ChequeRequisition.Controllers
 {
-    [Authorize(Roles = "teller")]
+    [Authorize(Roles = "teller,admin")]
     public class HomeController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();

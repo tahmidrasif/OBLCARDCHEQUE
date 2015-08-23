@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using CardChequeModule.Models;
+using Microsoft.SqlServer.Server;
 using PagedList;
 
 namespace CardChequeModule.Areas.Admin.Controllers
@@ -48,7 +50,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 if (!String.IsNullOrEmpty(CARDNO))
                 {
                     CARDNO = CARDNO.Trim();
-                    list = list.Where(x => x.CARDNUMBER == CARDNO).ToList();
+                    list = list.Where(x => x.CARDNUMBER.Contains(CARDNO)).ToList();
                     ViewBag.CARDNO = CARDNO;
                 }
                 if (CREATEDON != null)
@@ -70,104 +72,66 @@ namespace CardChequeModule.Areas.Admin.Controllers
         // GET: Admin/Payment/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                DEPOSIT deposit = db.DEPOSIT.Find(id);
+                if (deposit == null)
+                {
+                    return HttpNotFound();
+                }
+                List<string> currencyList = new List<string>() { "USD", "BDT" };
+
+                ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME", deposit.BRANCH);
+                ViewBag.CURRENCY = new SelectList(currencyList, null, null, deposit.CURRENCY);
+
+                return View(deposit);
             }
-            DEPOSIT dEPOSIT = db.DEPOSIT.Find(id);
-            if (dEPOSIT == null)
+            catch (Exception exception)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error", "Home", new { Area = "" });
             }
-            return View(dEPOSIT);
+      
         }
 
-        // GET: Admin/Payment/Create
-        public ActionResult Create()
-        {
-            ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE");
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID");
-            return View();
-        }
 
-        // POST: Admin/Payment/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CARDNUMBER,BRANCH,CREATEDBY,CREATEDON,ISAUTHORIZED,REFERENCENUMBER,PAYMENTTYPE,AMOUNT,CURRENCY,ADI,PDCBANK,PDCBRANCH,PDCCHEQUENO,PDCDATE,CARDHOLDERNAME,MOBILE")] DEPOSIT dEPOSIT)
+        public ActionResult Details(DEPOSIT deposit, string btnName)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.DEPOSIT.Add(dEPOSIT);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                OCCUSER user = (OCCUSER)Session["User"];
+                if (String.Equals(btnName, "update"))
+                {
+                    db.Entry(deposit).State = EntityState.Modified;
+                    db.SaveChanges();
+                    var msg = "Successfully Updated";
+                    return Json(msg, JsonRequestBehavior.AllowGet);
+                }
+                if (String.Equals(btnName, "delete"))
+                {
+
+                    DEPOSIT depostis = db.DEPOSIT.Find(deposit.ID);
+                    db.DEPOSIT.Remove(depostis);
+                    db.SaveChanges();
+                    var msg = "Successfully Removed";
+                    return Json(msg, JsonRequestBehavior.AllowGet);
+                }
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
             }
 
-            ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", dEPOSIT.BRANCH);
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", dEPOSIT.CREATEDBY);
-            return View(dEPOSIT);
-        }
 
-        // GET: Admin/Payment/Edit/5
-        public ActionResult Edit(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DEPOSIT dEPOSIT = db.DEPOSIT.Find(id);
-            if (dEPOSIT == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", dEPOSIT.BRANCH);
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", dEPOSIT.CREATEDBY);
-            return View(dEPOSIT);
-        }
-
-        // POST: Admin/Payment/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CARDNUMBER,BRANCH,CREATEDBY,CREATEDON,ISAUTHORIZED,REFERENCENUMBER,PAYMENTTYPE,AMOUNT,CURRENCY,ADI,PDCBANK,PDCBRANCH,PDCCHEQUENO,PDCDATE,CARDHOLDERNAME,MOBILE")] DEPOSIT dEPOSIT)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(dEPOSIT).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", dEPOSIT.BRANCH);
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", dEPOSIT.CREATEDBY);
-            return View(dEPOSIT);
-        }
-
-        // GET: Admin/Payment/Delete/5
-        public ActionResult Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DEPOSIT dEPOSIT = db.DEPOSIT.Find(id);
-            if (dEPOSIT == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dEPOSIT);
-        }
-
-        // POST: Admin/Payment/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
-        {
-            DEPOSIT dEPOSIT = db.DEPOSIT.Find(id);
-            db.DEPOSIT.Remove(dEPOSIT);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
