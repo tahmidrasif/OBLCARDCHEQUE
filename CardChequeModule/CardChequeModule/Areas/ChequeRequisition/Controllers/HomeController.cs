@@ -33,7 +33,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 };
                 ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
 
-                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.CREATEDON).ToList();
+                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
 
                 if (STATUS != null)
                 {
@@ -45,7 +45,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 if (!String.IsNullOrEmpty(CARDNO))
                 {
                     CARDNO = CARDNO.Trim();
-                    List = List.Where(x => x.CARDNO == CARDNO).ToList();
+                    List = List.Where(x => x.CARDNO.Contains(CARDNO)).ToList();
                     ViewBag.CARDNO = CARDNO;
                 }
                 if (CREATEDON != null)
@@ -54,7 +54,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                     ViewBag.CREATEDON = CREATEDON;
                 }
 
-                int pageSize = 3;
+                int pageSize = ConstantConfig.PageSizes;
                 int pageNumber = ((page ?? 1));
                 return View(List.ToPagedList(pageNumber, pageSize));
 
@@ -72,12 +72,12 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
             string msg = "";
             DateTime dob = DateTime.Now;
             int flag = 0;
-            
+
             try
             {
                 DataTable dt = cardApi.GetCCardDetail(cardNo);
-            
-                if (dt.Rows.Count>0)
+
+                if (dt.Rows.Count > 0)
                 {
 
                     foreach (DataRow dataRow in dt.Rows)
@@ -85,8 +85,9 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                         name = (string)dataRow[2];
                         dob = (DateTime)dataRow[3];
                     }
-                     msg = "This Card Is Valid, User Name: " + name + " and Date of Birth: " + dob.Date.ToShortDateString();
-                    return Json(new {msg,flag=1}, JsonRequestBehavior.AllowGet);
+                    string userName = "User Name: " + name;
+                    String userDob="Date of Birth: " + dob.Date.ToShortDateString();
+                    return Json(new { userName,userDob, flag = 1 }, JsonRequestBehavior.AllowGet);
                 }
                 msg = "Invalid Card Number. Please Recheck";
                 return Json(new { msg, flag }, JsonRequestBehavior.AllowGet);
@@ -138,13 +139,14 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Form(CARDCHEREUISITION cardchereuisition)
         {
+
+
             try
             {
                 user = (OCCUSER)Session["User"];
-
                 cardchereuisition.LEAFNO = 10;
                 cardchereuisition.ISACTIVE = false;
                 cardchereuisition.CREATEDBY = user.ID;
@@ -155,7 +157,8 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                     {
                         db.CARDCHEREUISITION.Add(cardchereuisition);
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+                        string msg = "Successfully Saved";
+                        return Json(msg, JsonRequestBehavior.AllowGet);
                     }
                     ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", user.BRANCH);
                     CARDCHEREUISITION ccreq = new CARDCHEREUISITION();
@@ -175,7 +178,9 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                     {
                         db.Entry(cardchereuisition).State = EntityState.Modified;
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+                        string msg = "Successfully Updated";
+                        return Json(msg, JsonRequestBehavior.AllowGet);
+
                     }
                     ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", cardchereuisition.BRANCHCODE);
 
@@ -189,6 +194,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
             {
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
+
 
         }
 

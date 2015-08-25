@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using NPOI.HSSF.Model; // InternalWorkbook
 using NPOI.HSSF.UserModel; // HSSFWorkbook, HSSFSheet
 using NPOI.XSSF.UserModel;
+using PagedList;
 
 
 namespace CardChequeModule.Areas.Establishment.Controllers
@@ -38,11 +39,42 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
 
         // GET: /Establishment/Home/
-        public ActionResult Index()
+        
+        public ActionResult Index(string CARDNO, DateTime? CREATEDON, int? BRANCH,int? page)
         {
-            ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
-            var cardchereuisition = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.STATUS == 5);
-            return View(cardchereuisition.ToList());
+            try
+            {
+                ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
+                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 5).OrderByDescending(x=>x.ID).ToList();
+
+                if (!String.IsNullOrEmpty(CARDNO))
+                {
+                    CARDNO = CARDNO.Trim();
+                    List = List.Where(x => x.CARDNO.Contains(CARDNO)).ToList();
+                    ViewBag.CARDNO = CARDNO;
+                }
+                if (CREATEDON != null)
+                {
+                    List = List.Where(x => x.MODIFIEDON == CREATEDON).ToList();
+                    ViewBag.CREATEDON = CREATEDON;
+                }
+                if (BRANCH != null)
+                {
+                    List = List.Where(x => x.BRANCHCODE == BRANCH).ToList();
+                    ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME", BRANCH);
+                    ViewBag.currbranch = BRANCH;
+                }
+                int pageSize = ConstantConfig.PageSizes;
+                int pageNumber = ((page ?? 1));
+                return View(List.ToPagedList(pageNumber, pageSize));
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+         
+       
         }
 
         [HttpPost]

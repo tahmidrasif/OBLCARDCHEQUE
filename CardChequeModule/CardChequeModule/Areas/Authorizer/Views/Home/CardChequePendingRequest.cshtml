@@ -212,7 +212,7 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script>
 
-        $('.checkBoxClass').change(function() {
+        $('.checkBoxClass').change(function () {
             var isChecked = this.checked;
 
             if (isChecked) {
@@ -230,35 +230,35 @@
         $("#myTable tbody tr input:text").prop("disabled", true);
 
         //select all
-        $("#checkall").change(function() {
+        $("#checkall").change(function () {
             $("input:checkbox").prop('checked', $(this).prop("checked"));
 
         });
 
         //check box click button enable disable
-        $(function() {
-            var checkboxes = $(':checkbox:not(#checkall)').click(function(event) {
+        $(function () {
+            var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
                 $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
 
 
             });
 
-            $('#checkall').click(function(event) {
+            $('#checkall').click(function (event) {
                 checkboxes.prop('checked', this.checked);
                 $('#Assign').prop("disabled", !this.checked);
                 $("tr td input:text").prop('disabled', !this.checked);
             });
         });
 
-  
+
         jQuery.validator.addClassRules({
             approvalClass: {
                 required: true
             },
         });
-             
+
         $('#cardChequeAuthForm').validate();
-       
+
 
     </script>
 }

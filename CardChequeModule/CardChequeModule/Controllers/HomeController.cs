@@ -81,11 +81,11 @@ namespace CardChequeModule.Controllers
             WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
-              //Tahmid
-              //  var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, PASSWORD);
+              
+                //var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, PASSWORD);
                 
-              //  if (isValid == "Valid")
-               // {
+                //if (isValid == "Valid")
+                //{
                     ViewBag.flag = "";
                     if (IsUserInSystem(aUser.EMPLOYEEID))
                     {
@@ -116,7 +116,7 @@ namespace CardChequeModule.Controllers
                             }
                         }
 
-                  //  }
+                    //}
                     //else
                     //{
                     //    ViewBag.flag = "User is not in the system";

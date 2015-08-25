@@ -32,7 +32,7 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
             ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
 
 
-            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).ToList();
+            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).OrderByDescending(x => x.MODIFIEDON).ToList();
             if (STATUS != null)
             {
                 List = List.Where(x => x.STATUS == STATUS).ToList();
@@ -52,7 +52,7 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                 ViewBag.CREATEDON = CREATEDON;
             }
 
-            int pageSize = 3;
+            int pageSize = ConstantConfig.PageSizes;
             int pageNumber = ((page ?? 1));
             //return Request.IsAjaxRequest()? (ActionResult) PartialView("_AppliedList", List.ToPagedList(pageNumber, pageSize)): View(List.ToPagedList(pageNumber,pageSize));
             return View(List.ToPagedList(pageNumber, pageSize));
@@ -99,12 +99,12 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
 
 
         #region Cheque CardCheque Authorization
-        public ActionResult CardChequePendingRequest(string CARDNO, DateTime? CREATEDON, int? page,int? STATUS)
+        public ActionResult CardChequePendingRequest(string CARDNO, DateTime? CREATEDON, int? page, int? STATUS)
         {
             var statusID = db.OCCENUMERATION.Where(x => x.Type == "cardcheque");
             ViewBag.STATUS = new SelectList(statusID, "ID", "Name");
             var List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).ToList();
-           //
+            //
 
             if (STATUS != null)
             {
@@ -122,27 +122,27 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                 List = List.Where(x => x.CREATEDON == CREATEDON).ToList();
                 ViewBag.currentDate = CREATEDON;
             }
-     
-            int pageSize = 3;
+
+            int pageSize = ConstantConfig.PageSizes;
             int pageNumber = ((page ?? 1));
             return View(List.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpPost]
-        public ActionResult CardChAuthPost(List<int> ID, List<string> APPROVALNO)
+        public ActionResult CardChAuthPost(List<string> APPROVALNO, List<int> ID)
         {
-          
-            OCCUSER user = (OCCUSER)Session["User"];
-            List<CardChequeAuthorizrVM> vm=new List<CardChequeAuthorizrVM>();
-            for (int i = 0; i < ID.Count; i++)
-            {
-                var aVm = new CardChequeAuthorizrVM() {APPROVALNO = APPROVALNO[i], ID = ID[i]};
-                vm.Add(aVm);
-            }
-
 
             try
             {
+                OCCUSER user = (OCCUSER)Session["User"];
+                List<CardChequeAuthorizrVM> vm = new List<CardChequeAuthorizrVM>();
+                for (int i = 0; i < ID.Count; i++)
+                {
+                    var aVm = new CardChequeAuthorizrVM() { APPROVALNO = APPROVALNO[i], ID = ID[i] };
+                    vm.Add(aVm);
+                }
+
+
                 foreach (var aViewModel in vm)
                 {
                     var cardChq = db.CARDCHTRAN.FirstOrDefault(x => x.ID == aViewModel.ID);
@@ -151,7 +151,8 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                     cardChq.MODIFIEDBY = user.ID;
                     cardChq.MODIFIEDON = DateTime.Now.Date;
                     db.Entry(cardChq).State = EntityState.Modified;
-                    db.SaveChanges();
+            
+                    //db.SaveChanges();
                 }
 
                 return RedirectToAction("CardChequePendingRequest");

@@ -80,7 +80,7 @@
 
 }
 
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal">
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -88,7 +88,7 @@
                 <h4 class="modal-title" id="myModalLabel">Messege</h4>
             </div>
             <div class="modal-body" id="myModalBody">
-               
+
             </div>
             <div class="modal-footer">
                 @Html.ActionLink("Ok", "UserList", "Home", new { area = "Admin" }, new { @class = "btn btn-primary" })

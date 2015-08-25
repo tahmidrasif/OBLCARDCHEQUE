@@ -10,6 +10,9 @@
 }
 
 
+<div align="center" style="margin-top:-30px ">
+    <h3>CREDIT/PREPAID CARD PAYMENT LIST</h3>
+</div>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
@@ -43,12 +46,16 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-11 control-label"></label>
+                <div class="col-sm-1">
+                    @Html.ActionLink("Create New", "Index", "PaymentSlip",new { Area="Payment"}, new { @class = "btn btn-success" })
+                </div>
+                <label class="col-sm-10 control-label"></label>
                 <div class="col-sm-1">
                     <button class="btn btn-info" type="submit" id="searchBtn">Search</button>
                 </div>
             </div>
         }
+       
     </div>
 </div>
 
@@ -114,7 +121,6 @@
     </table>
 </div>
 
-<br />
 
 @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index",
             new { page, BRANCH = ViewBag.currentBranch, CARDNO = ViewBag.CARDNO, CREATEDON = ViewBag.CREATEDON, serial = ViewBag.Sln }))

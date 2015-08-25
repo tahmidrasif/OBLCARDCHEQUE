@@ -41,7 +41,7 @@
 
             @Html.HiddenFor(x => x.CHEQUELEAFID)
             <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
-            
+
 
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Pay To</label>
@@ -86,7 +86,7 @@
                 <label for="name" class="col-lg-2 control-label">Date</label>
                 <div class="col-lg-4">
                     <div class='input-group date' id='datetimepicker1'>
-                        @Html.TextBoxFor(x => x.REQUESTDATE, new { @class = "form-control", @placeholder = "Date" })
+                        @Html.TextBoxFor(x => x.REQUESTDATE, new { @class = "form-control", @placeholder = "MM-DD-YYYY" })
 
                         <span class="input-group-addon" id="mySpan">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -98,7 +98,7 @@
 
             <div class="form-group">
                 <div class="col-lg-2 col-lg-offset-10">
-                    <input type="submit" value="Save" class="btn btn-danger" />
+                    <input type="submit" value="Save" class="btn btn-danger" id="saveButton" />
                 </div>
             </div>
 
@@ -113,7 +113,7 @@
                 <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1 text-center">
                         <img id="userPhoto" alt="" style="width: 50%; height: 120px; border:1px solid black" src="~/assets/img/default.png" />
-                        
+
                         <hr />
                     </div>
                     <div class="col-lg-4 col-lg-offset-2 text-center">
@@ -137,6 +137,41 @@
     </div>
 }
 
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Messege</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+
+            </div>
+            @*<div class="modal-footer">
+                    @Html.ActionLink("Ok", "UserList", "Home", new { area = "Admin" }, new { @class = "btn btn-primary" })
+
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Messege</h4>
+            </div>
+            <div class="modal-body" id="myModalBody1">
+
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Ok", "Index", "Home", new { area = "CardCheque" }, new { @class = "btn btn-primary" })
+
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <script src="~/Scripts/jquery.validate.js"></script>
@@ -195,7 +230,7 @@
 
         });
 
-
+        $('#saveButton').prop('disabled', true);
         $('#leafNo').blur(function () {
 
             $.ajax({
@@ -206,15 +241,32 @@
                 complete: function () { $('#spinner').hide(); },
                 success: function (result) {
                     if (result == null) {
-                        alert("No Data Found");
+
+                        $('#myModalBody').html("No Data Found");
+                        $('#myModal').modal('show');
+
                         $('#CARDNO').val('');
                         $('#CARDHOLDERNAME').val('');
-                        $('#userPhoto').removeAttr('src');
-                        $('#sigphoto').removeAttr('src');
+                        $('#saveButton').prop('disabled', true);
+                        //$('#userPhoto').removeAttr('src');
+                        //$('#sigphoto').removeAttr('src');
 
                     }
                     if (result == 'used') {
-                        alert('Leaf Is Already Used');
+                        // alert('Leaf Is Already Used');
+                        $('#myModalBody').html("Leaf Is Already Used");
+                        $('#myModal').modal('show');
+                        $('#saveButton').prop('disabled', true);
+                        //$('#userPhoto').removeAttr('src');
+                        //$('#sigphoto').removeAttr('src');
+                    }
+                    else if (result == 'invalid') {
+                        //('Invalid Leaf Number');
+                        $('#myModalBody').html("Invalid Leaf Number");
+                        $('#myModal').modal('show');
+                        $('#saveButton').prop('disabled', true);
+                        //$('#userPhoto').removeAttr('src');
+                        //$('#sigphoto').removeAttr('src');
                     }
                     else {
 
@@ -223,7 +275,7 @@
                         $('#CARDNO').val(result.cardno);
                         $('#CARDHOLDERNAME').val(result.name);
                         $('#CHEQUELEAFID').val(result.leafID);
-
+                        $('#saveButton').prop('disabled', false);
                     }
 
 
@@ -235,13 +287,15 @@
         });
 
         function OnSuccess(response) {
-            alert(response);
 
-            window.location.href = '@Url.Action("Index", "Home", new { area = "CardCheque" })';
-            
+            $('#myModalBody1').html(response);
+            $('#myModal1').modal('show');
+           
+
         }
         function OnFailure(response) {
-            alert(response);
+            $('#myModalBody').html(response);
+            $('#myModal').modal('show');
         }
     </script>
 }

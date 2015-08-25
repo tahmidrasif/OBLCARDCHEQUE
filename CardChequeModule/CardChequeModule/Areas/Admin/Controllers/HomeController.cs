@@ -38,21 +38,21 @@ namespace CardChequeModule.Areas.Admin.Controllers
             string branchName = "";
             try
             {
-                //Tahmid
-                //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
-                //DataTable dt=oblApp.GetByUserID(empId);
 
-                //foreach (DataRow dataRow in dt.Rows)
-                //{
-                //   userName= (string) dataRow[3];
-                //   branchCode=(string) dataRow[22];
-                //   branchName = (string) dataRow[21];
-                //}
+                WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                DataTable dt = oblApp.GetByUserID(empId);
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    userName = (string)dataRow[3];
+                    branchCode = (string)dataRow[22];
+                    branchName = (string)dataRow[21];
+                }
 
                 long branchId=db.BRANCHINFO.Where(x => x.BRANCHCODE == branchCode).Select(x=>x.ID).FirstOrDefault();
-                return Json(new { userName = "Rasif", branchId = 5, branchName = "Khatungonj" }, JsonRequestBehavior.AllowGet);
-                
-                //return Json(new { userName,branchId,branchName}, JsonRequestBehavior.AllowGet);
+                //return Json(new { userName = "Rasif", branchId = 5, branchName = "Khatungonj" }, JsonRequestBehavior.AllowGet);
+
+                return Json(new { userName, branchId, branchName }, JsonRequestBehavior.AllowGet);
               
             }
             catch (Exception)

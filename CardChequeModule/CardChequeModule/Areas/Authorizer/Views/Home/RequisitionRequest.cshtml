@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<CardChequeModule.Models.CARDCHEREUISITION>
-           
+
 @using PagedList
 @using PagedList.Mvc
 
@@ -16,8 +16,8 @@
         <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
     </div>
     <div class="panel-body">
-       @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
-         @using (Html.BeginForm("RequisitionRequest", "Home", FormMethod.Get,new { @class = "form-horizontal", area = "Authorizer" }))     
+        @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
+        @using (Html.BeginForm("RequisitionRequest", "Home", FormMethod.Get, new { @class = "form-horizontal", area = "Authorizer" }))
         {
 
             <div class="form-group">
@@ -56,8 +56,8 @@
 
 
 @*<div id="partialChange">
-    @Html.Partial("_AppliedList", Model)
-</div>*@
+        @Html.Partial("_AppliedList", Model)
+    </div>*@
 
 
 
@@ -180,39 +180,29 @@
 
 
 @section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    @*<script>
-        $('body').on('click', '#partialChange .pagination a', function (event) {
-            alert('hello');
-           // event.preventDefault();
-
-            var cardno = $('#CARDNO').val();
-            var sts = $('#STATUS option:selected').val();
-            var date = $('#CREATEDON').val();
-            var searchString;
-            alert(cardno + ' ' + sts + ' ' + date);
-            if ((sts == undefined || sts == '') && (cardno == undefined || cardno == '') && (date == undefined || date == '')) {
-                searchString = '';
-
-            }
-            else {
-                searchString = '?';
-                if ((sts != undefined || sts != '')) {
-                    searchString = 'STATUS=' + sts;
-                } if (cardno != undefined || cardno != '') {
-
-                } if (date != undefined || date != '') {
-
-                }
-                $.ajax({
-                    url: '/Authorizer / Home / RequisitionRequest'+searchString,
-                    success: function (result) {
-                        $('#partialChange').html(result);
-                    }
-                });
-            }
+    <script>
+        $("#checkall").change(function () {
+            $("input:checkbox").prop('checked', $(this).prop("checked"));
         });
-    </script>*@
+
+        //intial button disabled
+        $('#Assign').prop("disabled", true);
+
+        //check box click button enable disable
+        $(function () {
+            var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
+                $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
+            });
+
+            $('#checkall').click(function (event) {
+                checkboxes.prop('checked', this.checked);
+                $('#Assign').prop("disabled", !this.checked);
+            });
+        });
+    </script>
 
 }
 @section DatetimeCss{

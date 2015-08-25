@@ -71,8 +71,11 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
                     }
                     return Json(null);
                 }
-
-                return Json("used");
+                else if (leafstatus == 11)
+                {
+                    return Json("used");
+                }
+                return Json("invalid");
             }
             catch (Exception)
             {
