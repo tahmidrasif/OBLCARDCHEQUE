@@ -147,10 +147,7 @@
             <div class="modal-body" id="myModalBody">
 
             </div>
-            @*<div class="modal-footer">
-                    @Html.ActionLink("Ok", "UserList", "Home", new { area = "Admin" }, new { @class = "btn btn-primary" })
-
-                </div>*@
+            
         </div>
     </div>
 </div>
@@ -188,6 +185,8 @@
                 },
                 CARDNO: {
                     required: true,
+                    digits: true,
+                    maxlength: 18,
 
                 },
                 BENEFICIARINFO: {

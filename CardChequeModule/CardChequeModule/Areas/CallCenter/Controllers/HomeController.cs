@@ -11,7 +11,7 @@ using CardChequeModule.Models;
 
 namespace CardChequeModule.Areas.CallCenter.Controllers
 {
-    [Authorize(Roles = "call center")]
+    [Authorize(Roles = "call center,admin")]
     public class HomeController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
@@ -36,8 +36,8 @@ namespace CardChequeModule.Areas.CallCenter.Controllers
                 foreach (var id in idList)
                 {
                     var cheqreq = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
-                    cheqreq.MODIFIEDBY = user.ID;
-                    cheqreq.MODIFIEDON = DateTime.Now;
+                    cheqreq.CALLCENTERBY = user.ID;
+                    cheqreq.CALLCENTERON = DateTime.Now;
                     cheqreq.ISACTIVE = true;
                     db.Entry(cheqreq).State = EntityState.Modified;
                     db.SaveChanges();

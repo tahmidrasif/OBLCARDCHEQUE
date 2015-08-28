@@ -11,7 +11,7 @@ using CardChequeModule.Models;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
-    [Authorize(Roles = "teller")]
+    [Authorize(Roles = "teller,admin")]
     public class EditController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
@@ -50,7 +50,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
                 {
                     OCCUSER user = (OCCUSER)Session["User"];
                     deposit.CREATEDBY = user.ID;
-                    deposit.ISAUTHORIZED = false;
+                    deposit.ISACTIVE = true;
                    
                     db.Entry(deposit).State = EntityState.Modified;
                     //db.DEPOSIT.AddOrUpdate(x=>x.ID==deposit.ID);

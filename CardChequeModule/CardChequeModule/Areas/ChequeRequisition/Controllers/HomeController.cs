@@ -95,7 +95,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
             catch (Exception exception)
             {
 
-                return Json(exception, JsonRequestBehavior.AllowGet);
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -147,18 +147,24 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
             try
             {
                 user = (OCCUSER)Session["User"];
-                cardchereuisition.LEAFNO = 10;
-                cardchereuisition.ISACTIVE = false;
-                cardchereuisition.CREATEDBY = user.ID;
-
+               
+                
+                int adminFlag = 0;
                 if (cardchereuisition.ID == 0)
                 {
+                    cardchereuisition.LEAFNO = 10;
+                    cardchereuisition.ISACTIVE = false;
+                    cardchereuisition.CREATEDBY = user.ID;
                     if (ModelState.IsValid)
                     {
                         db.CARDCHEREUISITION.Add(cardchereuisition);
                         db.SaveChanges();
+                        if (user.TYPE == 1)
+                        {
+                            adminFlag = 1;
+                        }
                         string msg = "Successfully Saved";
-                        return Json(msg, JsonRequestBehavior.AllowGet);
+                        return Json(new {msg,adminFlag}, JsonRequestBehavior.AllowGet);
                     }
                     ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", user.BRANCH);
                     CARDCHEREUISITION ccreq = new CARDCHEREUISITION();
@@ -174,12 +180,19 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 }
                 else
                 {
+                    var modifiedcardCheque = db.CARDCHEREUISITION.Find(cardchereuisition.ID);
+                   
+                  //
                     if (ModelState.IsValid)
                     {
-                        db.Entry(cardchereuisition).State = EntityState.Modified;
+                        modifiedcardCheque.REMARKS = cardchereuisition.REMARKS;
+                        modifiedcardCheque.REFERENCENO = cardchereuisition.REFERENCENO;
+                        modifiedcardCheque.MODIFIDBY = user.ID;
+                        modifiedcardCheque.MODIFIEDON = DateTime.Now.Date;
+                        db.Entry(modifiedcardCheque).State = EntityState.Modified;
                         db.SaveChanges();
                         string msg = "Successfully Updated";
-                        return Json(msg, JsonRequestBehavior.AllowGet);
+                        return Json(new {msg,adminFlag}, JsonRequestBehavior.AllowGet);
 
                     }
                     ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", cardchereuisition.BRANCHCODE);

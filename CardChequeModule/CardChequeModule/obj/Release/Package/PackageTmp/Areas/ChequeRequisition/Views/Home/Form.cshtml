@@ -9,17 +9,18 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Warning!</strong> Better check yourself, you're not looking too good.
     </div>*@
-<div id="result"></div>
+@*<div id="result"></div>*@
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "chequeReqForm" }))
+@using (Ajax.BeginForm("Form", "Home", 
+    new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { @class = "form-horizontal", id = "chequeReqForm", area = "ChequeRequisition" }))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)*@
     @Html.TextBoxFor(model => model.ID, new { @class = "form-control col-sm-10", @type = "hidden" })
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><span class="glyphicon glyphicon-envelope"> Requisition Form</span></h3>
+            <h3 class="panel-title"><span class="glyphicon glyphicon-envelope"> <strong>Requisition Form</strong></span></h3>
         </div>
         <div class="panel-body">
             <div class="form-group">
@@ -35,7 +36,7 @@
                 <div class="col-sm-6">
                     <div class='input-group date' id='datetimepicker1'>
 
-                        @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "Date" })
+                        @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "MM/DD/YYYY" })
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -106,9 +107,7 @@
                 <h4 class="modal-title" id="myModalLabel">Card Cheque Management</h4>
             </div>
             <div class="modal-body" id="modalBody">
-                <h4>
-                    <p></p>
-                </h4>
+               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
@@ -117,11 +116,64 @@
     </div>
 </div>
 
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Valid Card</h4>
+            </div>
+            <div class="modal-body" id="myModalBody2">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Messege</h4>
+            </div>
+            <div class="modal-body" id="myModalBody1">
+
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Ok", "Index", "Home", new { area = "ChequeRequisition" }, new { @class = "btn btn-primary" })
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal3" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Messege</h4>
+            </div>
+            <div class="modal-body" id="myModalBody3">
+
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Ok", "Index", "Requisition", new { area = "Admin" }, new { @class = "btn btn-primary" })
+
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         $('#saveButton').prop('disabled', true);
         $("#CARDNO").blur(function () {
@@ -136,12 +188,16 @@
                 success: function (result) {
                     if (result.flag == 1) {
                         $('#saveButton').prop('disabled', false);
+                        var msg = result.userName + "<br/>" + result.userDob;
+                        $('#myModalBody2').html(msg);
+                        $('#myModal2').modal('show');
+
                     } else {
                         $('#saveButton').prop('disabled', true);
+                        $('#modalBody').html(result.msg);
+                        $('#myModal').modal('show');
                     }
-                    $('#modalBody').html(result.msg);
-                    $('#myModal').modal('show');
-
+                    
                 },
                 error: function (xhr) {
                     $('#saveButton').prop('disabled', true);
@@ -161,6 +217,8 @@
                 },
                 CARDNO: {
                     required: true,
+                    digits: true,
+                    maxlength: 18,
 
                 },
 
@@ -191,6 +249,25 @@
             //},
 
         });
+        
+        function OnSuccess(response) {
+            //alert(response);
+            if (response.adminFlag == 1) {
+                $('#myModalBody3').html(response.msg);
+                $('#myModal3').modal('show');
+            } else {
+                $('#myModalBody1').html(response.msg);
+                $('#myModal1').modal('show');
+            }
+           
+            //window.location.href = '/ChequeRequisition/Home/Index/';
+        }
+        function OnFailure(response) {
+            alert(response);
+            $('#modalBody').html(response);
+            $('#myModal').modal('show');
+        }
+
     </script>
 }
 

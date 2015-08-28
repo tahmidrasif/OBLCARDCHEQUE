@@ -30,7 +30,7 @@
 
 @*<form class="form-horizontal" method="POST" id="chequeForm" action="/Payment/Edit/Edit">*@
 @using (Ajax.BeginForm("Edit", "Edit",
-    new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "cardchequeForm", @class = "form-horizontal" }))
+    new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "chequeForm", @class = "form-horizontal" }))
 {
     <div class="col-lg-4">
         @Html.TextBoxFor(model => model.ID, new { @class = "form-control col-sm-10", @type = "hidden" })
@@ -325,9 +325,9 @@
 
         $(function () {
             // subscribe to the keydown event
-            $('#CARDNUMBER').keydown(function (e) {
+            $("#CARDNUMBER").blur(function () {
                 // when a key is pressed check if its code was 9 (TAB)
-                if (e.which == 9) {
+        
 
                     $.ajax({
                         url: '@Url.Action("GetCardInfo", "Paymentslip", new { area = "Payment" })',
@@ -341,8 +341,7 @@
                             } else {
                                 $('#CARDHOLDERNAME').val(result.CLIENTNAME);
                                 $('#MOBILE').val(result.MOBILE);
-                                $('#pendingTxtBox').show();
-                                $('#pendingTxtBox').val(result.MINAMNTDUE);
+                               
                             }
 
 
@@ -351,7 +350,7 @@
                             alert("Something is wrong");
                         }
                     });
-                }
+           
             });
         });
         $("#chequeForm").validate({
@@ -365,7 +364,8 @@
                 },
                 CARDNUMBER: {
                     required: true,
-                    digits: true
+                    digits: true,
+                    maxlength: 18,
                 },
                 CURRENCY: {
                     required: true,

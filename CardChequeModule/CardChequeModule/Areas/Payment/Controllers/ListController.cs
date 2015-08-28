@@ -8,7 +8,7 @@ using PagedList;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
-    [Authorize(Roles = "teller")]
+    [Authorize(Roles = "teller,admin")]
     public class ListController : Controller
     {
         OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
@@ -17,7 +17,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
         // GET: /Payment/List/
         public ActionResult Index(int?BRANCH,string CARDNO,DateTime? CREATEDON,int? page,int? serial)
         {
-            int pageSize = 10;
+            int pageSize = ConstantConfig.PageSizes;
             int pageNumber = (page ?? 1);
 
             user = (OCCUSER) Session["User"];

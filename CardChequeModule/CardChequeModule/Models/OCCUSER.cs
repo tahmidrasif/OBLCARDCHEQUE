@@ -7,26 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using CardChequeModule.Models.MetaData;
-
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
     
-    [MetadataType(typeof(UserMeta))]
     public partial class OCCUSER
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OCCUSER()
         {
             this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
             this.CARDCHEREUISITION1 = new HashSet<CARDCHEREUISITION>();
+            this.CARDCHEREUISITION2 = new HashSet<CARDCHEREUISITION>();
+            this.CARDCHEREUISITION3 = new HashSet<CARDCHEREUISITION>();
+            this.CARDCHEREUISITION4 = new HashSet<CARDCHEREUISITION>();
             this.CARDCHLEAF = new HashSet<CARDCHLEAF>();
             this.CARDCHLEAF1 = new HashSet<CARDCHLEAF>();
             this.CARDCHTRAN = new HashSet<CARDCHTRAN>();
             this.CARDCHTRAN1 = new HashSet<CARDCHTRAN>();
+            this.CARDCHTRAN2 = new HashSet<CARDCHTRAN>();
             this.DEPOSIT = new HashSet<DEPOSIT>();
+            this.DEPOSIT1 = new HashSet<DEPOSIT>();
+            this.DEPOSIT2 = new HashSet<DEPOSIT>();
             this.OCCEVENTLOG = new HashSet<OCCEVENTLOG>();
         }
     
@@ -42,14 +45,34 @@ namespace CardChequeModule.Models
         public Nullable<long> TYPE { get; set; }
     
         public virtual BRANCHINFO BRANCHINFO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION4 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHLEAF> CARDCHLEAF { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHLEAF> CARDCHLEAF1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DEPOSIT> DEPOSIT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DEPOSIT> DEPOSIT1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DEPOSIT> DEPOSIT2 { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OCCEVENTLOG> OCCEVENTLOG { get; set; }
     }
 }

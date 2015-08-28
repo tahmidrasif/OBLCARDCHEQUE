@@ -4,13 +4,21 @@
     ViewBag.Title = "Index";
 }
 
+@using PagedList
+@using PagedList.Mvc
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<div align="center" style="margin-top:-30px ">
+    <h3>CHEQUE PAYMENT LIST</h3>
+</div>
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
     </div>
     <div class="panel-body">
-        @using (Ajax.BeginForm("SearchResult", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "CardCheque" }))
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", area = "CardCheque" }))
         {
 
             <div class="form-group">
@@ -21,14 +29,13 @@
                 </div>
                 <label class="col-sm-1 control-label">Card Number</label>
                 <div class="col-sm-3">
-                    <input type="text" id="CARDNO" name="CARDNO" class="form-control" />
+                    <input type="text" id="CARDNO" name="CARDNO" class="form-control" value="@ViewBag.CARDNO" />
                 </div>
                 <label class="col-sm-1 control-label">Date</label>
                 <div class="col-sm-3">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" />
-                        @*  @Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control", @placeholder = "Date" })*@
-                        @*@Html.TextBoxFor(x => x.CREATEDON, new { @class = "form-control" })*@
+                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" value="@ViewBag.CREATEDON" />
+                       
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -48,10 +55,85 @@
 </div>
 
 
+<p>
+    @Html.ActionLink("Create New", "Create", "Home", new { Area = "CardCheque" }, new { @class = "btn btn-success" })
+</p>
 
-<div id="partialChange">
-    @Html.Partial("_CardChAppliedList", Model)
-</div>
+
+<table class="table table-bordered table-striped ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CARDNO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CARDHOLDERNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REQUESTDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BENEFICIARINFO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CARDCHLEAF.LEAFNO)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.APPROVALNO)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class=@( item.STATUS == 13 ? "danger" : "success")>
+            <td>
+                @Html.DisplayFor(modelItem => item.CARDNO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CARDHOLDERNAME)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.REQUESTDATE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BENEFICIARINFO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AMOUNT)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
+            </th>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CARDCHLEAF.LEAFNO)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.APPROVALNO)
+            </th>
+
+
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Home",
+                                          new { page, STATUS = ViewBag.currsts, CARDNO = ViewBag.CARDNO, CREATEDON = ViewBag.CREATEDON }))
+
+
+
+
+
 
 
 

@@ -78,7 +78,7 @@ namespace CardChequeModule.Controllers
         [HttpPost]
         public ActionResult LogIn(OCCUSER aUser, string PASSWORD)
         {
-            WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
+           // WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
               
@@ -104,7 +104,7 @@ namespace CardChequeModule.Controllers
                             }
                             if (user.TYPE == 2)
                             {
-                                return RedirectToAction("Index", "Home", new { Area = "Taler" });
+                                return RedirectToAction("Index", "Home", new { Area = "Teller" });
                             }
                             if (user.TYPE == 9)
                             {
@@ -116,14 +116,14 @@ namespace CardChequeModule.Controllers
                             }
                         }
 
-                    //}
-                    //else
-                    //{
-                    //    ViewBag.flag = "User is not in the system";
-                    //}
+                    }
+                 //   else
+                //    {
+                //        ViewBag.flag = "User is not in the system";
+                //    }
 
 
-                }
+                //}
                 //else if (isValid == "Invalid")
                 //{
                 //    ViewBag.flag = "Invalid User";

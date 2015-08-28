@@ -13,7 +13,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
     </div>
     <div class="panel-body">
         @using (Html.BeginForm("CardChequePendingRequest", "Home", new { @class = "form-horizontal", area = "Authorizer" }))
@@ -56,9 +56,9 @@
 
 @using (Html.BeginForm("CardChAuthPost", "Home", new { area = "Authorizer" }, FormMethod.Post, new { @class = "form-horizontal", id = "cardChequeAuthForm" }))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)*@
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -124,7 +124,8 @@
                             {
                                 <td>
                                     @*<input type="checkbox" class="checkBoxClass" name="[@item.Index].ID" id="idList" value="@item.Data.ID" />*@
-                                    <input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />
+                                    <input type="checkbox" class="checkBoxClass" name="ID" value="@item.Data.ID" id="@item.Index" />
+                                    @*<input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />*@
                                 </td>
                             }
                             else
@@ -158,9 +159,11 @@
                             {
                                 <td>
 
-                                    @*<input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="[@item.Index].APPROVALNO" />*@
-                                    <input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />
-                                </td>
+                                    <input type="text" class="form-control approvalClass @item.Index" name="APPROVALNO" id="@item.Index" />
+                                    @*<input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />*@
+                                    @*<input type="text" class="form-control approvalClass"  name="APPROVALNO" />*@
+
+                                 </td>
                             }
                             else
                             {

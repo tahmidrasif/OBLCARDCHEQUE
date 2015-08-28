@@ -23,7 +23,7 @@ using PagedList;
 
 namespace CardChequeModule.Areas.Establishment.Controllers
 {
-    [Authorize(Roles = "establishment")]
+    [Authorize(Roles = "establishment,admin")]
     public class HomeController : Controller
     {
         private JsonSerializer serializer = new JsonSerializer();
@@ -39,13 +39,13 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
 
         // GET: /Establishment/Home/
-        
-        public ActionResult Index(string CARDNO, DateTime? CREATEDON, int? BRANCH,int? page)
+
+        public ActionResult Index(string CARDNO, DateTime? CREATEDON, int? BRANCH, int? page)
         {
             try
             {
                 ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
-                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 5).OrderByDescending(x=>x.ID).ToList();
+                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 5).OrderByDescending(x => x.ID).ToList();
 
                 if (!String.IsNullOrEmpty(CARDNO))
                 {
@@ -73,8 +73,8 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
-         
-       
+
+
         }
 
         [HttpPost]
@@ -123,11 +123,13 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                             cheque.LEAFNEXT = leafnext;
                         }
                     }
-                    cheque.MODIFIEDBY = user.ID;
-                    cheque.MODIFIEDON = DateTime.Now;
+                    cheque.ESTABLISHMENTBY = user.ID;
+                    cheque.ESTABLISHMENTON = DateTime.Now.Date;
                     db.Entry(cheque).State = EntityState.Modified;
-                    db.SaveChanges();
+                   // db.SaveChanges();
+
                 }
+                DownloadFile(idList);
                 return RedirectToAction("Index");
             }
             catch (Exception exception)
@@ -149,14 +151,14 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
 
 
-        public ActionResult DownloadFile()
+        public ActionResult DownloadFile(IEnumerable<long> idList)
         {
             try
             {
                 wb = new XSSFWorkbook();
                 sh = (XSSFSheet)wb.CreateSheet("Sheet1");
-
-                var row = sh.CreateRow(1);
+                List<CARDCHEREUISITION> list = new List<CARDCHEREUISITION>();
+                var row = sh.CreateRow(0);
 
                 row.CreateCell(0).SetCellValue("Bank");
 
@@ -169,12 +171,16 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                 row.CreateCell(4).SetCellValue("RoutingNo?");
 
                 row.CreateCell(5).SetCellValue("Transaction Code");
-
-                var list = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).ToList();
+                foreach (var id in idList)
+                {
+                    var aItem = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID==id);
+                    list.Add(aItem);
+                }
+               // var list = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).ToList();
 
                 foreach (var card in list.Select((value, index) => new { value, index }))
                 {
-                    row = sh.CreateRow(card.index + 2);
+                    row = sh.CreateRow(card.index +1);
 
                     row.CreateCell(0).SetCellValue("OBL");
                     row.CreateCell(1).SetCellValue(card.value.CARDNO);
@@ -183,30 +189,29 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                     row.CreateCell(4).SetCellValue("Test Routing");
                     row.CreateCell(5).SetCellValue("Test Transaction");
                 }
-                using (var fs = new FileStream(@"C:\test.xls", FileMode.Create, FileAccess.Write))
-                {
-                    wb.Write(fs);
-                }
+                //using (var fs = new FileStream(@"~/test.xls", FileMode.Create, FileAccess.Write))
+                //{
+                //    wb.Write(fs);
+                //}
                 using (var exportData = new MemoryStream())
                 {
 
                     wb.Write(exportData);
+                    exportData.Close();
 
-                    string saveAsFileName = string.Format("MembershipExport-{0:d}.xls", DateTime.Now).Replace("/", "-");
-
-
-                    Response.Clear();
-                    Response.ContentType = "application/octet-stream";
-                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
-
-
-                    Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", saveAsFileName));
-
-
-
-                    Response.BinaryWrite(exportData.GetBuffer());
-
+                    var buffer = exportData.GetBuffer();
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    Response.BinaryWrite(buffer);
                     Response.End();
+
+                    //string saveAsFileName = string.Format("Cheque_Requisition{0:d}.xls", DateTime.Now).Replace("/", "-");
+                    //Response.Clear();
+                    ////Response.ContentType = "application/octet-stream";
+                    //Response.ContentType = "application/vnd.ms-excel";
+                    //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                    //Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", saveAsFileName));
+                    //Response.BinaryWrite(exportData.GetBuffer());
+                    //Response.End();
 
                 }
 
@@ -256,3 +261,23 @@ namespace CardChequeModule.Areas.Establishment.Controllers
         }
     }
 }
+
+//wb.Write(exportData);
+
+//                   string saveAsFileName = string.Format("Cheque_Requisition{0:d}.xls", DateTime.Now).Replace("/", "-");
+
+
+//                   Response.Clear();
+//                   //Response.ContentType = "application/octet-stream";
+//                   Response.ContentType = "application/vnd.ms-excel";
+
+//                   Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+
+//                   Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", saveAsFileName));
+
+
+
+//                   Response.BinaryWrite(exportData.GetBuffer());
+
+//                   Response.End();

@@ -7,17 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using CardChequeModule.Models.MetaData;
-
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
     
-    [MetadataType(typeof(CardChLeafMeta))]
     public partial class CARDCHLEAF
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CARDCHLEAF()
         {
             this.CARDCHTRAN = new HashSet<CARDCHTRAN>();
@@ -33,11 +30,13 @@ namespace CardChequeModule.Models
         public System.DateTime CREATEDON { get; set; }
         public Nullable<long> MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
+        public Nullable<bool> ISDELETE { get; set; }
     
         public virtual CARDCHEREUISITION CARDCHEREUISITION { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
-        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }
         public virtual OCCUSER OCCUSER1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
     }
 }

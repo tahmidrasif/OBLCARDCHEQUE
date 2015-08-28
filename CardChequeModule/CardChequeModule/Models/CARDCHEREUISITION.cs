@@ -7,17 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using CardChequeModule.Models.MetaData;
-
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
     
-    [MetadataType(typeof(ChequeRequisitionMeta))]
     public partial class CARDCHEREUISITION
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CARDCHEREUISITION()
         {
             this.CARDCHLEAF = new HashSet<CARDCHLEAF>();
@@ -35,14 +32,25 @@ namespace CardChequeModule.Models
         public bool ISACTIVE { get; set; }
         public long CREATEDBY { get; set; }
         public System.DateTime CREATEDON { get; set; }
-        public Nullable<long> MODIFIEDBY { get; set; }
-        public Nullable<System.DateTime> MODIFIEDON { get; set; }
+        public Nullable<long> AUTHORIZEDBY { get; set; }
+        public Nullable<System.DateTime> AUTHORIZEDON { get; set; }
         public string REFERENCENO { get; set; }
+        public Nullable<long> ESTABLISHMENTBY { get; set; }
+        public Nullable<System.DateTime> ESTABLISHMENTON { get; set; }
+        public Nullable<long> CALLCENTERBY { get; set; }
+        public Nullable<System.DateTime> CALLCENTERON { get; set; }
+        public Nullable<bool> ISDELETE { get; set; }
+        public Nullable<long> MODIFIDBY { get; set; }
+        public Nullable<System.DateTime> MODIFIEDON { get; set; }
     
         public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
-        public virtual ICollection<CARDCHLEAF> CARDCHLEAF { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }
         public virtual OCCUSER OCCUSER1 { get; set; }
+        public virtual OCCUSER OCCUSER2 { get; set; }
+        public virtual OCCUSER OCCUSER3 { get; set; }
+        public virtual OCCUSER OCCUSER4 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CARDCHLEAF> CARDCHLEAF { get; set; }
     }
 }

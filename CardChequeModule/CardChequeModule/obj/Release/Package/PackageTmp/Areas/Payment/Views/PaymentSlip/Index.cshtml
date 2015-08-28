@@ -3,6 +3,9 @@
     ViewBag.Title = "Cheque";
 }
 
+
+
+
 <div align="center" style="margin-top:-30px ">
     <h3>CREDIT/PREPAID CARD PAYMENT SLIP</h3>
 </div>
@@ -22,9 +25,10 @@
     </div>
 </div>
 
+
 @*<form class="form-horizontal" method="POST" id="chequeForm">*@
 @using (Ajax.BeginForm("Index", "PaymentSLip",
-    new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "chequeForm", @class = "form-horizontal" }))
+        new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "chequeForm", @class = "form-horizontal" }))
 {
     <div class="panel panel-default">
         <div class="panel-body">
@@ -40,7 +44,7 @@
                 <div class="col-lg-4">
                     <div class='input-group date' id='datetimepicker1'>
                         <input type='text' class="form-control" placeholder="MM/DD/YYYY" id="CREATEDON" name="CREATEDON" />
-                
+
                         <span class="input-group-addon" id="mySpan">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -51,14 +55,14 @@
 
 
             </div>
-           
-      
 
-        @*</div>
-    </div>
 
-    <div class="panel panel-default">
-        <div class="panel-body">*@
+
+            @*</div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">*@
 
 
             <div class="form-group">
@@ -170,24 +174,24 @@
 
 
             </div>
-            
+
             <div class="form-group">
-                
+
                 <div class="col-lg-12 col-lg-offset-10">
-                    <input type="submit" value="Save" class="btn btn-danger" />
+                    <input type="submit" value="Save" class="btn btn-danger" id="saveButton"/>
                 </div>
 
             </div>
 
         </div>
     </div>
-
-
-
 }
 
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<br />
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -200,14 +204,58 @@
                 </h4>
             </div>
             <div class="modal-footer">
-                @*<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>*@
+               
+               
                 @Html.ActionLink("Ok", "Index", "List", new { area = "Payment" }, new { @class = "btn btn-primary" })
-                
+             
+               
+
             </div>
         </div>
     </div>
 </div>
-    
+
+
+
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Card Cheque Management</h4>
+            </div>
+            <div class="modal-body" id="modalBody3">
+                <h4>
+                    <p></p>
+                </h4>
+            </div>
+            <div class="modal-footer">
+
+
+                @Html.ActionLink("Ok", "Index", "Payment", new { area = "Admin" }, new { @class = "btn btn-primary" })
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Messege</h4>
+            </div>
+            <div class="modal-body" id="myModalBody1">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 @section scripts{
     <script src="~/Scripts/jquery.validate.js"></script>
@@ -218,7 +266,7 @@
 
             $('#accdebitDiv *').attr('disabled', true);
             $('#pdcDiv *').attr('disabled', true);
-
+            $('#saveButton').prop('disabled', true);
 
             $("input[name$='PAYMENTTYPE']").click(function () {
                 var test = $(this).val();
@@ -268,17 +316,25 @@
 
 
                 $.ajax({
-                    url: '@Url.Action("GetCardInfo", "Paymentslip", new { area = "Payment" })',                   
+                    url: '@Url.Action("GetCardInfo", "Paymentslip", new { area = "Payment" })',
                     type: 'POST',
                     data: { cardNo: $(this).val() },
                     beforeSend: function () { $('#spinner').show(); },
                     complete: function () { $('#spinner').hide(); },
                     success: function (result) {
                         if (result == null) {
-                            alert("No Data Found");
+                            $('#myModalBody1').html('Invalid Card Number');
+                            $('#myModal1').modal('show');
+                            $('#saveButton').prop('disabled', true);
+                        }
+                        else if (result == "") {
+                            $('#myModalBody1').html('No Data Found');
+                            $('#myModal1').modal('show');
+                            $('#saveButton').prop('disabled', true);
                         } else {
 
-                            $('#CARDHOLDERNAME').val(result);                          
+                            $('#CARDHOLDERNAME').val(result);
+                            $('#saveButton').prop('disabled', false);
                         }
                     },
                     error: function (xhr) {
@@ -290,9 +346,15 @@
         });
 
         function OnSuccess(response) {
-            $('#modalBody').html(response);
-            $('#myModal').modal('show');
-           //  window.location.href = '/Payment/List/Index/';
+            if (response.adminFlag == 1) {
+                $('#modalBody3').html(response.msg);
+                $('#myModal3').modal('show');
+            } else {
+                $('#modalBody').html(response.msg);
+                $('#myModal').modal('show');
+            }
+         
+            //  window.location.href = '/Payment/List/Index/';
         }
         function OnFailure(response) {
             alert(response);
@@ -310,7 +372,8 @@
                 },
                 CARDNUMBER: {
                     required: true,
-                    digits: true
+                    digits: true,
+                    maxlength: 18,
                 },
                 CURRENCY: {
                     required: true,

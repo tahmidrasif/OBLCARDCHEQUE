@@ -9,31 +9,13 @@
 
 }
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Card Cheque Management</h4>
-            </div>
-            <div class="modal-body">
-                <h4>
-                    <p></p>
-                </h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
 
-            </div>
-        </div>
-    </div>
+<div align="center" style="margin-top:-30px ">
+    <h3>CREDIT/PREPAID CARD PAYMENT LIST</h3>
 </div>
-
-
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
     </div>
     <div class="panel-body">
         @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
@@ -63,15 +45,17 @@
 
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-11 control-label"></label>
-                <div class="col-sm-1">
-                    <button class="btn btn-info" type="submit" id="searchBtn">Search</button>
-                </div>
-            </div>
+           
         }
+       
     </div>
 </div>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Index", "PaymentSlip", new { Area = "Payment" }, new { @class = "btn btn-success" })
+</p>
 
 
 
@@ -135,27 +119,12 @@
     </table>
 </div>
 
-<br />
 
 @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index",
             new { page, BRANCH = ViewBag.currentBranch, CARDNO = ViewBag.CARDNO, CREATEDON = ViewBag.CREATEDON, serial = ViewBag.Sln }))
 
 
 @section scripts{
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    <script>
-        
-        $(document).ready(function() {
-            //alert("Test");
-                        @*if (@flag == 1) {
-                $('#myModal').modal('show');
-                
-                $.ajax('/Payment/PaymentSlip/DestroySession');
-
-            }*@
-        
-        });
-    </script>
 }
 
 @section DatetimeCss{

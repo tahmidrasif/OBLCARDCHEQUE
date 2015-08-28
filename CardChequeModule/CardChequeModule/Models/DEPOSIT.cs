@@ -7,15 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using CardChequeModule.Models.MetaData;
-
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
     
-    [MetadataType(typeof(DepositMeta))]
     public partial class DEPOSIT
     {
         public long ID { get; set; }
@@ -23,7 +19,7 @@ namespace CardChequeModule.Models
         public Nullable<long> BRANCH { get; set; }
         public Nullable<long> CREATEDBY { get; set; }
         public Nullable<System.DateTime> CREATEDON { get; set; }
-        public Nullable<bool> ISAUTHORIZED { get; set; }
+        public Nullable<bool> ISACTIVE { get; set; }
         public string REFERENCENUMBER { get; set; }
         public string PAYMENTTYPE { get; set; }
         public Nullable<decimal> AMOUNT { get; set; }
@@ -35,8 +31,15 @@ namespace CardChequeModule.Models
         public Nullable<System.DateTime> PDCDATE { get; set; }
         public string CARDHOLDERNAME { get; set; }
         public string MOBILE { get; set; }
+        public Nullable<bool> ISDELETE { get; set; }
+        public Nullable<long> MODIFIEDBY { get; set; }
+        public Nullable<System.DateTime> MODIFIEDON { get; set; }
+        public Nullable<long> AUTHORIZEDBY { get; set; }
+        public Nullable<System.DateTime> AUTHORIZEDON { get; set; }
     
         public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }
+        public virtual OCCUSER OCCUSER1 { get; set; }
+        public virtual OCCUSER OCCUSER2 { get; set; }
     }
 }

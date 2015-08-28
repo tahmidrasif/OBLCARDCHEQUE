@@ -1,0 +1,423 @@
+﻿@using CardChequeModule.Models
+@model CardChequeModule.Areas.Teller.Models.TellerDashBoardVM
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { area = "Teller", id = "tellerDashboard", @class = "form-horizontal" }))
+{
+
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Date Range</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label class="col-sm-1"><strong>Start Date</strong></label>
+                    <div class="col-sm-4">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type="text" id="startDate" name="startDate" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <label class="col-sm-1"><strong>End Date</strong></label>
+                    <div class="col-sm-4">
+                        <div class='input-group date' id='datetimepicker2'>
+                            <input type="text" id="endDate" name="endDate" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">User Information</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-12"><strong>Employee Id</strong></label>
+                    <div class="col-sm-12">@Html.TextBoxFor(x => x.EmployeeId, new { @class = "form-control", @readonly = true })</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12"><strong>Name</strong></label>
+                    <div class="col-sm-12">@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @readonly = true })</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12"><strong>Email</strong></label>
+                    <div class="col-sm-12">@Html.TextBoxFor(x => x.Email, new { @class = "form-control", @readonly = true })</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12"><strong>Job Title</strong></label>
+                    <div class="col-sm-12">@Html.TextBoxFor(x => x.JobTitle, new { @class = "form-control", @readonly = true })</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12"><strong>Present Department Name</strong></label>
+                    <div class="col-sm-12">@Html.TextBoxFor(x => x.PreDeptName, new { @class = "form-control", @readonly = true })</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12"><strong>Branch Name</strong></label>
+                    <div class="col-sm-12">@Html.TextBoxFor(x => x.BranchName, new { @class = "form-control", @readonly = true })</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Visa Payment</h3>
+            </div>
+            <div class="panel-body">
+
+                <table class="table table-striped">
+                    <tr class="success">
+
+                        <th>
+                            @Html.DisplayName("Card Number")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Applied Date")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Amount")
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.Deposits)
+                    {
+
+                        <tr class="active">
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CARDNUMBER)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AMOUNT)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CREATEDON)
+                            </td>
+
+                        </tr>
+
+                    }
+
+
+                </table>
+                <div class="form-group">
+                    <label class="col-sm-11 control-label"></label>
+                    <div class="col-sm-1">
+                        <button class="btn btn-info" type="submit" id="searchBtn" name="btnName" value="visa">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Visa Payment</h3>
+            </div>
+            <div class="panel-body">
+
+                <table class="table table-striped">
+                    <tr class="success">
+
+                        <th>
+                            @Html.DisplayName("Card Number")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Applied Date")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Status")
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.Requisitions)
+                    {
+
+                        <tr class="active">
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CARDNO)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CREATEDON)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
+                            </td>
+
+                        </tr>
+
+                    }
+
+
+                </table>
+                <div class="form-group">
+                    <label class="col-sm-11 control-label"></label>
+                    <div class="col-sm-1">
+                        <button class="btn btn-info" type="submit" id="searchBtn" name="btnName" value="cardcheque">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+
+        });
+        $(function () {
+            $('#datetimepicker2').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+
+        });
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="tab-pane" id="chartjs">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="content-panel" style="background-color:skyblue">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Date Range</h3>
+                    </div>
+                    <div class="panel-body text-center">
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>*@
+
+
+
+@*<div class="col-lg-6">
+        <div class="content-panel" style="background-color:skyblue">
+            <div class="panel-heading">
+                <h3 class="panel-title">Date Range</h3>
+            </div>
+            <div class="panel-body text-center">
+
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<form class="form-horizontal" role="form">
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Date Range</h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label class="col-sm-2"><strong>Start Date</strong></label>
+                        <div class="col-sm-4">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type="text" id="startDate" name="startDate" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="col-sm-2"><strong>End Date</strong></label>
+                        <div class="col-sm-4">
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type="text" id="endDate" name="endDate" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User Information</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-12"><strong>Employee Id</strong></label>
+                        <div class="col-sm-12">@Html.TextBoxFor(x => x.EmployeeId, new { @class = "form-control", @readonly = true })</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12"><strong>Name</strong></label>
+                        <div class="col-sm-12">@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @readonly = true })</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12"><strong>Email</strong></label>
+                        <div class="col-sm-12">@Html.TextBoxFor(x => x.Email, new { @class = "form-control", @readonly = true })</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12"><strong>Job Title</strong></label>
+                        <div class="col-sm-12">@Html.TextBoxFor(x => x.JobTitle, new { @class = "form-control", @readonly = true })</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12"><strong>Present Department Name</strong></label>
+                        <div class="col-sm-12">@Html.TextBoxFor(x => x.PreDeptName, new { @class = "form-control", @readonly = true })</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12"><strong>Branch Name</strong></label>
+                        <div class="col-sm-12">@Html.TextBoxFor(x => x.BranchName, new { @class = "form-control", @readonly = true })</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Visa Payment</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" type="button">
+                                <strong>Total Visa Payment</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPayment)</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" type="button">
+                                <strong>Total Collection</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPaymentCollection)</span>
+                            </button>
+
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Cheque Requisition</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" type="button">
+                                <strong>Total Visa Payment</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPayment)</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" type="button">
+                                <strong>Total Collection</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPaymentCollection)</span>
+                            </button>
+
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Cheque Payment</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" type="button">
+                                <strong>Total Visa Payment</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPayment)</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" type="button">
+                                <strong>Total Collection</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPaymentCollection)</span>
+                            </button>
+
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>*@
+
+

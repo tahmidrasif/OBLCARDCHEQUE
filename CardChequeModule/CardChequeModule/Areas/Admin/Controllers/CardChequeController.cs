@@ -7,139 +7,169 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Models;
+using CardChequeModule.OraDBCardInfo;
+using PagedList;
 
 namespace CardChequeModule.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CardChequeController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
 
         // GET: Admin/CardCheque
-        public ActionResult Index()
+        public ActionResult Index(int? STATUS, string CARDNO, DateTime? CREATEDON, int? page)
         {
-            var cARDCHTRAN = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.BRANCHINFO1).Include(c => c.CARDCHLEAF).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Include(c => c.OCCUSER1);
-            return View(cARDCHTRAN.ToList());
+            try
+            {
+                OCCUSER user = (OCCUSER)Session["User"];
+                var List = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).OrderByDescending(x => x.ID).ToList();
+                var status = db.OCCENUMERATION.Where(x => x.Type == "cardcheque");
+                ViewBag.STATUS = new SelectList(status, "ID", "Name");
+
+                if (STATUS != null)
+                {
+                    List = List.Where(x => x.STATUS == STATUS).ToList();
+                    ViewBag.STATUS = new SelectList(status, "ID", "Name", STATUS);
+                    ViewBag.currsts = STATUS;
+                }
+                if (!String.IsNullOrEmpty(CARDNO))
+                {
+                    CARDNO = CARDNO.Trim();
+                    List = List.Where(x => x.CARDNO.Contains(CARDNO)).ToList();
+                    ViewBag.CARDNO = CARDNO;
+                }
+                if (CREATEDON != null)
+                {
+                    List = List.Where(x => x.CREATEDON == CREATEDON).ToList();
+                    ViewBag.CREATEDON = CREATEDON;
+                }
+                // int pageSize = ConstantConfig.PageSizes;
+                int pageSize = ConstantConfig.PageSizes;
+                int pageNumber = ((page ?? 1));
+                return View(List.ToPagedList(pageNumber, pageSize));
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+
         }
 
-        // GET: Admin/CardCheque/Details/5
+        
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                List<string> currencyList = new List<string>() { "USD", "BDT" };
+                ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
+                ViewBag.CURRENCY = new SelectList(currencyList);
+
+                CARDCHTRAN tran = db.CARDCHTRAN.Find(id);
+                if (tran == null)
+                {
+                    return HttpNotFound();
+                }
+
+
+                return View(tran);
             }
-            CARDCHTRAN cARDCHTRAN = db.CARDCHTRAN.Find(id);
-            if (cARDCHTRAN == null)
+            catch (Exception exception)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error", "Home", new { Area = "" });
             }
-            return View(cARDCHTRAN);
+
         }
 
-        // GET: Admin/CardCheque/Create
-        public ActionResult Create()
-        {
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE");
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE");
-            ViewBag.CHEQUELEAFID = new SelectList(db.CARDCHLEAF, "ID", "LEAFNO");
-            ViewBag.STATUS = new SelectList(db.OCCENUMERATION, "ID", "Type");
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID");
-            ViewBag.MODIFIEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID");
-            return View();
-        }
-
-        // POST: Admin/CardCheque/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CHEQUELEAFID,CARDNO,CARDHOLDERNAME,BRANCHCODE,REQUESTDATE,BENEFICIARINFO,AMOUNT,ISSIGNATUREVERIFIED,STATUS,APPROVALNO,ISACTIVE,CREATEDBY,CREATEDON,MODIFIEDBY,MODIFIEDON")] CARDCHTRAN cARDCHTRAN)
+        public ActionResult Details(CARDCHTRAN tran,string btnName)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.CARDCHTRAN.Add(cARDCHTRAN);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                OCCUSER user = (OCCUSER)Session["User"];
+                if (String.Equals(btnName, "update"))
+                {
+
+                    tran.MODIFIEDBY = user.ID;
+                    tran.MODIFIEDON = DateTime.Now.Date;
+                    tran.ISACTIVE = true;
+                  //  db.Entry(tran).State = EntityState.Modified;
+                  //db.SaveChanges();
+                    var msg = "Successfully Updated";
+                    return Json(msg, JsonRequestBehavior.AllowGet);
+                }
+                if (String.Equals(btnName, "delete"))
+                {
+                    //aUser.MODIFIEDBY = user.ID;
+                    //aUser.MODIFIEDON = DateTime.Now.Date;
+                    //aUser.ISACTIVE = false;
+                    //db.Entry(aUser).State = EntityState.Modified;
+                    //db.SaveChanges();
+                    var msg = "Successfully Removed";
+                    return Json(msg, JsonRequestBehavior.DenyGet);
+                }
+                return Json("", JsonRequestBehavior.DenyGet);
+                return View(tran);
+            }
+            catch (Exception exception)
+            {
+                return Json("Exception", JsonRequestBehavior.DenyGet);
+                return RedirectToAction("Error", "Home", new { Area = "" });
             }
 
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", cARDCHTRAN.BRANCHCODE);
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", cARDCHTRAN.BRANCHCODE);
-            ViewBag.CHEQUELEAFID = new SelectList(db.CARDCHLEAF, "ID", "LEAFNO", cARDCHTRAN.CHEQUELEAFID);
-            ViewBag.STATUS = new SelectList(db.OCCENUMERATION, "ID", "Type", cARDCHTRAN.STATUS);
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", cARDCHTRAN.CREATEDBY);
-            ViewBag.MODIFIEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", cARDCHTRAN.MODIFIEDBY);
-            return View(cARDCHTRAN);
         }
 
-        // GET: Admin/CardCheque/Edit/5
-        public ActionResult Edit(long? id)
+        public ActionResult GetInfo(string leafno)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CARDCHTRAN cARDCHTRAN = db.CARDCHTRAN.Find(id);
-            if (cARDCHTRAN == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", cARDCHTRAN.BRANCHCODE);
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", cARDCHTRAN.BRANCHCODE);
-            ViewBag.CHEQUELEAFID = new SelectList(db.CARDCHLEAF, "ID", "LEAFNO", cARDCHTRAN.CHEQUELEAFID);
-            ViewBag.STATUS = new SelectList(db.OCCENUMERATION, "ID", "Type", cARDCHTRAN.STATUS);
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", cARDCHTRAN.CREATEDBY);
-            ViewBag.MODIFIEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", cARDCHTRAN.MODIFIEDBY);
-            return View(cARDCHTRAN);
-        }
+               // var leafstatus = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.LEAFSTATUS).FirstOrDefault();
+                //if (leafstatus == 10)
+                //{
+                    var chequeId = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.CHEQUEID).FirstOrDefault();
 
-        // POST: Admin/CardCheque/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CHEQUELEAFID,CARDNO,CARDHOLDERNAME,BRANCHCODE,REQUESTDATE,BENEFICIARINFO,AMOUNT,ISSIGNATUREVERIFIED,STATUS,APPROVALNO,ISACTIVE,CREATEDBY,CREATEDON,MODIFIEDBY,MODIFIEDON")] CARDCHTRAN cARDCHTRAN)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(cARDCHTRAN).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", cARDCHTRAN.BRANCHCODE);
-            ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHCODE", cARDCHTRAN.BRANCHCODE);
-            ViewBag.CHEQUELEAFID = new SelectList(db.CARDCHLEAF, "ID", "LEAFNO", cARDCHTRAN.CHEQUELEAFID);
-            ViewBag.STATUS = new SelectList(db.OCCENUMERATION, "ID", "Type", cARDCHTRAN.STATUS);
-            ViewBag.CREATEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", cARDCHTRAN.CREATEDBY);
-            ViewBag.MODIFIEDBY = new SelectList(db.OCCUSER, "ID", "EMPLOYEEID", cARDCHTRAN.MODIFIEDBY);
-            return View(cARDCHTRAN);
-        }
+                    var leafID = db.CARDCHLEAF.Where(x => x.LEAFNO == leafno).Select(x => x.ID).FirstOrDefault();
+                    var cardno = db.CARDCHEREUISITION.Where(x => x.ID == chequeId).Select(x => x.CARDNO).FirstOrDefault();
 
-        // GET: Admin/CardCheque/Delete/5
-        public ActionResult Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CARDCHTRAN cARDCHTRAN = db.CARDCHTRAN.Find(id);
-            if (cARDCHTRAN == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cARDCHTRAN);
-        }
+                    OradbaccessSoap service = new OradbaccessSoapClient();
+                    DataTable dt = service.GetCCardDetail(cardno);
 
-        // POST: Admin/CardCheque/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
-        {
-            CARDCHTRAN cARDCHTRAN = db.CARDCHTRAN.Find(id);
-            db.CARDCHTRAN.Remove(cARDCHTRAN);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+                    if (dt != null)
+                    {
+                        string userPhoto = "";
+                        string signature = "";
+                        string clientname = "";
+                        foreach (DataRow dataRow in dt.Rows)
+                        {
+                            userPhoto = Convert.ToBase64String((byte[])dataRow[4]);
+                            signature = Convert.ToBase64String((byte[])dataRow[5]);
+                            clientname = (string)dataRow[2];
+                        }
 
+
+                        var model = new { leafID, cardno, userPhoto, signature, name = clientname };
+                        return Json(model);
+                    }
+                    return Json(null);
+                //}
+                //else if (leafstatus == 11)
+                //{
+                //    return Json("used");
+                //}
+                //return Json("invalid");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+
+        }
+      
         protected override void Dispose(bool disposing)
         {
             if (disposing)

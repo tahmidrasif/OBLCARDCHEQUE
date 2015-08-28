@@ -13,7 +13,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
     </div>
     <div class="panel-body">
         @using (Html.BeginForm("CardChequePendingRequest", "Home", new { @class = "form-horizontal", area = "Authorizer" }))
@@ -56,9 +56,9 @@
 
 @using (Html.BeginForm("CardChAuthPost", "Home", new { area = "Authorizer" }, FormMethod.Post, new { @class = "form-horizontal", id = "cardChequeAuthForm" }))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)*@
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -123,8 +123,7 @@
                             @if (item.Data.STATUS == 13)
                             {
                                 <td>
-                                    @*<input type="checkbox" class="checkBoxClass" name="[@item.Index].ID" id="idList" value="@item.Data.ID" />*@
-                                    <input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />
+                                     <input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />
                                 </td>
                             }
                             else
@@ -157,10 +156,8 @@
                             @if (item.Data.STATUS == 13)
                             {
                                 <td>
-
-                                    @*<input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="[@item.Index].APPROVALNO" />*@
-                                    <input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />
-                                </td>
+                                    <input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />                                  
+                                 </td>
                             }
                             else
                             {
@@ -212,7 +209,7 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script>
 
-        $('.checkBoxClass').change(function () {
+        $('.checkBoxClass').change(function() {
             var isChecked = this.checked;
 
             if (isChecked) {
@@ -230,35 +227,35 @@
         $("#myTable tbody tr input:text").prop("disabled", true);
 
         //select all
-        $("#checkall").change(function () {
+        $("#checkall").change(function() {
             $("input:checkbox").prop('checked', $(this).prop("checked"));
 
         });
 
         //check box click button enable disable
-        $(function () {
-            var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
+        $(function() {
+            var checkboxes = $(':checkbox:not(#checkall)').click(function(event) {
                 $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
 
 
             });
 
-            $('#checkall').click(function (event) {
+            $('#checkall').click(function(event) {
                 checkboxes.prop('checked', this.checked);
                 $('#Assign').prop("disabled", !this.checked);
                 $("tr td input:text").prop('disabled', !this.checked);
             });
         });
 
-
+  
         jQuery.validator.addClassRules({
             approvalClass: {
                 required: true
             },
         });
-
+             
         $('#cardChequeAuthForm').validate();
-
+       
 
     </script>
 }

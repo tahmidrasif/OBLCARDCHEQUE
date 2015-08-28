@@ -15,7 +15,7 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
     </div>
     <div class="panel-body">
         @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
@@ -26,7 +26,7 @@
                 <label class="col-sm-1 control-label">Branch</label>
                 <div class="col-sm-3">
 
-                    @Html.DropDownList("BRANCH", ViewBag.BRANCH as SelectList, "Select Branch", new { @class = "form-control" })
+                    @Html.DropDownList("BRANCH", ViewBag.BRANCH as SelectList, "Select All", new { @class = "form-control" })
                 </div>
                 <label class="col-sm-1 control-label">Card Number</label>
                 <div class="col-sm-3">
@@ -44,20 +44,23 @@
                 </div>
 
             </div>
-
             <div class="form-group">
-                <div class="col-sm-1">
-                    @Html.ActionLink("Create New", "Index", "PaymentSlip",new { Area="Payment"}, new { @class = "btn btn-success" })
-                </div>
-                <label class="col-sm-10 control-label"></label>
+                <label class="col-sm-11 control-label"></label>
                 <div class="col-sm-1">
                     <button class="btn btn-info" type="submit" id="searchBtn">Search</button>
                 </div>
             </div>
+
         }
-       
+
     </div>
 </div>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Index", "PaymentSlip", new { Area = "Payment" }, new { @class = "btn btn-success" })
+</p>
 
 
 
@@ -92,8 +95,8 @@
         {
 
             <tr class="active">
-                <td> 
-                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new{@id= item.Data.ID})
+                <td>
+                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Data.CARDNUMBER)
@@ -122,7 +125,7 @@
 </div>
 
 
-@Html.PagedListPager((IPagedList) Model, page => Url.Action("Index",
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
             new { page, BRANCH = ViewBag.currentBranch, CARDNO = ViewBag.CARDNO, CREATEDON = ViewBag.CREATEDON, serial = ViewBag.Sln }))
 
 

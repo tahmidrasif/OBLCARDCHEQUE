@@ -5,193 +5,193 @@
 
 
 
-    
-    <div align="center" style="margin-top:-30px ">
-        <h3>CREDIT/PREPAID CARD PAYMENT SLIP</h3>
-    </div>
 
+<div align="center" style="margin-top:-30px ">
+    <h3>CREDIT/PREPAID CARD PAYMENT SLIP</h3>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-lg-3">
+            <img src="~/assets/img/obl.jpg" class="" alt="Responsive image">
+
+        </div>
+        <div class="col-lg-6">
+
+        </div>
+        <div class="col-lg-3" align="right">
+            <img src="~/assets/img/visa.jpg" class="" alt="Responsive image">
+        </div>
+    </div>
+</div>
+
+
+@*<form class="form-horizontal" method="POST" id="chequeForm">*@
+@using (Ajax.BeginForm("Index", "PaymentSLip",
+        new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "chequeForm", @class = "form-horizontal" }))
+{
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="col-lg-3">
-                <img src="~/assets/img/obl.jpg" class="" alt="Responsive image">
+
+
+            <div class="form-group" id="coerror">
+                <label for="name" class="col-lg-2 control-label">Branch</label>
+                <div class="col-lg-4">
+                    @Html.DropDownList("BRANCH", null, "Select Branch", new { @class = "form-control" })
+                </div>
+
+                <label for="name" class="col-lg-2 control-label">Date</label>
+                <div class="col-lg-4">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" placeholder="MM/DD/YYYY" id="CREATEDON" name="CREATEDON" />
+
+                        <span class="input-group-addon" id="mySpan">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                    @Html.ValidationMessageFor(m => m.CREATEDON)
+                </div>
+
 
             </div>
-            <div class="col-lg-6">
+
+
+
+            @*</div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">*@
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CARDHOLDERNAME, new { @class = "col-lg-2 control-label" })
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.CARDHOLDERNAME, new { @class = "form-control col-sm-10" })
+                </div>
+
+
+                @Html.LabelFor(model => model.MOBILE, new { @class = "col-lg-2 control-label" })
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.MOBILE, new { @class = "form-control col-sm-10" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthday" class="col-lg-2 col-sm-2 control-label">Card Number</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control col-sm-10" placeholder="" id="CARDNUMBER" name="CARDNUMBER" />
+                </div>
 
             </div>
-            <div class="col-lg-3" align="right">
-                <img src="~/assets/img/visa.jpg" class="" alt="Responsive image">
+
+            <div id="result"></div>
+            <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
+
+            <div class="form-group" id="radioError">
+                <label for="birthday" class="col-xs-3 col-sm-2 control-label">Payment Type</label>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="Cash">Cash</label>
+                </div>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="Cheque">Cheque</label>
+                </div>
+                <div class="col-xs-3">
+                    <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="ADI">Account Debit Instruction</label>
+                </div>
             </div>
+
+            <div class="form-group">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-4">
+                    <label for="paymentType" class="error" id="errmsg" style="display: none"></label>
+                </div>
+            </div>
+
+
+
+            <div class="form-group" id="amountDiv">
+                <label for="amount" class="col-xs-2 col-sm-2 control-label">Amount</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" placeholder="" id="AMOUNT" name="AMOUNT" />
+                </div>
+
+
+                <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
+                <div class="col-lg-4">
+                    @Html.DropDownList("CURRENCY", null, "Select Currency", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group" id="accdebitDiv">
+
+
+                <label class="col-xs-2 col-sm-2 control-label">Account Debit Instruction</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control col-sm-3" placeholder="" id="ADI" name="ADI" />
+                </div>
+
+            </div>
+
+
+            <div class="form-group" id="pdcDiv">
+                <label for="currency" class="col-xs-2 col-sm-2 control-label">Perticulars of Deposited Cheque</label>
+                <div class="col-lg-10">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="info">BANK</th>
+                            <th class="info">BRANCH</th>
+                            <th class="info">CHEQUE NO.</th>
+                            <th class="info">DATE</th>
+
+                        </tr>
+                        <tr>
+                            <td class="active">
+                                <textarea class="form-control" rows="3" id="PDCBANK" name="PDCBANK" style="width: auto"></textarea>
+                            </td>
+                            <td class="active">
+                                <textarea class="form-control" rows="3" id="PDCBRANCH" name="PDCBRANCH" style="width: auto"></textarea>
+                            </td>
+                            <td class="active">
+                                <textarea class="form-control" rows="3" id="PDCCHEQUENO" name="PDCCHEQUENO" style="width: auto"></textarea>
+                            </td>
+                            <td class="active">
+                                @*  <textarea class="form-control" rows="3" id="PDCDATE" name="PDCDATE"></textarea>*@
+                                <div class='input-group date' id='datetimepicker2'>
+
+                                    <input type='text' class="form-control" id="PDCDATE" name="PDCDATE" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+
+
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-lg-12 col-lg-offset-10">
+                    <input type="submit" value="Save" class="btn btn-danger" id="saveButton"/>
+                </div>
+
+            </div>
+
         </div>
     </div>
+}
 
 
-    @*<form class="form-horizontal" method="POST" id="chequeForm">*@
-    @using (Ajax.BeginForm("Index", "PaymentSLip",
-        new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Payment", id = "chequeForm", @class = "form-horizontal" }))
-    {
-        <div class="panel panel-default">
-            <div class="panel-body">
+<br />
 
 
-                <div class="form-group" id="coerror">
-                    <label for="name" class="col-lg-2 control-label">Branch</label>
-                    <div class="col-lg-4">
-                        @Html.DropDownList("BRANCH", null, "Select Branch", new { @class = "form-control" })
-                    </div>
-
-                    <label for="name" class="col-lg-2 control-label">Date</label>
-                    <div class="col-lg-4">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" placeholder="MM/DD/YYYY" id="CREATEDON" name="CREATEDON" />
-
-                            <span class="input-group-addon" id="mySpan">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-
-                        </div>
-                        @Html.ValidationMessageFor(m => m.CREATEDON)
-                    </div>
-
-
-                </div>
-
-
-
-                @*</div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">*@
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CARDHOLDERNAME, new { @class = "col-lg-2 control-label" })
-                    <div class="col-lg-4">
-                        @Html.TextBoxFor(model => model.CARDHOLDERNAME, new { @class = "form-control col-sm-10" })
-                    </div>
-
-
-                    @Html.LabelFor(model => model.MOBILE, new { @class = "col-lg-2 control-label" })
-                    <div class="col-lg-4">
-                        @Html.TextBoxFor(model => model.MOBILE, new { @class = "form-control col-sm-10" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="birthday" class="col-lg-2 col-sm-2 control-label">Card Number</label>
-                    <div class="col-lg-10">
-                        <input type="text" class="form-control col-sm-10" placeholder="" id="CARDNUMBER" name="CARDNUMBER" />
-                    </div>
-
-                </div>
-
-                <div id="result"></div>
-                <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
-
-                <div class="form-group" id="radioError">
-                    <label for="birthday" class="col-xs-3 col-sm-2 control-label">Payment Type</label>
-                    <div class="col-xs-3">
-                        <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="Cash">Cash</label>
-                    </div>
-                    <div class="col-xs-3">
-                        <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="Cheque">Cheque</label>
-                    </div>
-                    <div class="col-xs-3">
-                        <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="ADI">Account Debit Instruction</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-4">
-                        <label for="paymentType" class="error" id="errmsg" style="display: none"></label>
-                    </div>
-                </div>
-
-
-
-                <div class="form-group" id="amountDiv">
-                    <label for="amount" class="col-xs-2 col-sm-2 control-label">Amount</label>
-                    <div class="col-lg-4">
-                        <input type="text" class="form-control" placeholder="" id="AMOUNT" name="AMOUNT" />
-                    </div>
-
-
-                    <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
-                    <div class="col-lg-4">
-                        @Html.DropDownList("CURRENCY", null, "Select Currency", new { @class = "form-control" })
-                    </div>
-                </div>
-
-                <div class="form-group" id="accdebitDiv">
-
-
-                    <label class="col-xs-2 col-sm-2 control-label">Account Debit Instruction</label>
-                    <div class="col-lg-10">
-                        <input type="text" class="form-control col-sm-3" placeholder="" id="ADI" name="ADI" />
-                    </div>
-
-                </div>
-
-
-                <div class="form-group" id="pdcDiv">
-                    <label for="currency" class="col-xs-2 col-sm-2 control-label">Perticulars of Deposited Cheque</label>
-                    <div class="col-lg-10">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th class="info">BANK</th>
-                                <th class="info">BRANCH</th>
-                                <th class="info">CHEQUE NO.</th>
-                                <th class="info">DATE</th>
-
-                            </tr>
-                            <tr>
-                                <td class="active">
-                                    <textarea class="form-control" rows="3" id="PDCBANK" name="PDCBANK" style="width: auto"></textarea>
-                                </td>
-                                <td class="active">
-                                    <textarea class="form-control" rows="3" id="PDCBRANCH" name="PDCBRANCH" style="width: auto"></textarea>
-                                </td>
-                                <td class="active">
-                                    <textarea class="form-control" rows="3" id="PDCCHEQUENO" name="PDCCHEQUENO" style="width: auto"></textarea>
-                                </td>
-                                <td class="active">
-                                    @*  <textarea class="form-control" rows="3" id="PDCDATE" name="PDCDATE"></textarea>*@
-                                    <div class='input-group date' id='datetimepicker2'>
-
-                                        <input type='text' class="form-control" id="PDCDATE" name="PDCDATE" placeholder="MM/DD/YYYY" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </td>
-
-                            </tr>
-                        </table>
-                    </div>
-
-
-
-                </div>
-
-                <div class="form-group">
-
-                    <div class="col-lg-12 col-lg-offset-10">
-                        <input type="submit" value="Save" class="btn btn-danger" />
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    }
-
-
-<br/>
-
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -204,8 +204,11 @@
                 </h4>
             </div>
             <div class="modal-footer">
-                @*<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>*@
+               
+               
                 @Html.ActionLink("Ok", "Index", "List", new { area = "Payment" }, new { @class = "btn btn-primary" })
+             
+               
 
             </div>
         </div>
@@ -213,16 +216,57 @@
 </div>
 
 
-    @section scripts{
-        <script src="~/Scripts/jquery.validate.js"></script>
-        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-        <script type="text/javascript">
+
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Card Cheque Management</h4>
+            </div>
+            <div class="modal-body" id="modalBody3">
+                <h4>
+                    <p></p>
+                </h4>
+            </div>
+            <div class="modal-footer">
+
+
+                @Html.ActionLink("Ok", "Index", "Payment", new { area = "Admin" }, new { @class = "btn btn-primary" })
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Messege</h4>
+            </div>
+            <div class="modal-body" id="myModalBody1">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
         $(function () {
 
             $('#accdebitDiv *').attr('disabled', true);
             $('#pdcDiv *').attr('disabled', true);
-
+            $('#saveButton').prop('disabled', true);
 
             $("input[name$='PAYMENTTYPE']").click(function () {
                 var test = $(this).val();
@@ -279,10 +323,18 @@
                     complete: function () { $('#spinner').hide(); },
                     success: function (result) {
                         if (result == null) {
-                            alert("No Data Found");
+                            $('#myModalBody1').html('Invalid Card Number');
+                            $('#myModal1').modal('show');
+                            $('#saveButton').prop('disabled', true);
+                        }
+                        else if (result == "") {
+                            $('#myModalBody1').html('No Data Found');
+                            $('#myModal1').modal('show');
+                            $('#saveButton').prop('disabled', true);
                         } else {
 
                             $('#CARDHOLDERNAME').val(result);
+                            $('#saveButton').prop('disabled', false);
                         }
                     },
                     error: function (xhr) {
@@ -294,9 +346,15 @@
         });
 
         function OnSuccess(response) {
-            $('#modalBody').html(response);
-            $('#myModal').modal('show');
-           //  window.location.href = '/Payment/List/Index/';
+            if (response.adminFlag == 1) {
+                $('#modalBody3').html(response.msg);
+                $('#myModal3').modal('show');
+            } else {
+                $('#modalBody').html(response.msg);
+                $('#myModal').modal('show');
+            }
+         
+            //  window.location.href = '/Payment/List/Index/';
         }
         function OnFailure(response) {
             alert(response);
@@ -314,7 +372,8 @@
                 },
                 CARDNUMBER: {
                     required: true,
-                    digits: true
+                    digits: true,
+                    maxlength: 18,
                 },
                 CURRENCY: {
                     required: true,
@@ -373,21 +432,21 @@
             },
         });
 
-        </script>
+    </script>
 
-    }
+}
 
-    @section DatetimeCss{
+@section DatetimeCss{
 
-        <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
-    }
-    @section DateTimeJs{
+}
+@section DateTimeJs{
 
-        <script src="~/Scripts/moment.min.js"></script>
-        <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker({
                 format: 'MM/DD/YYYY'
@@ -398,6 +457,6 @@
         });
 
 
-        </script>
-    }
+    </script>
+}
 

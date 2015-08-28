@@ -13,7 +13,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
     </div>
     <div class="panel-body">
         @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
@@ -48,6 +48,10 @@
     </div>
 </div>
 
+
+<p>
+    @Html.ActionLink("Create New", "UserCreation", "Home", new { Area = "Admin" }, new { @class = "btn btn-info" })
+</p>
 
 
 

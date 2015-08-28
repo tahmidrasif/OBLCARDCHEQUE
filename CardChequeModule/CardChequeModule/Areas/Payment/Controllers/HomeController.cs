@@ -8,7 +8,7 @@ using Microsoft.Ajax.Utilities;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
-    [Authorize(Roles = "teller")]
+    [Authorize(Roles = "teller,admin")]
     public class HomeController : Controller
     {
         OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();

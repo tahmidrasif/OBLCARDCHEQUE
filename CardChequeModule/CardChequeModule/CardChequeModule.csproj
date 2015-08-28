@@ -213,13 +213,13 @@
     <Compile Include="Areas\Payment\Controllers\HomeController.cs" />
     <Compile Include="Areas\Payment\Controllers\ListController.cs" />
     <Compile Include="Areas\Payment\Controllers\PaymentSlipController.cs" />
+    <Compile Include="Areas\Teller\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Teller\Models\TellerDashBoardVM.cs" />
+    <Compile Include="Areas\Teller\TellerAreaRegistration.cs" />
     <Compile Include="Models\BRANCHINFO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BranchInformation.cs" />
-    <Compile Include="Models\BRANCHINFO_V.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CARDCHEREUISITION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -230,18 +230,16 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CardInformation.cs" />
+    <Compile Include="Models\ConstantConfig.cs" />
     <Compile Include="Models\DEPOSIT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ConstantConfig.cs" />
     <Compile Include="Models\MetaData\BranchMeta.cs" />
     <Compile Include="Models\MetaData\CardChLeafMeta.cs" />
     <Compile Include="Models\MetaData\CardChTranMeta.cs" />
     <Compile Include="Models\MetaData\ChequeRequisitionMeta.cs" />
     <Compile Include="Models\MetaData\DepositMeta.cs" />
     <Compile Include="Areas\Payment\PaymentAreaRegistration.cs" />
-    <Compile Include="Areas\Taler\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Taler\TalerAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -276,12 +274,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -597,7 +589,6 @@
     <Content Include="Areas\Authorizer\Views\web.config" />
     <Content Include="Areas\Authorizer\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Authorizer\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Taler\Views\web.config" />
     <Content Include="Areas\Payment\Views\web.config" />
     <Content Include="Areas\Payment\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Payment\Views\Shared\_Layout.cshtml" />
@@ -644,10 +635,26 @@
     <Content Include="Areas\CallCenter\Views\Home\Edit.cshtml" />
     <Content Include="Areas\CallCenter\Views\Home\Index.cshtml" />
     <Content Include="Areas\CallCenter\Views\Shared\_DownloadList.cshtml" />
-    <Content Include="Areas\CardCheque\Views\Shared\_CardChAppliedList.cshtml" />
     <Content Include="Areas\Authorizer\Views\Home\CardChequePendingRequest.cshtml" />
     <Content Include="Areas\Authorizer\Views\Shared\_AppliedCardChList.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\UserCreation.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\UserList.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\UserDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Payment\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Payment\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Requisition\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CardCheque\Index.cshtml" />
+    <Content Include="Areas\Teller\Views\web.config" />
+    <Content Include="Areas\Teller\Views\Home\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -665,21 +672,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\Admin\Views\Home\UserCreation.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\UserList.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\UserDetail.cshtml" />
-    <Content Include="Areas\Admin\Views\Payment\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Payment\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Requisition\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Requisition\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Requisition\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Requisition\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Requisition\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\CardCheque\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\CardCheque\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\CardCheque\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\CardCheque\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\CardCheque\Index.cshtml" />
+    <Content Include="Areas\Teller\Views\Shared\_UserInfoPartial.cshtml" />
+    <Content Include="Areas\Teller\Views\Shared\_VisaPaymentPartial.cshtml" />
     <None Include="Properties\PublishProfiles\CCM.pubxml" />
     <None Include="Properties\PublishProfiles\OblCardCheque.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -791,9 +785,6 @@
     <Folder Include="Areas\CardCheque\Models\" />
     <Folder Include="Areas\ChequeRequisition\Models\" />
     <Folder Include="Areas\Payment\Models\" />
-    <Folder Include="Areas\Taler\Models\" />
-    <Folder Include="Areas\Taler\Views\Home\" />
-    <Folder Include="Areas\Taler\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

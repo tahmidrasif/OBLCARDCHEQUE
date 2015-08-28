@@ -10,25 +10,47 @@ using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Models;
 using CardChequeModule.OraDBCardInfo;
+using PagedList;
 
 namespace CardChequeModule.Areas.CardCheque.Controllers
 {
-    [Authorize(Roles = "teller")]
+    [Authorize(Roles = "teller,admin")]
     public class HomeController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
         
 
         // GET: /CardCheque/Home/
-        public ActionResult Index()
+        public ActionResult Index(int? STATUS, string CARDNO, DateTime? CREATEDON, int? page)
         {
             try
             {
                 OCCUSER user = (OCCUSER)Session["User"];
-                var cardchtran = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID);
+                var List = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
                 var status = db.OCCENUMERATION.Where(x => x.Type == "cardcheque");
                 ViewBag.STATUS = new SelectList(status, "ID", "Name");
-                return View(cardchtran.ToList());
+
+                if (STATUS != null)
+                {
+                    List = List.Where(x => x.STATUS == STATUS).ToList();
+                    ViewBag.STATUS = new SelectList(status, "ID", "Name",STATUS);
+                    ViewBag.currsts = STATUS;
+                }
+                if (!String.IsNullOrEmpty(CARDNO))
+                {
+                    CARDNO = CARDNO.Trim();
+                    List = List.Where(x => x.CARDNO.Contains(CARDNO)).ToList();
+                    ViewBag.CARDNO = CARDNO;
+                }
+                if (CREATEDON != null)
+                {
+                    List = List.Where(x => x.CREATEDON == CREATEDON).ToList();
+                    ViewBag.CREATEDON = CREATEDON;
+                }
+               // int pageSize = ConstantConfig.PageSizes;
+                int pageSize = ConstantConfig.PageSizes;
+                int pageNumber = ((page ?? 1));
+                return View(List.ToPagedList(pageNumber,pageSize));
             }
             catch (Exception)
             {
@@ -79,7 +101,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Error", "Home", new { Area = "" });
+                return Json("invalid");
             }
            
         }

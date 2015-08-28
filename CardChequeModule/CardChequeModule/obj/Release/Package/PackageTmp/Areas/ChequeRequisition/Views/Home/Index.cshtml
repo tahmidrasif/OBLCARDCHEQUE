@@ -10,10 +10,13 @@
     ViewBag.Title = "Index";
 }
 
+<div align="center" style="margin-top:-30px ">
+    <h3>CHEQUE REQUISITION LIST</h3>
+</div>
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> Search</span> </h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
     </div>
     <div class="panel-body">
         @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
@@ -54,8 +57,8 @@
 </div>
 
 
-<p>
-    @Html.ActionLink("Create New", "Form")
+<p>  
+    @Html.ActionLink("Create New", "Form", "Home", new { Area = "ChequeRequisition" }, new { @class = "btn btn-success" })
 </p>
 
 
@@ -89,7 +92,7 @@
         </th>
 
 
-        <th></th>
+        @*<th></th>*@
     </tr>
 
     @foreach (var item in Model)
@@ -97,7 +100,15 @@
         <tr>
 
             <td>
-                @Html.DisplayFor(modelItem => item.CARDNO)
+                @if (item.STATUS == 4)
+                {
+                    @Html.ActionLink(Html.DisplayFor(modelItem => item.CARDNO).ToString(), "Form", "Home",new { Area = "ChequeRequisition", id = item.ID }, new { @id = item.ID })
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.CARDNO)
+                }
+                
             </td>
 
             <td>
@@ -120,14 +131,14 @@
             </td>
 
 
-            <td>
+            @*<td>
                 @if (item.STATUS==4)
                 {
                     @Html.ActionLink("Edit", "Form", new { id = item.ID })
                 }
 
 
-            </td>
+            </td>*@
         </tr>
     }
 

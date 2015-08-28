@@ -13,6 +13,7 @@ using PagedList;
 
 namespace CardChequeModule.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PaymentController : Controller
     {
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();

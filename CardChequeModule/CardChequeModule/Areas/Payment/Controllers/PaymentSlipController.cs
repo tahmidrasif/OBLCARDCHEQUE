@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CardChequeModule.Areas.Payment.Controllers
 {
-    [Authorize(Roles = "teller")]
+    [Authorize(Roles = "teller,admin")]
     public class PaymentSlipController : Controller
     {
         private JsonSerializer serializer = new JsonSerializer();
@@ -40,13 +40,14 @@ namespace CardChequeModule.Areas.Payment.Controllers
         {
             
             OCCUSER user = (OCCUSER)Session["User"];
+            int adminFlag = 0;
             if (ModelState.IsValid)
             {
                 try
                 {
                     
                     deposit.CREATEDBY = user.ID;
-                    deposit.ISAUTHORIZED = false;
+                    deposit.ISACTIVE = true;
 
                     var userId = user.EMPLOYEEID;
                     var length = userId.Length;
@@ -62,8 +63,12 @@ namespace CardChequeModule.Areas.Payment.Controllers
                     db.SaveChanges();
                   //  Session["DepositSaveMsg"] = "Data saved successfully.\nReferance Number is: "+deposit.REFERENCENUMBER;
                     var msg="Data saved successfully.\nReferance Number is: "+deposit.REFERENCENUMBER;
+                    if (user.TYPE == 1)
+                    {
+                        adminFlag = 1;
+                    }
                    // return RedirectToAction("Index", "List");
-                    return Json(msg,JsonRequestBehavior.AllowGet);
+                    return Json(new{msg,adminFlag},JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception exception)
                 {
