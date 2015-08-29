@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using CardChequeModule.Models;
 
-namespace CardChequeModule.Areas.Teller.Models
+namespace CardChequeModule.Areas.Admin.Models
 {
-    public class TellerDashBoardVM
+    public class AdminDashboardVM
     {
-        public TellerDashBoardVM()
+        public AdminDashboardVM()
         {
             EmployeeInfoVm=new EmployeeInfoVM();
         }
@@ -21,6 +21,5 @@ namespace CardChequeModule.Areas.Teller.Models
         public int TotalReqisitionRequest { get; set; }
         public decimal TotalCardPayment { get; set; }
         public int TotalChequePaymentNumber { get; set; }
-
     }
 }

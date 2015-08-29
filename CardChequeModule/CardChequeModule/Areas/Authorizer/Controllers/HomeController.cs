@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CardChequeModule.Areas.Admin.Models;
 using CardChequeModule.Areas.Authorizer.Models;
 using CardChequeModule.Models;
 using Microsoft.Office.Interop.Excel;
@@ -18,8 +19,57 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
         private OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                OCCUSER user = (OCCUSER)Session["User"];
+                AuthorizerDashboardVM aVm = new AuthorizerDashboardVM();
+
+                //TAHMID
+                //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                //DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
+                //foreach (DataRow dataRow in dt.Rows)
+                //{
+                //    aVm.BranchName = (string)dataRow[21];
+                //    aVm.Email = (string)dataRow[9];
+                //    aVm.EmployeeId = (string)dataRow[2];
+                //    aVm.JobTitle = (string)dataRow[7];
+                //    aVm.Name = (string)dataRow[3];
+                //    aVm.PreDeptName = (string)dataRow[17];
+
+                //}
+                aVm.EmployeeInfoVm.BranchName = "MyBranchName";
+                aVm.EmployeeInfoVm.Email = "myMailId";
+                aVm.EmployeeInfoVm.EmployeeId = "MyEmpId";
+                aVm.EmployeeInfoVm.JobTitle = "MyJobTitle";
+                aVm.EmployeeInfoVm.Name = "MyName";
+                aVm.EmployeeInfoVm.PreDeptName = "MyPresentDepartment";
+                return View(aVm);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+           
+           // return View();
         }
+
+        [HttpPost]
+        public ActionResult Index(DateTime? startDate, DateTime? endDate, string btnName)
+        {
+            try
+            {
+                if (startDate != null || endDate != null)
+                {
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception exception)
+            {
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+        }
+
 
         #region Cheque Reequistion Authorization
 

@@ -25,9 +25,22 @@ namespace CardChequeModule.Areas.Teller.Controllers
             {
                 OCCUSER user = (OCCUSER)Session["User"];
                 TellerDashBoardVM aVm = new TellerDashBoardVM();
-                var visaList = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).Take(5).ToList();
-                var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).Take(5).ToList();
-                var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).Take(5).ToList();
+
+                var visaList = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                aVm.TotalVisaPayment = visaList.Count;
+                aVm.TotalVisaPaymentCollection = (decimal)visaList.Sum(x => x.AMOUNT);
+                visaList = visaList.Take(5).ToList();
+
+
+                var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                aVm.TotalReqisitionRequest = requisitionList.Count;
+                requisitionList = requisitionList.Take(5).ToList();
+
+
+                var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
+                aVm.TotalChequePaymentNumber = cardchtanList.Count;
+                cardchtanList = cardchtanList.Take(5).ToList();
 
                 //TAHMID
                 //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
@@ -42,12 +55,12 @@ namespace CardChequeModule.Areas.Teller.Controllers
                 //    aVm.PreDeptName = (string)dataRow[17];
 
                 //}
-                aVm.BranchName = "MyBranchName";
-                aVm.Email = "myMailId";
-                aVm.EmployeeId = "MyEmpId";
-                aVm.JobTitle = "MyJobTitle";
-                aVm.Name = "MyName";
-                aVm.PreDeptName = "MyPresentDepartment";
+                aVm.EmployeeInfoVm.BranchName = "MyBranchName";
+                aVm.EmployeeInfoVm.Email = "myMailId";
+                aVm.EmployeeInfoVm.EmployeeId = "MyEmpId";
+                aVm.EmployeeInfoVm.JobTitle = "MyJobTitle";
+                aVm.EmployeeInfoVm.Name = "MyName";
+                aVm.EmployeeInfoVm.PreDeptName = "MyPresentDepartment";
                 //var visaPaymentList = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).ToList();
                 aVm.Deposits = visaList;
                 aVm.Requisitions = requisitionList;
@@ -65,64 +78,90 @@ namespace CardChequeModule.Areas.Teller.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(DateTime startDate, DateTime endDate, string btnName,TellerDashBoardVM vm)
+        public ActionResult Index(DateTime? startDate, DateTime? endDate, string btnName,TellerDashBoardVM vm)
         {
             try
             {
-                OCCUSER user = (OCCUSER)Session["User"];
-                TellerDashBoardVM aVm = new TellerDashBoardVM();
-                var visaList = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).Take(5).ToList();
-                var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).Take(5).ToList();
-                var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).Take(5).ToList();
-
-
-                //TAHMID
-                //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
-                //DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
-                //foreach (DataRow dataRow in dt.Rows)
-                //{
-                //    aVm.BranchName = (string)dataRow[21];
-                //    aVm.Email = (string)dataRow[9];
-                //    aVm.EmployeeId = (string)dataRow[2];
-                //    aVm.JobTitle = (string)dataRow[7];
-                //    aVm.Name = (string)dataRow[3];
-                //    aVm.PreDeptName = (string)dataRow[17];
-
-                //}
-                //aVm.BranchName = vm.BranchName;
-                //aVm.Email = vm.Email;
-                //aVm.EmployeeId = vm.EmployeeId;
-                //aVm.JobTitle = vm.JobTitle;
-                //aVm.Name = vm.Name;
-                //aVm.PreDeptName = vm.PreDeptName;
-                aVm.BranchName = "MyBranchName";
-                aVm.Email = "myMailId";
-                aVm.EmployeeId = "MyEmpId";
-                aVm.JobTitle = "MyJobTitle";
-                aVm.Name = "MyName";
-                aVm.PreDeptName = "MyPresentDepartment";
-
-                if (btnName == "visa")
+                if (startDate != null || endDate != null)
                 {
-                    visaList = db.DEPOSIT.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).Take(5).ToList();
-                    //aVm.Deposits = List;
+                    OCCUSER user = (OCCUSER)Session["User"];
+                    TellerDashBoardVM aVm = new TellerDashBoardVM();
+
+                    var visaList = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                    aVm.TotalVisaPayment = visaList.Count;
+                    aVm.TotalVisaPaymentCollection = (decimal)visaList.Sum(x => x.AMOUNT);
+                    visaList = visaList.Take(5).ToList();
+
+
+                    var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                    aVm.TotalReqisitionRequest = requisitionList.Count;
+                    requisitionList = requisitionList.Take(5).ToList();
+
+
+                    var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                    aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
+                    aVm.TotalChequePaymentNumber = cardchtanList.Count;
+                    cardchtanList = cardchtanList.Take(5).ToList();
+
+
+                    //TAHMID
+                    //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                    //DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
+                    //foreach (DataRow dataRow in dt.Rows)
+                    //{
+                    //    aVm.BranchName = (string)dataRow[21];
+                    //    aVm.Email = (string)dataRow[9];
+                    //    aVm.EmployeeId = (string)dataRow[2];
+                    //    aVm.JobTitle = (string)dataRow[7];
+                    //    aVm.Name = (string)dataRow[3];
+                    //    aVm.PreDeptName = (string)dataRow[17];
+
+                    //}
+                    //aVm.BranchName = vm.BranchName;
+                    //aVm.Email = vm.Email;
+                    //aVm.EmployeeId = vm.EmployeeId;
+                    //aVm.JobTitle = vm.JobTitle;
+                    //aVm.Name = vm.Name;
+                    //aVm.PreDeptName = vm.PreDeptName;
+                    aVm.EmployeeInfoVm.BranchName = "MyBranchName";
+                    aVm.EmployeeInfoVm.Email = "myMailId";
+                    aVm.EmployeeInfoVm.EmployeeId = "MyEmpId";
+                    aVm.EmployeeInfoVm.JobTitle = "MyJobTitle";
+                    aVm.EmployeeInfoVm.Name = "MyName";
+                    aVm.EmployeeInfoVm.PreDeptName = "MyPresentDepartment";
+
+                    if (btnName == "visa")
+                    {
+                        visaList = db.DEPOSIT.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
+                        aVm.TotalVisaPayment = visaList.Count;
+                        aVm.TotalVisaPaymentCollection = (decimal)visaList.Sum(x => x.AMOUNT);
+                        //aVm.Deposits = List;
+                    }
+                    else if (btnName == "requisition")
+                    {
+                        requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
+                        aVm.TotalReqisitionRequest = requisitionList.Count;
+
+                    }
+                    else if (btnName == "cardcheque")
+                    {
+                        cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
+                        aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
+                        aVm.TotalChequePaymentNumber = cardchtanList.Count;
+
+                    }
+                    aVm.Deposits = visaList;
+                    aVm.Requisitions = requisitionList;
+                    aVm.ChequeTrans = cardchtanList;
+
+                    return View(aVm);
                 }
-                else if (btnName == "requisition")
-                {
-                     requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).Take(5).ToList();
-                   
-                }
-                else if (btnName == "cardcheque")
-                {
-                     cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).Take(5).ToList();
-                  
-                }
-                return View();
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
 
-                return Json("Error");
+                return RedirectToAction("Error","Home",new {Area=""});
             }
 
         }

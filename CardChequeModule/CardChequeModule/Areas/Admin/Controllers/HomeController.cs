@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CardChequeModule.Areas.Admin.Models;
 using CardChequeModule.Models;
 using NPOI.SS.Formula.Functions;
 using PagedList;
@@ -17,10 +18,32 @@ namespace CardChequeModule.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
-        OBLCARDCHEQUEEntities db=new OBLCARDCHEQUEEntities();
+        OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
         public ActionResult Index()
         {
-          return View();
+            OCCUSER user = (OCCUSER)Session["User"];
+            AdminDashboardVM aVm = new AdminDashboardVM();
+
+            //TAHMID
+            //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+            //DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
+            //foreach (DataRow dataRow in dt.Rows)
+            //{
+            //    aVm.BranchName = (string)dataRow[21];
+            //    aVm.Email = (string)dataRow[9];
+            //    aVm.EmployeeId = (string)dataRow[2];
+            //    aVm.JobTitle = (string)dataRow[7];
+            //    aVm.Name = (string)dataRow[3];
+            //    aVm.PreDeptName = (string)dataRow[17];
+
+            //}
+            aVm.EmployeeInfoVm.BranchName = "MyBranchName";
+            aVm.EmployeeInfoVm.Email = "myMailId";
+            aVm.EmployeeInfoVm.EmployeeId = "MyEmpId";
+            aVm.EmployeeInfoVm.JobTitle = "MyJobTitle";
+            aVm.EmployeeInfoVm.Name = "MyName";
+            aVm.EmployeeInfoVm.PreDeptName = "MyPresentDepartment";
+            return View(aVm);
         }
 
         public ActionResult UserCreation()
@@ -33,8 +56,8 @@ namespace CardChequeModule.Areas.Admin.Controllers
 
         public ActionResult UserInfoByEmpId(string empId)
         {
-            string userName="";
-            string branchCode="";
+            string userName = "";
+            string branchCode = "";
             string branchName = "";
             try
             {
@@ -49,19 +72,19 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     branchName = (string)dataRow[21];
                 }
 
-                long branchId=db.BRANCHINFO.Where(x => x.BRANCHCODE == branchCode).Select(x=>x.ID).FirstOrDefault();
+                long branchId = db.BRANCHINFO.Where(x => x.BRANCHCODE == branchCode).Select(x => x.ID).FirstOrDefault();
                 //return Json(new { userName = "Rasif", branchId = 5, branchName = "Khatungonj" }, JsonRequestBehavior.AllowGet);
 
                 return Json(new { userName, branchId, branchName }, JsonRequestBehavior.AllowGet);
-              
+
             }
             catch (Exception)
             {
 
                 return Json("null", JsonRequestBehavior.DenyGet);
             }
-          
-            
+
+
         }
 
         [HttpPost]
@@ -84,14 +107,14 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 }
 
 
-                ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME",BranchId);
-                ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name",occuser.TYPE);
+                ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME", BranchId);
+                ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name", occuser.TYPE);
                 return View();
             }
             catch (Exception)
             {
 
-                return RedirectToAction("Error", "Home", new {Area = ""});
+                return RedirectToAction("Error", "Home", new { Area = "" });
             }
 
         }
@@ -99,12 +122,12 @@ namespace CardChequeModule.Areas.Admin.Controllers
         public ActionResult UserList(int? TYPE, string EMPLOYEEID, string USERNAME, int? page)
         {
             ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name");
-            var List = db.OCCUSER.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Where(x=>x.ISACTIVE==true).ToList();
+            var List = db.OCCUSER.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Where(x => x.ISACTIVE == true).ToList();
 
             if (TYPE != null)
             {
                 List = List.Where(x => x.TYPE == TYPE).ToList();
-                ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name",TYPE);
+                ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name", TYPE);
                 ViewBag.currtype = TYPE;
                 // ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
             }
@@ -133,8 +156,8 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 if (user != null)
                 {
 
-                    ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME",user.BRANCH);
-                    ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name",user.TYPE);
+                    ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME", user.BRANCH);
+                    ViewBag.TYPE = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "user").ToList(), "ID", "Name", user.TYPE);
                     return View(user);
                 }
                 return RedirectToAction("Error", "Home", new { Area = "" });
@@ -144,8 +167,8 @@ namespace CardChequeModule.Areas.Admin.Controllers
 
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
-          
-            
+
+
         }
 
         [HttpPost]
@@ -156,7 +179,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 OCCUSER user = (OCCUSER)Session["User"];
                 if (String.Equals(btnName, "update"))
                 {
-                    
+
                     aUser.MODIFIEDBY = user.ID;
                     aUser.MODIFIEDON = DateTime.Now.Date;
                     db.Entry(aUser).State = EntityState.Modified;
@@ -174,7 +197,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     var msg = "Successfully Removed";
                     return Json(msg, JsonRequestBehavior.DenyGet);
                 }
-               return RedirectToAction("Error", "Home", new { Area = "" });
+                return RedirectToAction("Error", "Home", new { Area = "" });
             }
             catch (Exception)
             {
