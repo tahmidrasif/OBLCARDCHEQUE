@@ -59,38 +59,43 @@
             </div>
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Reference Number</label>
-                <div class="col-lg-4">
+                <div class="col-lg-10">
                     @Html.TextBoxFor(model => model.REFERENCENUMBER, new { @class = "form-control col-sm-10", @readonly = "readonly" })
                 </div>
-                <label for="name" class="col-lg-2 control-label">Pending Amount</label>
+                @*<label for="name" class="col-lg-2 control-label">Pending Amount</label>
                 <div class="col-lg-4">
                     <input type="text" class="form-control col-sm-10" name="pendingTxtBox" id="pendingTxtBox" style="display: none" />
-                </div>
+                </div>*@
             </div>
 
-
+            
+            
+            
+          
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CARDHOLDERNAME, new { @class = "col-lg-2 control-label" })
+              
+                @Html.LabelFor(model => model.CARDNUMBER, new { @class = "col-lg-2 col-sm-2 control-label" })
                 <div class="col-lg-4">
-                    @Html.TextBoxFor(model => model.CARDHOLDERNAME, new { @class = "form-control col-sm-10" })
+                    @Html.TextBoxFor(model => model.CARDNUMBER, new { @class = "form-control col-sm-10", @placeholder="Please enter card number and press tab" })
                 </div>
-
 
                 @Html.LabelFor(model => model.MOBILE, new { @class = "col-lg-2 control-label" })
                 <div class="col-lg-4">
-                    @Html.TextBoxFor(model => model.MOBILE, new { @class = "form-control col-sm-10" })
+                    @Html.TextBoxFor(model => model.MOBILE, new { @class = "form-control col-sm-10", @placeholder = "11 digits Ex 01XXXXXXXXX" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CARDNUMBER, new { @class = "col-lg-2 col-sm-2 control-label" })
+            
+                @Html.LabelFor(model => model.CARDHOLDERNAME, new { @class = "col-lg-2 control-label" })
                 <div class="col-lg-10">
-                    @Html.TextBoxFor(model => model.CARDNUMBER, new { @class = "form-control col-sm-10" })
+                    @Html.TextBoxFor(model => model.CARDHOLDERNAME, new { @class = "form-control col-sm-10", @placeholder = "Name will be appeared automatically if card number is valid" })
                 </div>
-
             </div>
-
+            
+            
+          
 
 
             <div id="result"></div>
@@ -186,7 +191,7 @@
             {
                 <div class="form-group">
                     <div class="col-lg-12 col-lg-offset-10">
-                        <input type="submit" value="Edit" class="btn btn-success" />
+                        <input type="submit" value="Edit" class="btn btn-success" id="editButton" />
                     </div>
 
                 </div>
@@ -255,7 +260,8 @@
          //   window.location.href = '/Payment/List/Index/';
         }
         function OnFailure(response) {
-            alert(response);
+            $('#modalBody2').html(response);
+            $('#myModal2').modal('show');
         }
 
         $(function () {
@@ -337,17 +343,32 @@
                         complete: function () { $('#spinner').hide(); },
                         success: function (result) {
                             if (result == null) {
-                                alert("No Data Found");
+                                $('#modalBody2').html("No data found. Enter a valid card number");
+                                $('#myModal2').modal('show');
+                                $('#editButton').prop('disabled', true);
+                            }
+                            else if (result == "") {
+                                $('#myModalBody1').html('No Data Found');
+                                $('#myModal1').modal('show');
+                                $('#editButton').prop('disabled', true);
+                            }
+                           else if (result == 'error') {
+                                $('#modalBody2').html("Invalid operation. Please try again");
+                                $('#myModal2').modal('show');
+                                $('#editButton').prop('disabled', true);
                             } else {
                                 $('#CARDHOLDERNAME').val(result.CLIENTNAME);
                                 $('#MOBILE').val(result.MOBILE);
+                                $('#editButton').prop('disabled', false);
                                
                             }
 
 
                         },
                         error: function (xhr) {
-                            alert("Something is wrong");
+                            $('#modalBody2').html("Error");
+                            $('#myModal2').modal('show');
+                            $('#editButton').prop('disabled', true);
                         }
                     });
            
@@ -366,6 +387,12 @@
                     required: true,
                     digits: true,
                     maxlength: 18,
+                },
+                MOBILE: {
+                    digits: true,
+                    minlength: 11,
+                    maxlength: 11,
+                    
                 },
                 CURRENCY: {
                     required: true,

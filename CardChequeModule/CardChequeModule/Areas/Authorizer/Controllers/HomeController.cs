@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -8,8 +10,8 @@ using System.Web.Mvc;
 using CardChequeModule.Areas.Admin.Models;
 using CardChequeModule.Areas.Authorizer.Models;
 using CardChequeModule.Models;
-using Microsoft.Office.Interop.Excel;
 using PagedList;
+using DataTable = Microsoft.Office.Interop.Excel.DataTable;
 
 namespace CardChequeModule.Areas.Authorizer.Controllers
 {
@@ -24,25 +26,42 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                 OCCUSER user = (OCCUSER)Session["User"];
                 AuthorizerDashboardVM aVm = new AuthorizerDashboardVM();
 
-                //TAHMID
-                //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
-                //DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
-                //foreach (DataRow dataRow in dt.Rows)
-                //{
-                //    aVm.BranchName = (string)dataRow[21];
-                //    aVm.Email = (string)dataRow[9];
-                //    aVm.EmployeeId = (string)dataRow[2];
-                //    aVm.JobTitle = (string)dataRow[7];
-                //    aVm.Name = (string)dataRow[3];
-                //    aVm.PreDeptName = (string)dataRow[17];
+                WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                System.Data.DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    aVm.EmployeeInfoVm.BranchName = (string)dataRow[21];
+                    aVm.EmployeeInfoVm.Email = (string)dataRow[9];
+                    aVm.EmployeeInfoVm.EmployeeId = (string)dataRow[2];
+                    aVm.EmployeeInfoVm.JobTitle = (string)dataRow[7];
+                    aVm.EmployeeInfoVm.Name = (string)dataRow[3];
+                    aVm.EmployeeInfoVm.PreDeptName = (string)dataRow[17];
+                }
 
-                //}
-                aVm.EmployeeInfoVm.BranchName = "MyBranchName";
-                aVm.EmployeeInfoVm.Email = "myMailId";
-                aVm.EmployeeInfoVm.EmployeeId = "MyEmpId";
-                aVm.EmployeeInfoVm.JobTitle = "MyJobTitle";
-                aVm.EmployeeInfoVm.Name = "MyName";
-                aVm.EmployeeInfoVm.PreDeptName = "MyPresentDepartment";
+                var pendingReqList = db.CARDCHEREUISITION.Where(x => x.ISDELETE == false).Where(x => x.STATUS == 4).OrderByDescending(x => x.ID).ToList();
+                var pendingReqListCount = pendingReqList.Count;
+                aVm.PendingRequisitionCount = pendingReqListCount;
+                aVm.PendingRequisitionList = pendingReqList.Take(5).ToList();
+
+
+                var pendingChequeList = db.CARDCHTRAN.Where(x=>x.STATUS==13).OrderByDescending(x => x.ID).ToList();
+                var pendingChequeListCount = pendingChequeList.Count;
+                aVm.PendingCardChequeAmount = pendingChequeList.Sum(x => x.AMOUNT);
+                aVm.PendingCardChequeCount = pendingChequeListCount;
+                aVm.PendingCardChequeList = pendingChequeList.Take(5).ToList();
+
+                var authReqList = db.CARDCHEREUISITION.Where(x=>x.ISDELETE==false).Where(x => x.STATUS ==5).OrderByDescending(x => x.ID).ToList();
+                var authReqListCount = authReqList.Count;
+                aVm.AuthRequisitionCount = authReqListCount;
+                aVm.AuthorizedRequisitionList = authReqList.Take(5).ToList();
+                    
+
+                var authChequeList = db.CARDCHTRAN.Where(x => x.STATUS == 14).OrderByDescending(x => x.ID).ToList();
+                var authChequeListCount = pendingReqList.Count;
+                aVm.AuthorizedCardChequeAmount = authChequeList.Sum(x => x.AMOUNT);
+                aVm.AuthCardCHequeCount = authChequeListCount;
+                aVm.AuthorizedCardChequeList = authChequeList.Take(5).ToList();
+
                 return View(aVm);
             }
             catch (Exception)
@@ -61,6 +80,82 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
             {
                 if (startDate != null || endDate != null)
                 {
+                    OCCUSER user = (OCCUSER)Session["User"];
+                    AuthorizerDashboardVM aVm = new AuthorizerDashboardVM();
+
+                    WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                    System.Data.DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
+                    foreach (DataRow dataRow in dt.Rows)
+                    {
+                        aVm.EmployeeInfoVm.BranchName = (string)dataRow[21];
+                        aVm.EmployeeInfoVm.Email = (string)dataRow[9];
+                        aVm.EmployeeInfoVm.EmployeeId = (string)dataRow[2];
+                        aVm.EmployeeInfoVm.JobTitle = (string)dataRow[7];
+                        aVm.EmployeeInfoVm.Name = (string)dataRow[3];
+                        aVm.EmployeeInfoVm.PreDeptName = (string)dataRow[17];
+                    }
+
+                    var pendingReqList = db.CARDCHEREUISITION.Where(x => x.ISDELETE == false).Where(x => x.STATUS == 4).OrderByDescending(x => x.ID).ToList();
+                    var pendingReqListCount = pendingReqList.Count;
+                    aVm.PendingRequisitionCount = pendingReqListCount;
+                    aVm.PendingRequisitionList = pendingReqList.Take(5).ToList();
+
+
+                    var pendingChequeList = db.CARDCHTRAN.Where(x => x.STATUS == 13).OrderByDescending(x => x.ID).ToList();
+                    var pendingChequeListCount = pendingChequeList.Count;
+                    aVm.PendingCardChequeAmount = pendingChequeList.Sum(x => x.AMOUNT);
+                    aVm.PendingCardChequeCount = pendingChequeListCount;
+                    aVm.PendingCardChequeList = pendingChequeList.Take(5).ToList();
+
+                    var authReqList = db.CARDCHEREUISITION.Where(x => x.ISDELETE == false).Where(x => x.STATUS == 5).OrderByDescending(x => x.ID).ToList();
+                    var authReqListCount = authReqList.Count;
+                    aVm.AuthRequisitionCount = authReqListCount;
+                    aVm.AuthorizedRequisitionList = authReqList.Take(5).ToList();
+
+
+                    var authChequeList = db.CARDCHTRAN.Where(x => x.STATUS == 14).OrderByDescending(x => x.ID).ToList();
+                    var authChequeListCount = authChequeList.Count;
+                    aVm.AuthorizedCardChequeAmount = authChequeList.Sum(x => x.AMOUNT);
+                    aVm.AuthCardCHequeCount = authChequeListCount;
+                    aVm.AuthorizedCardChequeList = authChequeList.Take(5).ToList();
+
+
+                    if (btnName == "pendingreq")
+                    {
+                        pendingReqList = db.CARDCHEREUISITION.Where(x => x.ISDELETE == false).Where(x => x.STATUS == 4).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
+                        pendingReqListCount = pendingReqList.Count;
+                        aVm.PendingRequisitionCount = pendingReqListCount;
+                        aVm.PendingRequisitionList = pendingReqList.ToList();
+                        //aVm.Deposits = List;
+                    }
+                    else if (btnName == "pendingcc")
+                    {
+                        pendingChequeList = db.CARDCHTRAN.Where(x => x.STATUS == 13).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
+                        pendingChequeListCount = pendingChequeList.Count;
+                        aVm.PendingCardChequeAmount = pendingChequeList.Sum(x => x.AMOUNT);
+                        aVm.PendingCardChequeCount = pendingChequeListCount;
+                        aVm.PendingCardChequeList = pendingChequeList.ToList();
+
+                    }
+                    else if (btnName == "authreq")
+                    {
+                        authReqList = db.CARDCHEREUISITION.Where(x => x.ISDELETE == false).Where(x => x.STATUS == 5).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
+                        authReqListCount = authReqList.Count;
+                        aVm.AuthRequisitionCount = authReqListCount;
+                        aVm.AuthorizedRequisitionList = authReqList.Take(5).ToList();
+
+                    }
+
+                    else if (btnName == "authcc")
+                    {
+                        authChequeList = db.CARDCHTRAN.Where(x => x.STATUS == 14).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
+                        authChequeListCount = authChequeList.Count;
+                        aVm.AuthorizedCardChequeAmount = authChequeList.Sum(x => x.AMOUNT);
+                        aVm.AuthCardCHequeCount = authChequeListCount;
+                        aVm.AuthorizedCardChequeList = authChequeList.Take(5).ToList();
+
+                    }
+                    return View(aVm);
                 }
                 return RedirectToAction("Index");
             }
@@ -89,7 +184,7 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
             ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
 
 
-            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).OrderByDescending(x=>x.ID).ToList();
+            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.ISDELETE == false).OrderByDescending(x => x.ID).ToList();
             if (STATUS != null)
             {
                 List = List.Where(x => x.STATUS == STATUS).ToList();
@@ -132,9 +227,9 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                 foreach (var id in idList)
                 {
                     var cheueReq = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
-                    cheueReq.STATUS = 5;
+                    cheueReq.STATUS = db.OCCENUMERATION.Where(x => x.Type == "chequereq").Where(x => x.Name == "authorized").Select(x=>x.ID).FirstOrDefault();
                     cheueReq.AUTHORIZEDBY = user.ID;
-                    cheueReq.AUTHORIZEDON = DateTime.Now.Date;
+                    cheueReq.AUTHORIZEDON = DateTime.Now;
                     UpdatedList.Add(cheueReq);
                 }
 
@@ -146,7 +241,7 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                 // var authorizedList = db.CARDCHEREUISITION.Where(x => x.STATUS == 4).ToList();
                 return RedirectToAction("RequisitionRequest");
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
@@ -155,6 +250,91 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
         }
 
         #endregion
+
+        #region Delivary Report
+
+
+
+        public ActionResult DelivaryChequeBook(int? STATUS, string CARDNO, DateTime? CREATEDON, int? page)
+        {
+            Dictionary<int, string> statusID;
+            OCCUSER user = (OCCUSER)Session["User"];
+            if (user.TYPE == 1)
+            {
+                statusID = new Dictionary<int, string>() { { 4, "applied" }, { 5, "authorized" }, { 7, "received" }, { 8, "deny" }, { 16, "delivered" } };
+            }
+            else
+            {
+                statusID = new Dictionary<int, string>() { { 4, "applied" }, { 5, "authorized" }, { 7, "received" }, { 16, "delivered" } };
+            }
+
+            ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
+            var statusId =
+                        db.OCCENUMERATION.Where(x => x.Type == "chequereq")
+                            .Where(x => x.Name == "received")
+                            .Select(x => x.ID)
+                            .FirstOrDefault();
+
+            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.ISDELETE == false).Where(x => x.STATUS == statusId).OrderByDescending(x => x.ID).ToList();
+            if (STATUS != null)
+            {
+                List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.ISDELETE == false).Where(x => x.STATUS == STATUS).OrderByDescending(x => x.ID).ToList();
+                ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
+                ViewBag.currsts = STATUS;
+                // ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
+            }
+           
+            if (!String.IsNullOrEmpty(CARDNO))
+            {
+                CARDNO = CARDNO.Trim();
+                List = List.Where(x => x.CARDNO.Contains(CARDNO)).ToList();
+                ViewBag.CARDNO = CARDNO;
+            }
+            if (CREATEDON != null)
+            {
+                List = List.Where(x => x.CREATEDON == CREATEDON).ToList();
+                ViewBag.CREATEDON = CREATEDON;
+            }
+
+            int pageSize = ConstantConfig.PageSizes;
+            int pageNumber = ((page ?? 1));
+            //return Request.IsAjaxRequest()? (ActionResult) PartialView("_AppliedList", List.ToPagedList(pageNumber, pageSize)): View(List.ToPagedList(pageNumber,pageSize));
+            return View(List.ToPagedList(pageNumber, pageSize));
+        }
+
+
+        public ActionResult DelivaryPost(IEnumerable<long> idList)
+        {
+            OCCUSER user = (OCCUSER) Session["User"];
+
+            try
+            {
+                foreach (var id in idList)
+                {
+                    var chequereq = db.CARDCHEREUISITION.Find(id);
+                    var statusId= db.OCCENUMERATION.Where(x => x.Type == "chequereq")
+                            .Where(x => x.Name == "delivered")
+                            .Select(x => x.ID)
+                            .FirstOrDefault();
+                    chequereq.DELIVEREDBY = user.ID;
+                    chequereq.DELIVEREDON = DateTime.Now.Date;
+                    chequereq.STATUS = statusId;
+                    db.Entry(chequereq).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("DelivaryChequeBook");
+            }
+            catch (Exception exception)
+            {
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
+        }
+
+        #endregion
+
+
+
+
 
         #region Cheque CardCheque Authorization
         public ActionResult CardChequePendingRequest(string CARDNO, DateTime? CREATEDON, int? page, int? STATUS)
@@ -258,6 +438,8 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
 
         #endregion
 
+        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -268,81 +450,3 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
         }
     }
 }
-
-
-//[HttpPost]
-//public ActionResult GetAuthListPartial(int? STATUS, string CARDNO, DateTime? CREATEDON,int? page)
-//{
-//    var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).ToList();
-//    if (STATUS != null)
-//    {
-//        List = List.Where(x => x.STATUS == STATUS).ToList();
-//    }
-//    if (!String.IsNullOrEmpty(CARDNO))
-//    {
-//        CARDNO = CARDNO.Trim();
-//        List = List.Where(x => x.CARDNO == CARDNO).ToList();
-//    }
-//    if (CREATEDON != null)
-//    {
-//        List = List.Where(x => x.CREATEDON == CREATEDON).ToList();
-//    }
-//    ViewBag.Flag = 2;
-//    int pageSize = 5;
-//    int pageNumber = ((page ?? 1));
-//  //  return View(List.ToPagedList(pageNumber, pageSize));
-//    return PartialView("_AppliedList", List.ToPagedList(pageNumber, pageSize));
-//    //return PartialView("_AppliedList", List);
-//}
-
-
-//[HttpPost]
-//public PartialViewResult SearchCardChList(int? STATUS, string CARDNO, DateTime? CREATEDON)
-//{
-//    var List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).ToList();
-//    if (STATUS != null)
-//    {
-//        List = List.Where(x => x.STATUS == STATUS).ToList();
-//    }
-//    if (!String.IsNullOrEmpty(CARDNO))
-//    {
-//        CARDNO = CARDNO.Trim();
-//        List = List.Where(x => x.CARDNO == CARDNO).ToList();
-//    }
-//    if (CREATEDON != null)
-//    {
-//        List = List.Where(x => x.REQUESTDATE == CREATEDON).ToList();
-//    }
-
-//    return PartialView("_AppliedCardChList", List);
-//}
-
-
-//foreach (var id in idList)
-//{
-//    var cardchq = db.CARDCHTRAN.FirstOrDefault(x => x.ID == id);
-
-
-//    var userId = user.EMPLOYEEID;
-//    var length = userId.Length;
-//    char first = userId[0];
-//    char last = userId[userId.Length - 1];
-//    char middle = userId[(userId.Length - 1) / 2];
-//    var refNo = (first + middle + last).ToString(CultureInfo.InvariantCulture);
-//    refNo += length;
-//    refNo += DateTime.Now.ToString("ddMMyyHHmmssfff");
-//    refNo += cardchq.CARDNO.Substring(cardchq.CARDNO.Length - 4);
-//    cardchq.APPROVALNO = refNo;
-
-
-//    cardchq.STATUS = 14;
-//    cardchq.MODIFIEDBY = user.ID;
-//    cardchq.MODIFIEDON = DateTime.Now.Date;
-//    UpdatedList.Add(cardchq);
-//}
-
-//foreach (var editedChqRq in UpdatedList)
-//{
-//    db.Entry(editedChqRq).State = EntityState.Modified;
-//    db.SaveChanges();
-//}

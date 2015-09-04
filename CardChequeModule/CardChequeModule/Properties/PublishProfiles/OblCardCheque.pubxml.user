@@ -16,7 +16,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2015 23:03:54</publishTime>
     </File>
     <File Include="Areas/Admin/Views/CardCheque/Details.cshtml">
-      <publishTime>08/26/2015 17:27:38</publishTime>
+      <publishTime>09/01/2015 13:18:58</publishTime>
     </File>
     <File Include="Areas/Admin/Views/CardCheque/Edit.cshtml">
       <publishTime>08/23/2015 23:03:57</publishTime>
@@ -25,10 +25,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/27/2015 12:00:56</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/Index.cshtml">
-      <publishTime>08/20/2015 17:09:50</publishTime>
+      <publishTime>08/30/2015 13:10:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/UserCreation.cshtml">
-      <publishTime>08/24/2015 16:17:58</publishTime>
+      <publishTime>08/30/2015 16:17:15</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Home/UserDetail.cshtml">
       <publishTime>08/23/2015 02:08:48</publishTime>
@@ -49,13 +49,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2015 18:02:30</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Requisition/Details.cshtml">
-      <publishTime>08/26/2015 17:29:00</publishTime>
+      <publishTime>08/31/2015 13:36:30</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Requisition/Edit.cshtml">
       <publishTime>08/23/2015 18:02:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Requisition/Index.cshtml">
-      <publishTime>08/27/2015 11:53:54</publishTime>
+      <publishTime>08/27/2015 18:16:38</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_Layout.cshtml">
       <publishTime>06/09/2015 15:58:58</publishTime>
@@ -67,13 +67,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/10/2015 14:21:50</publishTime>
     </File>
     <File Include="Areas/Authorizer/Views/Home/CardChequePendingRequest.cshtml">
-      <publishTime>08/27/2015 11:57:13</publishTime>
+      <publishTime>08/27/2015 14:35:43</publishTime>
+    </File>
+    <File Include="Areas/Authorizer/Views/Home/DelivaryChequeBook.cshtml">
+      <publishTime>09/02/2015 16:19:17</publishTime>
     </File>
     <File Include="Areas/Authorizer/Views/Home/Index.cshtml">
-      <publishTime>08/03/2015 12:19:08</publishTime>
+      <publishTime>09/03/2015 10:35:35</publishTime>
     </File>
     <File Include="Areas/Authorizer/Views/Home/RequisitionRequest.cshtml">
-      <publishTime>08/27/2015 11:57:51</publishTime>
+      <publishTime>09/03/2015 11:06:03</publishTime>
     </File>
     <File Include="Areas/Authorizer/Views/Shared/_AppliedCardChList.cshtml">
       <publishTime>08/13/2015 10:20:45</publishTime>
@@ -103,7 +106,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/11/2015 16:21:25</publishTime>
     </File>
     <File Include="Areas/CallCenter/Views/Home/Index.cshtml">
-      <publishTime>08/11/2015 16:34:25</publishTime>
+      <publishTime>09/02/2015 18:53:53</publishTime>
     </File>
     <File Include="Areas/CallCenter/Views/Shared/_DownloadList.cshtml">
       <publishTime>08/27/2015 11:58:33</publishTime>
@@ -118,7 +121,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/11/2015 16:32:32</publishTime>
     </File>
     <File Include="Areas/CardCheque/Views/Home/Create.cshtml">
-      <publishTime>08/26/2015 17:27:01</publishTime>
+      <publishTime>09/01/2015 12:49:03</publishTime>
     </File>
     <File Include="Areas/CardCheque/Views/Home/Delete.cshtml">
       <publishTime>08/09/2015 13:52:04</publishTime>
@@ -130,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/09/2015 13:52:06</publishTime>
     </File>
     <File Include="Areas/CardCheque/Views/Home/Index.cshtml">
-      <publishTime>08/27/2015 11:58:49</publishTime>
+      <publishTime>09/01/2015 12:10:43</publishTime>
     </File>
     <File Include="Areas/CardCheque/Views/Shared/_CardChAppliedList.cshtml">
       <publishTime>08/12/2015 13:53:43</publishTime>
@@ -145,10 +148,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/09/2015 13:52:39</publishTime>
     </File>
     <File Include="Areas/ChequeRequisition/Views/Home/Form.cshtml">
-      <publishTime>08/27/2015 11:55:13</publishTime>
+      <publishTime>09/03/2015 10:45:45</publishTime>
     </File>
     <File Include="Areas/ChequeRequisition/Views/Home/Index.cshtml">
-      <publishTime>08/27/2015 11:57:41</publishTime>
+      <publishTime>09/01/2015 11:29:01</publishTime>
     </File>
     <File Include="Areas/ChequeRequisition/Views/Shared/_Layout.cshtml">
       <publishTime>08/02/2015 11:13:09</publishTime>
@@ -172,7 +175,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/05/2015 16:51:21</publishTime>
     </File>
     <File Include="Areas/Establishment/Views/Home/Index.cshtml">
-      <publishTime>08/27/2015 11:59:14</publishTime>
+      <publishTime>09/02/2015 14:25:14</publishTime>
     </File>
     <File Include="Areas/Establishment/Views/Shared/_AuthorizedList.cshtml">
       <publishTime>08/09/2015 12:45:55</publishTime>
@@ -199,7 +202,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/30/2015 09:58:53</publishTime>
     </File>
     <File Include="Areas/Payment/Views/Edit/Edit.cshtml">
-      <publishTime>08/27/2015 14:04:43</publishTime>
+      <publishTime>09/03/2015 10:31:07</publishTime>
     </File>
     <File Include="Areas/Payment/Views/Edit/Index.cshtml">
       <publishTime>07/30/2015 09:58:55</publishTime>
@@ -208,10 +211,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/27/2015 12:16:02</publishTime>
     </File>
     <File Include="Areas/Payment/Views/List/Index.cshtml">
-      <publishTime>08/27/2015 11:59:29</publishTime>
+      <publishTime>09/03/2015 10:29:38</publishTime>
     </File>
     <File Include="Areas/Payment/Views/PaymentSlip/Index.cshtml">
-      <publishTime>08/27/2015 11:59:47</publishTime>
+      <publishTime>08/31/2015 18:06:30</publishTime>
     </File>
     <File Include="Areas/Payment/Views/Shared/_Layout.cshtml">
       <publishTime>07/27/2015 11:33:31</publishTime>
@@ -224,6 +227,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Areas/Taler/Views/web.config">
       <publishTime>07/26/2015 10:32:47</publishTime>
+    </File>
+    <File Include="Areas/Teller/Views/Home/Index.cshtml">
+      <publishTime>08/30/2015 13:25:47</publishTime>
+    </File>
+    <File Include="Areas/Teller/Views/Shared/_UserInfoPartial.cshtml">
+      <publishTime>08/28/2015 23:00:37</publishTime>
+    </File>
+    <File Include="Areas/Teller/Views/Shared/_VisaPaymentPartial.cshtml">
+      <publishTime>08/28/2015 23:36:49</publishTime>
+    </File>
+    <File Include="Areas/Teller/Views/web.config">
+      <publishTime>08/27/2015 15:08:48</publishTime>
     </File>
     <File Include="assets/.DS_Store">
       <publishTime>06/15/2015 11:16:11</publishTime>
@@ -595,76 +610,76 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2015 11:16:12</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
-      <publishTime>06/09/2015 12:35:11</publishTime>
+      <publishTime>08/30/2015 15:51:38</publishTime>
     </File>
     <File Include="bin/CardChequeModule.dll">
-      <publishTime>08/27/2015 13:37:54</publishTime>
+      <publishTime>09/03/2015 11:11:42</publishTime>
     </File>
     <File Include="bin/CardChequeModule.XmlSerializers.dll">
       <publishTime>08/27/2015 13:37:55</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
-      <publishTime>06/09/2015 12:56:31</publishTime>
+      <publishTime>08/30/2015 15:56:40</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
-      <publishTime>06/09/2015 12:56:31</publishTime>
+      <publishTime>08/30/2015 15:56:40</publishTime>
     </File>
     <File Include="bin/ICSharpCode.SharpZipLib.dll">
-      <publishTime>08/09/2015 12:01:14</publishTime>
+      <publishTime>08/30/2015 15:58:46</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
-      <publishTime>06/09/2015 12:35:16</publishTime>
+      <publishTime>08/30/2015 16:59:26</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
-      <publishTime>06/09/2015 12:35:16</publishTime>
+      <publishTime>08/30/2015 17:00:19</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
-      <publishTime>06/09/2015 12:35:16</publishTime>
+      <publishTime>08/30/2015 17:01:22</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/31/2015 11:54:11</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/31/2015 11:54:11</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/30/2015 17:01:22</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/31/2015 11:55:18</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Facebook.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/31/2015 11:55:19</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Google.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/31/2015 11:56:11</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.MicrosoftAccount.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/31/2015 11:56:55</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/30/2015 17:01:22</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Twitter.dll">
-      <publishTime>06/09/2015 12:35:17</publishTime>
+      <publishTime>08/31/2015 11:57:29</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>06/09/2015 12:35:11</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>06/09/2015 12:35:11</publishTime>
+      <publishTime>08/31/2015 11:55:18</publishTime>
     </File>
     <File Include="bin/NPOI.dll">
-      <publishTime>08/09/2015 12:01:14</publishTime>
+      <publishTime>08/30/2015 15:58:46</publishTime>
     </File>
     <File Include="bin/NPOI.OOXML.dll">
-      <publishTime>08/09/2015 12:01:14</publishTime>
+      <publishTime>08/30/2015 15:58:46</publishTime>
     </File>
     <File Include="bin/NPOI.OpenXml4Net.dll">
-      <publishTime>08/09/2015 12:01:14</publishTime>
+      <publishTime>08/30/2015 15:58:46</publishTime>
     </File>
     <File Include="bin/NPOI.OpenXmlFormats.dll">
-      <publishTime>08/09/2015 12:01:14</publishTime>
+      <publishTime>08/30/2015 15:58:46</publishTime>
     </File>
     <File Include="bin/Owin.dll">
       <publishTime>06/09/2015 12:35:16</publishTime>
@@ -1183,10 +1198,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/09/2015 12:58:59</publishTime>
     </File>
     <File Include="Models/Model1.edmx.diagram">
-      <publishTime>08/17/2015 17:48:01</publishTime>
+      <publishTime>09/02/2015 13:56:10</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>08/09/2015 12:01:17</publishTime>
+      <publishTime>08/31/2015 11:57:30</publishTime>
     </File>
     <File Include="Properties/DataSources/System.Data.DataTable.datasource">
       <publishTime>06/10/2015 11:20:43</publishTime>
@@ -1264,7 +1279,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/09/2015 12:35:12</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>08/26/2015 09:54:31</publishTime>
+      <publishTime>08/29/2015 00:46:37</publishTime>
     </File>
     <File Include="Views/Account/ExternalLoginConfirmation.cshtml">
       <publishTime>06/09/2015 12:35:13</publishTime>
@@ -1345,13 +1360,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2015 16:52:30</publishTime>
     </File>
     <File Include="Views/Shared/_LoginoutPartial.cshtml">
-      <publishTime>08/19/2015 13:02:35</publishTime>
+      <publishTime>08/28/2015 16:30:43</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>06/09/2015 12:35:14</publishTime>
     </File>
     <File Include="Views/Shared/_SideBarLayoutPartial.cshtml">
-      <publishTime>08/26/2015 13:23:30</publishTime>
+      <publishTime>09/02/2015 16:15:51</publishTime>
     </File>
     <File Include="Views/Test/Index.cshtml">
       <publishTime>06/15/2015 15:16:07</publishTime>
@@ -1384,7 +1399,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/10/2015 12:57:03</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/26/2015 10:18:32</publishTime>
+      <publishTime>08/31/2015 12:20:50</publishTime>
     </File>
   </ItemGroup>
 </Project>

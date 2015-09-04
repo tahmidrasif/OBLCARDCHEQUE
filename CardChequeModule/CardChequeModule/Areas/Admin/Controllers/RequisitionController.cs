@@ -29,7 +29,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 };
                 ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
 
-                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).OrderByDescending(x => x.ID).ToList();
+                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Where(x=>x.ISDELETE==false).OrderByDescending(x => x.ID).ToList();
 
                 if (STATUS != null)
                 {
@@ -99,7 +99,8 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 if (String.Equals(btnName, "delete"))
                 {
                     CARDCHEREUISITION ccr = db.CARDCHEREUISITION.Find(cardchereuisition.ID);
-                    db.CARDCHEREUISITION.Remove(ccr);
+                    ccr.ISDELETE = true;
+                    db.Entry(ccr).State = EntityState.Modified;
                     db.SaveChanges();
                     var msg = "Successfully Removed";
                     return Json(msg, JsonRequestBehavior.AllowGet);
@@ -129,12 +130,12 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     var msg = "Successfully Updated";
                     return Json(msg, JsonRequestBehavior.AllowGet);
                 }
-                return RedirectToAction("Error", "Home", new { Area = "" });
+                return Json("Error",JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
 
-                return RedirectToAction("Error", "Home", new { Area = "" });
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
             }
 
 

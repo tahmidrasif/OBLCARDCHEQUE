@@ -13,6 +13,9 @@ namespace CardChequeModule.Models.MetaData
         [DisplayName("Card Number")]
         public string CARDNUMBER { get; set; }
 
+        [DisplayName("Card Holder's Name")]
+        public string CARDHOLDERNAME { get; set; }
+
         [Required(ErrorMessage = "Enter Date")]
         [DisplayName("Deposit Date")]
         [DataType(DataType.Date)]
@@ -20,7 +23,7 @@ namespace CardChequeModule.Models.MetaData
         public Nullable<System.DateTime> CREATEDON { get; set; }
 
         [Required(ErrorMessage = "Enter the branch")]
-        [DisplayName("Branch Name")]
+        [DisplayName("Branch")]
         public Nullable<long> BRANCH { get; set; }
 
         [Range(0, Int32.MaxValue, ErrorMessage = "Number Only")]

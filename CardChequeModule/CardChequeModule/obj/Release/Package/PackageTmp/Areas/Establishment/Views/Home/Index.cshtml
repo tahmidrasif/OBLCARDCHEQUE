@@ -20,10 +20,10 @@
         {
 
         <div class="form-group">
-            <label class="col-sm-1 control-label">Status</label>
+            <label class="col-sm-1 control-label">Branch</label>
             <div class="col-sm-3">
 
-                @Html.DropDownList("BRANCH", null, "Select Branch", new { @class = "form-control" })
+                @Html.DropDownList("BRANCH", null, "Select All", new { @class = "form-control" })
             </div>
             <label class="col-sm-1 control-label">Card Number</label>
             <div class="col-sm-3">
@@ -70,11 +70,11 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="form-group">
-                <h3 class="panel-title col-sm-7"><span class="glyphicon glyphicon-list"> List</span> </h3>
-                <a href="@Url.Action("DownloadFile", "Home", new { Area = "Establishment" })">
+                <h3 class="panel-title col-sm-7"><span class="glyphicon glyphicon-list"> <strong>List</strong></span> </h3>
+                @*<a href="@Url.Action("DownloadFile", "Home", new { Area = "Establishment" })">
 
                     <h3 class="panel-title col-sm-5 text-right"><span class="glyphicon glyphicon-download-alt"> Downlaod</span> </h3>
-                </a>
+                </a>*@
 
 
             </div>
@@ -92,7 +92,7 @@
                         @Html.DisplayNameFor(model => model.REMARKS)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.MODIFIEDON)
+                        @Html.DisplayNameFor(model => model.AUTHORIZEDON)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.REFERENCENO)
@@ -122,7 +122,7 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.MODIFIEDON)
+                        @Html.DisplayFor(modelItem => item.AUTHORIZEDON)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.REFERENCENO)
@@ -132,7 +132,7 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.OCCUSER1.USERNAME)
+                        @Html.DisplayFor(modelItem => item.OCCUSER2.USERNAME)
                     </td>
 
 

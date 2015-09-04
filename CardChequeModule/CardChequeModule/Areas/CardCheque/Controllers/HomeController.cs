@@ -111,7 +111,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
         {
             try
             {
-                List<string> currencyList = new List<string>() { "USD", "BDT" };
+                List<string> currencyList = new List<string>() { "BDT" };
                 ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
                 ViewBag.CURRENCY = new SelectList(currencyList);
                 return View();
@@ -139,7 +139,8 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
                 cardchtran.ISACTIVE = true;
 
                 var leaf=db.CARDCHLEAF.FirstOrDefault(x => x.ID == cardchtran.CHEQUELEAFID);
-                leaf.LEAFSTATUS = 11;
+                
+                leaf.LEAFSTATUS = db.OCCENUMERATION.Where(x=>x.Name=="used").Select(x=>x.ID).FirstOrDefault();
                 db.Entry(leaf).State = EntityState.Modified;
 
                 if (ModelState.IsValid)
@@ -152,7 +153,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
                    
                 }
 
-                currencyList = new List<string>() { "USD", "BDT" };
+                currencyList = new List<string>() { "BDT" };
                 ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
                 ViewBag.CURRENCY = new SelectList(currencyList);
                 return View("Index");

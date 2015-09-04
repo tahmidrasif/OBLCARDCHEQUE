@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="OBLCARCHEQUE_1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="BRANCHINFO">
     <Key>
       <PropertyRef Name="ID" />
@@ -24,9 +24,18 @@
     <Property Name="ISACTIVE" Type="bit" Nullable="false" />
     <Property Name="CREATEDBY" Type="bigint" Nullable="false" />
     <Property Name="CREATEDON" Type="datetime" Nullable="false" />
+    <Property Name="AUTHORIZEDBY" Type="bigint" />
+    <Property Name="AUTHORIZEDON" Type="datetime" />
+    <Property Name="REFERENCENO" Type="nvarchar" MaxLength="50" />
+    <Property Name="ESTABLISHMENTBY" Type="bigint" />
+    <Property Name="ESTABLISHMENTON" Type="datetime" />
+    <Property Name="CALLCENTERBY" Type="bigint" />
+    <Property Name="CALLCENTERON" Type="datetime" />
+    <Property Name="ISDELETE" Type="bit" />
     <Property Name="MODIFIEDBY" Type="bigint" />
     <Property Name="MODIFIEDON" Type="datetime" />
-    <Property Name="REFERENCENO" Type="nvarchar" MaxLength="50" />
+    <Property Name="DELIVEREDBY" Type="bigint" />
+    <Property Name="DELIVEREDON" Type="datetime" />
   </EntityType>
   <EntityType Name="CARDCHLEAF">
     <Key>
@@ -42,6 +51,7 @@
     <Property Name="CREATEDON" Type="datetime" Nullable="false" />
     <Property Name="MODIFIEDBY" Type="bigint" />
     <Property Name="MODIFIEDON" Type="datetime" />
+    <Property Name="ISDELETE" Type="bit" />
   </EntityType>
   <EntityType Name="CARDCHTRAN">
     <Key>
@@ -63,6 +73,9 @@
     <Property Name="CREATEDON" Type="datetime" Nullable="false" />
     <Property Name="MODIFIEDBY" Type="bigint" />
     <Property Name="MODIFIEDON" Type="datetime" />
+    <Property Name="ISDELETE" Type="bit" />
+    <Property Name="AUTHORIZEDBY" Type="bigint" />
+    <Property Name="AUTHORIZEDON" Type="datetime" />
   </EntityType>
   <EntityType Name="DEPOSIT">
     <Key>
@@ -73,7 +86,7 @@
     <Property Name="BRANCH" Type="bigint" />
     <Property Name="CREATEDBY" Type="bigint" />
     <Property Name="CREATEDON" Type="datetime" />
-    <Property Name="ISAUTHORIZED" Type="bit" />
+    <Property Name="ISACTIVE" Type="bit" />
     <Property Name="REFERENCENUMBER" Type="nvarchar" MaxLength="50" />
     <Property Name="PAYMENTTYPE" Type="nvarchar" MaxLength="50" />
     <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="2" />
@@ -85,6 +98,11 @@
     <Property Name="PDCDATE" Type="datetime" />
     <Property Name="CARDHOLDERNAME" Type="nvarchar" MaxLength="100" />
     <Property Name="MOBILE" Type="nvarchar" MaxLength="16" />
+    <Property Name="ISDELETE" Type="bit" />
+    <Property Name="MODIFIEDBY" Type="bigint" />
+    <Property Name="MODIFIEDON" Type="datetime" />
+    <Property Name="AUTHORIZEDBY" Type="bigint" />
+    <Property Name="AUTHORIZEDON" Type="datetime" />
   </EntityType>
   <EntityType Name="OCCENUMERATION">
     <Key>
@@ -133,18 +151,6 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="BRANCHINFO_V">
-    <Key>
-      <PropertyRef Name="ID" />
-      <PropertyRef Name="BRANCHCODE" />
-      <PropertyRef Name="BRANCHNAME" />
-    </Key>
-    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="BRANCHCODE" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="BRANCHNAME" Type="varchar" MaxLength="50" Nullable="false" />
-  </EntityType>
   <Association Name="FK_CARDCHEREUISITION_BRANCHINFO">
     <End Role="BRANCHINFO" Type="Self.BRANCHINFO" Multiplicity="1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
@@ -170,6 +176,18 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_CARDCHEREUISITION_OCCUSER">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHEREUISITION">
+        <PropertyRef Name="DELIVEREDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
     <ReferentialConstraint>
@@ -181,7 +199,43 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER6">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHEREUISITION">
+        <PropertyRef Name="AUTHORIZEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER7">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHEREUISITION">
+        <PropertyRef Name="ESTABLISHMENTBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER8">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHEREUISITION">
+        <PropertyRef Name="CALLCENTERBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER9">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
     <ReferentialConstraint>
@@ -289,6 +343,18 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CARDCHTRAN_OCCUSER2">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHTRAN">
+        <PropertyRef Name="AUTHORIZEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CHEQUETRAN_OBLCHEQUELEAF">
     <End Role="CARDCHLEAF" Type="Self.CARDCHLEAF" Multiplicity="1" />
     <End Role="CARDCHTRAN" Type="Self.CARDCHTRAN" Multiplicity="*" />
@@ -322,6 +388,30 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
       </Principal>
       <Dependent Role="DEPOSIT">
         <PropertyRef Name="CREATEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DEPOSIT_OCCUSER1">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="DEPOSIT" Type="Self.DEPOSIT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DEPOSIT">
+        <PropertyRef Name="MODIFIEDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DEPOSIT_OCCUSER2">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="DEPOSIT" Type="Self.DEPOSIT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DEPOSIT">
+        <PropertyRef Name="AUTHORIZEDBY" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -373,38 +463,7 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <EntityContainer Name="OBLCARDCHEQUEModelStoreContainer">
+  <EntityContainer Name="OBLCARCHEQUE_1ModelStoreContainer">
     <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CARDCHEREUISITION" EntityType="Self.CARDCHEREUISITION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CARDCHLEAF" EntityType="Self.CARDCHLEAF" Schema="dbo" store:Type="Tables" />
@@ -414,13 +473,6 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
     <EntitySet Name="OCCEVENTLOG" EntityType="Self.OCCEVENTLOG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OCCUSER" EntityType="Self.OCCUSER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="BRANCHINFO_V" EntityType="Self.BRANCHINFO_V" store:Type="Views" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [BRANCHINFO_V].[ID] AS [ID], 
-    [BRANCHINFO_V].[BRANCHCODE] AS [BRANCHCODE], 
-    [BRANCHINFO_V].[BRANCHNAME] AS [BRANCHNAME]
-    FROM [dbo].[BRANCHINFO_V] AS [BRANCHINFO_V]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_CARDCHEREUISITION_BRANCHINFO" Association="Self.FK_CARDCHEREUISITION_BRANCHINFO">
       <End Role="BRANCHINFO" EntitySet="BRANCHINFO" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
@@ -434,6 +486,22 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
     </AssociationSet>
     <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER1" Association="Self.FK_CARDCHEREUISITION_OCCUSER1">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER6" Association="Self.FK_CARDCHEREUISITION_OCCUSER6">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER7" Association="Self.FK_CARDCHEREUISITION_OCCUSER7">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER8" Association="Self.FK_CARDCHEREUISITION_OCCUSER8">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER9" Association="Self.FK_CARDCHEREUISITION_OCCUSER9">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
     </AssociationSet>
@@ -469,6 +537,10 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
     </AssociationSet>
+    <AssociationSet Name="FK_CARDCHTRAN_OCCUSER2" Association="Self.FK_CARDCHTRAN_OCCUSER2">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
+    </AssociationSet>
     <AssociationSet Name="FK_CHEQUETRAN_OBLCHEQUELEAF" Association="Self.FK_CHEQUETRAN_OBLCHEQUELEAF">
       <End Role="CARDCHLEAF" EntitySet="CARDCHLEAF" />
       <End Role="CARDCHTRAN" EntitySet="CARDCHTRAN" />
@@ -478,6 +550,14 @@ warning 6002: The table/view 'OBLCARDCHEQUE.dbo.BRANCHINFO_V' does not have a pr
       <End Role="DEPOSIT" EntitySet="DEPOSIT" />
     </AssociationSet>
     <AssociationSet Name="FK_DEPOSIT_OCCUSER" Association="Self.FK_DEPOSIT_OCCUSER">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="DEPOSIT" EntitySet="DEPOSIT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DEPOSIT_OCCUSER1" Association="Self.FK_DEPOSIT_OCCUSER1">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="DEPOSIT" EntitySet="DEPOSIT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DEPOSIT_OCCUSER2" Association="Self.FK_DEPOSIT_OCCUSER2">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="DEPOSIT" EntitySet="DEPOSIT" />
     </AssociationSet>

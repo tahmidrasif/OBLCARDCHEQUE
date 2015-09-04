@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="OBLCARDCHEQUEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="OBLCARCHEQUE_1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="BRANCHINFO">
     <Key>
       <PropertyRef Name="ID" />
@@ -35,17 +35,20 @@
     <Property Name="ESTABLISHMENTBY" Type="Int64" />
     <Property Name="ESTABLISHMENTON" Type="DateTime" Precision="3" />
     <Property Name="CALLCENTERBY" Type="Int64" />
-    <Property Name="CALLCENTERON" Type="DateTime" Precision="0" />
+    <Property Name="CALLCENTERON" Type="DateTime" Precision="3" />
     <Property Name="ISDELETE" Type="Boolean" />
-    <Property Name="MODIFIDBY" Type="Int64" />
-    <Property Name="MODIFIEDON" Type="DateTime" Precision="0" />
+    <Property Name="MODIFIEDBY" Type="Int64" />
+    <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+    <Property Name="DELIVEREDBY" Type="Int64" />
+    <Property Name="DELIVEREDON" Type="DateTime" Precision="3" />
     <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_CARDCHEREUISITION_BRANCHINFO" FromRole="CARDCHEREUISITION" ToRole="BRANCHINFO" />
     <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHEREUISITION_OCCENUMERATION" FromRole="CARDCHEREUISITION" ToRole="OCCENUMERATION" />
     <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
     <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER1" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
-    <NavigationProperty Name="OCCUSER2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER3" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
-    <NavigationProperty Name="OCCUSER3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER4" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
-    <NavigationProperty Name="OCCUSER4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER5" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+    <NavigationProperty Name="OCCUSER2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER6" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+    <NavigationProperty Name="OCCUSER3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER7" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+    <NavigationProperty Name="OCCUSER4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER8" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+    <NavigationProperty Name="OCCUSER5" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER9" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
     <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" FromRole="CARDCHEREUISITION" ToRole="CARDCHLEAF" />
   </EntityType>
   <EntityType Name="CARDCHLEAF">
@@ -126,6 +129,7 @@
     <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
     <Property Name="AUTHORIZEDBY" Type="Int64" />
     <Property Name="AUTHORIZEDON" Type="DateTime" Precision="3" />
+    <Property Name="EXCHANGERATE" Type="Decimal" Precision="18" Scale="2" />
     <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_DEPOSIT_BRANCHINFO" FromRole="DEPOSIT" ToRole="BRANCHINFO" />
     <NavigationProperty Name="OCCUSER" Relationship="Self.FK_DEPOSIT_OCCUSER" FromRole="DEPOSIT" ToRole="OCCUSER" />
     <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_DEPOSIT_OCCUSER1" FromRole="DEPOSIT" ToRole="OCCUSER" />
@@ -175,9 +179,10 @@
     <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_OCCUSER_BRANCHINFO" FromRole="OCCUSER" ToRole="BRANCHINFO" />
     <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
     <NavigationProperty Name="CARDCHEREUISITION1" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-    <NavigationProperty Name="CARDCHEREUISITION2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER3" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-    <NavigationProperty Name="CARDCHEREUISITION3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER4" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-    <NavigationProperty Name="CARDCHEREUISITION4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER5" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+    <NavigationProperty Name="CARDCHEREUISITION2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER6" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+    <NavigationProperty Name="CARDCHEREUISITION3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER7" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+    <NavigationProperty Name="CARDCHEREUISITION4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER8" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+    <NavigationProperty Name="CARDCHEREUISITION5" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER9" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
     <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CARDCHLEAF_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
     <NavigationProperty Name="CARDCHLEAF1" Relationship="Self.FK_CARDCHLEAF_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
     <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CARDCHTRAN_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHTRAN" />
@@ -272,6 +277,18 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_CARDCHEREUISITION_OCCUSER">
+    <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+    <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OCCUSER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CARDCHEREUISITION">
+        <PropertyRef Name="DELIVEREDBY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
     <ReferentialConstraint>
@@ -283,7 +300,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER6">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
     <ReferentialConstraint>
@@ -295,7 +312,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CARDCHEREUISITION_OCCUSER3">
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER7">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
     <ReferentialConstraint>
@@ -307,7 +324,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CARDCHEREUISITION_OCCUSER4">
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER8">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
     <ReferentialConstraint>
@@ -319,7 +336,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CARDCHEREUISITION_OCCUSER5">
+  <Association Name="FK_CARDCHEREUISITION_OCCUSER9">
     <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
     <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
     <ReferentialConstraint>
@@ -327,7 +344,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="CARDCHEREUISITION">
-        <PropertyRef Name="MODIFIDBY" />
+        <PropertyRef Name="MODIFIEDBY" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -541,15 +558,19 @@
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
     </AssociationSet>
-    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER3" Association="Self.FK_CARDCHEREUISITION_OCCUSER3">
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER6" Association="Self.FK_CARDCHEREUISITION_OCCUSER6">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
     </AssociationSet>
-    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER4" Association="Self.FK_CARDCHEREUISITION_OCCUSER4">
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER7" Association="Self.FK_CARDCHEREUISITION_OCCUSER7">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
     </AssociationSet>
-    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER5" Association="Self.FK_CARDCHEREUISITION_OCCUSER5">
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER8" Association="Self.FK_CARDCHEREUISITION_OCCUSER8">
+      <End Role="OCCUSER" EntitySet="OCCUSER" />
+      <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER9" Association="Self.FK_CARDCHEREUISITION_OCCUSER9">
       <End Role="OCCUSER" EntitySet="OCCUSER" />
       <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
     </AssociationSet>

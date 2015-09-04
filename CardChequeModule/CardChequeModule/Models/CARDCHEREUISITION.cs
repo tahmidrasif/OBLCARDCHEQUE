@@ -14,7 +14,6 @@ namespace CardChequeModule.Models
     
     public partial class CARDCHEREUISITION
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CARDCHEREUISITION()
         {
             this.CARDCHLEAF = new HashSet<CARDCHLEAF>();
@@ -40,8 +39,10 @@ namespace CardChequeModule.Models
         public Nullable<long> CALLCENTERBY { get; set; }
         public Nullable<System.DateTime> CALLCENTERON { get; set; }
         public Nullable<bool> ISDELETE { get; set; }
-        public Nullable<long> MODIFIDBY { get; set; }
+        public Nullable<long> MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
+        public Nullable<long> DELIVEREDBY { get; set; }
+        public Nullable<System.DateTime> DELIVEREDON { get; set; }
     
         public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
@@ -50,7 +51,7 @@ namespace CardChequeModule.Models
         public virtual OCCUSER OCCUSER2 { get; set; }
         public virtual OCCUSER OCCUSER3 { get; set; }
         public virtual OCCUSER OCCUSER4 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual OCCUSER OCCUSER5 { get; set; }
         public virtual ICollection<CARDCHLEAF> CARDCHLEAF { get; set; }
     }
 }

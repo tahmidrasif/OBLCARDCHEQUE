@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -29,7 +30,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
             OCCUSER user = (OCCUSER)Session["User"];
             try
             {
-                var list = db.DEPOSIT.OrderByDescending(x => x.ID).ToList();
+                var list = db.DEPOSIT.Where(x=>x.ISDELETE==false).OrderByDescending(x => x.ID).ToList();
                 var branch = db.BRANCHINFO.Select(x => new { x.BRANCHNAME, x.ID }).OrderBy(x => x.BRANCHNAME);
                 ViewBag.BRANCH = new SelectList(branch, "ID", "BRANCHNAME");
 
@@ -110,7 +111,16 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 OCCUSER user = (OCCUSER)Session["User"];
                 if (String.Equals(btnName, "update"))
                 {
-                    db.Entry(deposit).State = EntityState.Modified;
+                    DEPOSIT deposits = db.DEPOSIT.Find(deposit.ID);
+                    
+                    deposit.CREATEDBY = deposits.CREATEDBY;
+                    deposit.CREATEDON = deposits.CREATEDON;
+                    deposit.MODIFIEDBY = user.ID;
+                    deposit.MODIFIEDON = DateTime.Now.Date;
+                    deposit.ISACTIVE = true;
+                    deposit.ISDELETE = false;
+                    //db.Entry(deposit).State = EntityState.Modified;
+                    db.DEPOSIT.AddOrUpdate(deposit);
                     db.SaveChanges();
                     var msg = "Successfully Updated";
                     return Json(msg, JsonRequestBehavior.AllowGet);
@@ -119,17 +129,18 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 {
 
                     DEPOSIT depostis = db.DEPOSIT.Find(deposit.ID);
-                    db.DEPOSIT.Remove(depostis);
+                    depostis.ISDELETE = true;
+                    db.Entry(depostis).State = EntityState.Modified;
                     db.SaveChanges();
                     var msg = "Successfully Removed";
                     return Json(msg, JsonRequestBehavior.AllowGet);
                 }
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                return RedirectToAction("Error", "Home", new { Area = "" });
+                var msg = exception.Message;
+                return Json(msg, JsonRequestBehavior.AllowGet);
             }
 
 

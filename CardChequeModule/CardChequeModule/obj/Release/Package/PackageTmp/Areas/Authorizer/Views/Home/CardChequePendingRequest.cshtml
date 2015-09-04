@@ -123,9 +123,7 @@
                             @if (item.Data.STATUS == 13)
                             {
                                 <td>
-                                    @*<input type="checkbox" class="checkBoxClass" name="[@item.Index].ID" id="idList" value="@item.Data.ID" />*@
-                                    <input type="checkbox" class="checkBoxClass" name="ID" value="@item.Data.ID" id="@item.Index" />
-                                    @*<input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />*@
+                                     <input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />
                                 </td>
                             }
                             else
@@ -158,11 +156,7 @@
                             @if (item.Data.STATUS == 13)
                             {
                                 <td>
-
-                                    <input type="text" class="form-control approvalClass @item.Index" name="APPROVALNO" id="@item.Index" />
-                                    @*<input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />*@
-                                    @*<input type="text" class="form-control approvalClass"  name="APPROVALNO" />*@
-
+                                    <input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />                                  
                                  </td>
                             }
                             else

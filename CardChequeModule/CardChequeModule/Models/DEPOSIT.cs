@@ -36,6 +36,7 @@ namespace CardChequeModule.Models
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
         public Nullable<long> AUTHORIZEDBY { get; set; }
         public Nullable<System.DateTime> AUTHORIZEDON { get; set; }
+        public Nullable<decimal> EXCHANGERATE { get; set; }
     
         public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }

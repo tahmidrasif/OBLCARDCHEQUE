@@ -8,7 +8,9 @@
     @{
         if (aUser != null)
         {
-            <li>@Html.ActionLink("Welcome " + @aUser.USERNAME, "Index", "Home", new { area = "" }, new { @class = "logout" })</li>
+          
+    <li>@Html.ActionLink("Welcome " + @aUser.USERNAME, "Index", "Home", new { area = "" }, new { @class = "logout" })</li>
+
             <li>@Html.ActionLink("Log Out", "LogOut", "Home", new { area = "" }, new { @class = "logout" })</li>
 
         }

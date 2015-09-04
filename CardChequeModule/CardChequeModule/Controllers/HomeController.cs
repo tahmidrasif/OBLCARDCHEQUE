@@ -78,17 +78,18 @@ namespace CardChequeModule.Controllers
         [HttpPost]
         public ActionResult LogIn(OCCUSER aUser, string PASSWORD)
         {
-           // WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
+            WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
+                //TAHMID
               
                 //var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, PASSWORD);
                 
                 //if (isValid == "Valid")
                 //{
-                    ViewBag.flag = "";
-                    if (IsUserInSystem(aUser.EMPLOYEEID))
-                    {
+                    //ViewBag.flag = "";
+                    //if (IsUserInSystem(aUser.EMPLOYEEID))
+                    //{
                         var user = GetByEmpId(aUser.EMPLOYEEID);
                         if (user != null)
                         {
@@ -116,8 +117,8 @@ namespace CardChequeModule.Controllers
                             }
                         }
 
-                    }
-                 //   else
+                //    }
+                //    else
                 //    {
                 //        ViewBag.flag = "User is not in the system";
                 //    }

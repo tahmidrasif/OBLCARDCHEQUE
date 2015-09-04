@@ -1,6 +1,158 @@
-﻿
+﻿@model IEnumerable<CardChequeModule.Models.DEPOSIT>
+@using PagedList
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 @{
     ViewBag.Title = "Index";
+    int y = ViewBag.Sln;
+
 }
 
-<h1>My Dashboard For Taler</h1>
+
+<div align="center" style="margin-top:-30px ">
+    <h3>CREDIT/PREPAID CARD PAYMENT LIST</h3>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"> <strong>Search</strong></span> </h3>
+    </div>
+    <div class="panel-body">
+        @* @using (Ajax.BeginForm("RequisitionRequest", "Home", FormMethod.Post, new AjaxOptions { UpdateTargetId = "partialChange", LoadingElementId = "Loading" }, new { @class = "form-horizontal", area = "Authorizer" }))*@
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-horizontal", area = "Payment" }))
+        {
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">Branch</label>
+                <div class="col-sm-3">
+
+                    @Html.DropDownList("BRANCH", ViewBag.BRANCH as SelectList, "Select All", new { @class = "form-control" })
+                </div>
+                <label class="col-sm-1 control-label">Card Number</label>
+                <div class="col-sm-3">
+                    <input type="text" id="CARDNO" name="CARDNO" class="form-control" value="@ViewBag.CARDNO" />
+                </div>
+                <label class="col-sm-1 control-label">Date</label>
+                <div class="col-sm-3">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type="text" id="CREATEDON" name="CREATEDON" placeholder="MM/DD/YYYY" class="form-control" value="@ViewBag.CREATEDON" />
+
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-11 control-label"></label>
+                <div class="col-sm-1">
+                    <button class="btn btn-info" type="submit" id="searchBtn">Search</button>
+                </div>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Form", "Home", new { Area = "Payment" }, new { @class = "btn btn-success" })
+</p>
+
+
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+        <tr class="success">
+            @*<th>
+                    Serial Number
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CARDNUMBER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AMOUNT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CREATEDON)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PAYMENTTYPE)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + y }))
+        {
+
+            <tr class="active">
+                @*<td>
+                        @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
+                    </td>*@
+                <td>
+                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Data.CARDNUMBER).ToString(), "Form", "Home", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
+                    @*@Html.DisplayFor(modelItem => item.Data.CARDNUMBER)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.AMOUNT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.CREATEDON)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.REFERENCENUMBER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.BRANCHINFO.BRANCHNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data.PAYMENTTYPE)
+                </td>
+            </tr>
+
+        }
+
+
+    </table>
+</div>
+
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
+            new { page, BRANCH = ViewBag.currentBranch, CARDNO = ViewBag.CARDNO, CREATEDON = ViewBag.CREATEDON, serial = ViewBag.Sln }))
+
+
+@section scripts{
+}
+
+@section DatetimeCss{
+
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+}
+@section DateTimeJs{
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+
+        });
+
+
+    </script>
+}
+
+

@@ -26,7 +26,7 @@
                 <label class="col-sm-1 control-label">Branch</label>
                 <div class="col-sm-3">
 
-                    @Html.DropDownList("BRANCH", ViewBag.BRANCH as SelectList, "Select Branch", new { @class = "form-control" })
+                    @Html.DropDownList("BRANCH", ViewBag.BRANCH as SelectList, "Select All", new { @class = "form-control" })
                 </div>
                 <label class="col-sm-1 control-label">Card Number</label>
                 <div class="col-sm-3">
@@ -35,7 +35,7 @@
                 <label class="col-sm-1 control-label">Date</label>
                 <div class="col-sm-3">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" value="@ViewBag.CREATEDON" />
+                        <input type="text" id="CREATEDON" name="CREATEDON" placeholder="MM/DD/YYYY" class="form-control" value="@ViewBag.CREATEDON" />
 
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -44,10 +44,15 @@
                 </div>
 
             </div>
+            <div class="form-group">
+                <label class="col-sm-11 control-label"></label>
+                <div class="col-sm-1">
+                    <button class="btn btn-info" type="submit" id="searchBtn">Search</button>
+                </div>
+            </div>
 
-           
         }
-       
+
     </div>
 </div>
 
@@ -62,9 +67,9 @@
 <div class="panel panel-default">
     <table class="table table-striped">
         <tr class="success">
-            <th>
+            @*<th>
                 Serial Number
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.CARDNUMBER)
             </th>
@@ -90,11 +95,12 @@
         {
 
             <tr class="active">
-                <td> 
-                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new{@id= item.Data.ID})
-                </td>
+                @*<td>
+                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
+                </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.Data.CARDNUMBER)
+                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Data.CARDNUMBER).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
+                    @*@Html.DisplayFor(modelItem => item.Data.CARDNUMBER)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Data.AMOUNT)
@@ -120,7 +126,7 @@
 </div>
 
 
-@Html.PagedListPager((IPagedList) Model, page => Url.Action("Index",
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
             new { page, BRANCH = ViewBag.currentBranch, CARDNO = ViewBag.CARDNO, CREATEDON = ViewBag.CREATEDON, serial = ViewBag.Sln }))
 
 

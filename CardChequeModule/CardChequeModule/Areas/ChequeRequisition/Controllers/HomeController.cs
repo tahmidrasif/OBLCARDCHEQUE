@@ -33,7 +33,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 };
                 ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
 
-                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Where(x => x.ISDELETE == false).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
 
                 if (STATUS != null)
                 {
@@ -86,8 +86,8 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                         dob = (DateTime)dataRow[3];
                     }
                     string userName = "User Name: " + name;
-                    String userDob="Date of Birth: " + dob.Date.ToShortDateString();
-                    return Json(new { userName,userDob, flag = 1 }, JsonRequestBehavior.AllowGet);
+                    String userDob = "Date of Birth: " + dob.Date.ToShortDateString();
+                    return Json(new { userName, userDob, flag = 1 }, JsonRequestBehavior.AllowGet);
                 }
                 msg = "Invalid Card Number. Please Recheck";
                 return Json(new { msg, flag }, JsonRequestBehavior.AllowGet);
@@ -107,16 +107,16 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 if (id == null)
                 {
                     user = (OCCUSER)Session["User"];
-                    ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", user.BRANCH);
+                    ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME");
                     CARDCHEREUISITION ccreq = new CARDCHEREUISITION();
-                    if (user.BRANCH != null)
-                    {
-                        ccreq.BRANCHCODE = (long)user.BRANCH;
-                    }
+                    //if (user.BRANCH != null)
+                    //{
+                    //    ccreq.BRANCHCODE = (long)user.BRANCH;
+                    //}
                     long status = db.OCCENUMERATION.Where(x => x.Name == "applied").Select(x => x.ID).FirstOrDefault();
                     ViewBag.STATUSID = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "chequereq"), "ID", "Name", status);
-                    ccreq.STATUS = status;
-                    ccreq.CREATEDON = DateTime.Now;
+                    ViewBag.STATUS = status;
+                    ccreq.CREATEDON = DateTime.Now.Date;
                     return View(ccreq);
                 }
                 CARDCHEREUISITION cardchereuisition = db.CARDCHEREUISITION.Find(id);
@@ -124,7 +124,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", cardchereuisition.BRANCHCODE);
+                ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", cardchereuisition.BRANCHCODE);
 
                 ViewBag.STATUSID = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "chequereq"), "ID", "Name", cardchereuisition.STATUS);
 
@@ -147,13 +147,14 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
             try
             {
                 user = (OCCUSER)Session["User"];
-               
-                
+
+
                 int adminFlag = 0;
                 if (cardchereuisition.ID == 0)
                 {
                     cardchereuisition.LEAFNO = 10;
                     cardchereuisition.ISACTIVE = false;
+                    cardchereuisition.ISDELETE = false;
                     cardchereuisition.CREATEDBY = user.ID;
                     if (ModelState.IsValid)
                     {
@@ -164,7 +165,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                             adminFlag = 1;
                         }
                         string msg = "Successfully Saved";
-                        return Json(new {msg,adminFlag}, JsonRequestBehavior.AllowGet);
+                        return Json(new { msg, adminFlag }, JsonRequestBehavior.AllowGet);
                     }
                     ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", user.BRANCH);
                     CARDCHEREUISITION ccreq = new CARDCHEREUISITION();
@@ -181,18 +182,18 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 else
                 {
                     var modifiedcardCheque = db.CARDCHEREUISITION.Find(cardchereuisition.ID);
-                   
-                  //
+
+                    //
                     if (ModelState.IsValid)
                     {
                         modifiedcardCheque.REMARKS = cardchereuisition.REMARKS;
                         modifiedcardCheque.REFERENCENO = cardchereuisition.REFERENCENO;
-                        modifiedcardCheque.MODIFIDBY = user.ID;
+                        modifiedcardCheque.MODIFIEDBY = user.ID;
                         modifiedcardCheque.MODIFIEDON = DateTime.Now.Date;
                         db.Entry(modifiedcardCheque).State = EntityState.Modified;
                         db.SaveChanges();
                         string msg = "Successfully Updated";
-                        return Json(new {msg,adminFlag}, JsonRequestBehavior.AllowGet);
+                        return Json(new { msg, adminFlag }, JsonRequestBehavior.AllowGet);
 
                     }
                     ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", cardchereuisition.BRANCHCODE);
@@ -203,7 +204,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 }
 
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }

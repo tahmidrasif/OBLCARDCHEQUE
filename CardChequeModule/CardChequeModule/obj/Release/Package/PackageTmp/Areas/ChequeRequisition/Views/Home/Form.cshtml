@@ -26,7 +26,7 @@
             <div class="form-group">
                 <div class="col-sm-6">
                     @Html.LabelFor(model => model.CARDNO)
-                    @Html.TextBoxFor(model => model.CARDNO, new { @class = "form-control", @placeholder = "Card Number" })
+                    @Html.TextBoxFor(model => model.CARDNO, new { @class = "form-control", @placeholder = "Please enter card number and press TAB" })
                     <label style="display: none">Email</label>
 
                 </div>
@@ -42,6 +42,17 @@
                         </span>
                     </div>
                 </div>
+                @*<div class="col-sm-6">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" placeholder="MM/DD/YYYY" id="CREATEDON" name="CREATEDON" />
+
+                        <span class="input-group-addon" id="mySpan">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                    @Html.ValidationMessageFor(m => m.CREATEDON)
+                </div>*@
             </div>
             <div id="result"></div>
             <img id="spinner" src="~/assets/img/spinner.gif" style="display: none;">
@@ -49,13 +60,14 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.BRANCHCODE, "Branch", new { @class = "col-sm-1 control-label" })
                 <div class="col-sm-5">
-                    @Html.DropDownList("BRANCH", null, null, new { @class = "form-control", disabled = "disabled" })
-                    @Html.HiddenFor(x => x.BRANCHCODE)
+                    @Html.DropDownList("BRANCHCODE", null, "Select Branch", new { @class = "form-control" })
+                    @*@Html.HiddenFor(x => x.BRANCHCODE)*@
                 </div>
                 @Html.LabelFor(model => model.STATUS, new { @class = "col-sm-1 control-label" })
                 <div class="col-sm-5">
                     @Html.DropDownList("STATUSID", null, "Select Status", new { @class = "form-control", @placeholder = "Status", disabled = "disabled" })
-                    @Html.HiddenFor(x => x.STATUS)
+                      @*@Html.HiddenFor(x => x.STATUS)*@
+                    <input type="hidden" name="STATUS" id="STATUS" value="@ViewBag.STATUS" />
                 </div>
             </div>
             
@@ -63,21 +75,21 @@
                 @Html.LabelFor(model => model.REFERENCENO, new { @class = "col-sm-1 control-label" })
 
                 <div class="col-sm-5">
-                    @Html.TextBoxFor(model => model.REFERENCENO, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.REFERENCENO, new { @class = "form-control", @placeholder = "Optional"})
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-12">
                     @Html.LabelFor(model => model.REMARKS)
-                    @Html.TextAreaFor(model => model.REMARKS, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.REMARKS, new { @class = "form-control", @placeholder = "Optional" })
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-11 control-label"></label>
                 <div class="col-sm-1">
-                    @if (Model.ID==0)
+                    @if (Model.ID!=null)
                     {
                         <button class="btn btn-info" type="submit" id="saveButton">Save</button>
                     }
@@ -194,14 +206,15 @@
 
                     } else {
                         $('#saveButton').prop('disabled', true);
-                        $('#modalBody').html(result.msg);
+                        $('#modalBody').html('<strong>Error</strong>');
                         $('#myModal').modal('show');
                     }
                     
                 },
                 error: function (xhr) {
                     $('#saveButton').prop('disabled', true);
-                    alert(xhr.message);
+                    $('#modalBody').html(xhr);
+                    $('#myModal').modal('show');
                 }
             });
 
@@ -212,6 +225,10 @@
             rules: {
 
                 CREATEDON: {
+                    required: true,
+
+                },
+                BRANCH: {
                     required: true,
 
                 },
@@ -263,7 +280,7 @@
             //window.location.href = '/ChequeRequisition/Home/Index/';
         }
         function OnFailure(response) {
-            alert(response);
+            
             $('#modalBody').html(response);
             $('#myModal').modal('show');
         }

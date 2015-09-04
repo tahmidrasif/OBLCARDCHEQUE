@@ -24,7 +24,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
         public ActionResult Index()
         {
 
-            List<string> currencyList = new List<string>() { "USD", "BDT" };
+            List<string> currencyList = new List<string>() {"USD", "BDT" };
             ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
             ViewBag.CURRENCY = new SelectList(currencyList);
             return View(new DEPOSIT());
@@ -48,21 +48,21 @@ namespace CardChequeModule.Areas.Payment.Controllers
                     
                     deposit.CREATEDBY = user.ID;
                     deposit.ISACTIVE = true;
-
-                    var userId = user.EMPLOYEEID;
-                    var length = userId.Length;
-                    char first = userId[0];
-                    char last = userId[userId.Length - 1];
-                    char middle = userId[(userId.Length - 1) / 2];
-                    var refNo = (first + middle + last).ToString(CultureInfo.InvariantCulture);
-                    refNo += length;
-                    refNo += DateTime.Now.ToString("ddMMyyHHmmssfff");
-                    refNo += deposit.CARDNUMBER.Substring(deposit.CARDNUMBER.Length - 4);
+                    deposit.ISDELETE = false;
+                    //var userId = user.EMPLOYEEID;
+                    //var length = userId.Length;
+                    //char first = userId[0];
+                    //char last = userId[userId.Length - 1];
+                    //char middle = userId[(userId.Length - 1) / 2];
+                    //var refNo = (first + middle + last).ToString(CultureInfo.InvariantCulture);
+                    //refNo += length;
+                    var refNo= DateTime.Now.ToString("ddMMyyHHmmssfff");
+                    //refNo += deposit.CARDNUMBER.Substring(deposit.CARDNUMBER.Length - 4);
                     deposit.REFERENCENUMBER = refNo;
                     db.DEPOSIT.Add(deposit);
                     db.SaveChanges();
                   //  Session["DepositSaveMsg"] = "Data saved successfully.\nReferance Number is: "+deposit.REFERENCENUMBER;
-                    var msg="Data saved successfully.\nReferance Number is: "+deposit.REFERENCENUMBER;
+                    var msg=@"Data saved successfully.<br/>Referance Number is: "+deposit.REFERENCENUMBER;
                     if (user.TYPE == 1)
                     {
                         adminFlag = 1;
@@ -77,7 +77,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
                 }
                
             }
-            List<string> currencyList = new List<string>() { "USD", "BDT" };
+            List<string> currencyList = new List<string>() {"BDT" };
             ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
             ViewBag.CURRENCY = new SelectList(currencyList);
             Session["DepositSaveMsg"] = "Data not saved";
@@ -103,8 +103,9 @@ namespace CardChequeModule.Areas.Payment.Controllers
                         foreach (DataRow row in details.Rows)
                         {
                             clientName = (string) row[2];
+                            return Json(clientName, JsonRequestBehavior.AllowGet);
                         }
-                        return Json(clientName, JsonRequestBehavior.AllowGet);
+                        Json(null, JsonRequestBehavior.AllowGet);
                     }
                     //return Json(null, JsonRequestBehavior.AllowGet);
                 }
@@ -114,7 +115,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
             catch (Exception)
             {
 
-                return RedirectToAction("Error", "Home", new { Area = "" });
+                return Json("error",JsonRequestBehavior.DenyGet);
             }
            
            

@@ -51,6 +51,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
                     OCCUSER user = (OCCUSER)Session["User"];
                     deposit.CREATEDBY = user.ID;
                     deposit.ISACTIVE = true;
+                    deposit.ISDELETE = false;
                    
                     db.Entry(deposit).State = EntityState.Modified;
                     //db.DEPOSIT.AddOrUpdate(x=>x.ID==deposit.ID);

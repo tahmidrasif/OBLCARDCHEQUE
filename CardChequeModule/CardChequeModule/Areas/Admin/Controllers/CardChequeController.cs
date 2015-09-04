@@ -66,16 +66,16 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                List<string> currencyList = new List<string>() { "USD", "BDT" };
-                ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
-                ViewBag.CURRENCY = new SelectList(currencyList);
-
+                List<string> currencyList = new List<string>() { "BDT" };
+               
                 CARDCHTRAN tran = db.CARDCHTRAN.Find(id);
                 if (tran == null)
                 {
                     return HttpNotFound();
                 }
 
+                ViewBag.BRANCHCODE = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME",tran.BRANCHCODE);
+                ViewBag.CURRENCY = new SelectList(currencyList);
 
                 return View(tran);
             }
@@ -94,12 +94,19 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 OCCUSER user = (OCCUSER)Session["User"];
                 if (String.Equals(btnName, "update"))
                 {
+                    var updatedTrn = db.CARDCHTRAN.Find(tran.ID);
+                    updatedTrn.CHEQUELEAFID = tran.CHEQUELEAFID;
+                    updatedTrn.CARDNO = tran.CARDNO;
+                    updatedTrn.BENEFICIARINFO = tran.BENEFICIARINFO;
+                    updatedTrn.AMOUNT = tran.AMOUNT;
+                    updatedTrn.BRANCHCODE = tran.BRANCHCODE;
+                    updatedTrn.REQUESTDATE = tran.REQUESTDATE;
 
-                    tran.MODIFIEDBY = user.ID;
-                    tran.MODIFIEDON = DateTime.Now.Date;
-                    tran.ISACTIVE = true;
-                  //  db.Entry(tran).State = EntityState.Modified;
-                  //db.SaveChanges();
+                    updatedTrn.MODIFIEDBY = user.ID;
+                    updatedTrn.MODIFIEDON = DateTime.Now.Date;
+                   // updatedTrn.ISACTIVE = true;
+                    db.Entry(updatedTrn).State = EntityState.Modified;
+                    db.SaveChanges();
                     var msg = "Successfully Updated";
                     return Json(msg, JsonRequestBehavior.AllowGet);
                 }

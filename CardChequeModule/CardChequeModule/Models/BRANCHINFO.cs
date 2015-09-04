@@ -14,7 +14,6 @@ namespace CardChequeModule.Models
     
     public partial class BRANCHINFO
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BRANCHINFO()
         {
             this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
@@ -28,15 +27,10 @@ namespace CardChequeModule.Models
         public string BRANCHCODE { get; set; }
         public string BRANCHNAME { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DEPOSIT> DEPOSIT { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OCCUSER> OCCUSER { get; set; }
     }
 }

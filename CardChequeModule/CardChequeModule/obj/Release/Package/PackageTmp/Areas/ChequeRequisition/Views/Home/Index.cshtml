@@ -27,7 +27,7 @@
                 <label class="col-sm-1 control-label">Status</label>
                 <div class="col-sm-3">
 
-                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select Value", new { @class = "form-control" })
+                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select All", new { @class = "form-control" })
                 </div>
                 <label class="col-sm-1 control-label">Card Number</label>
                 <div class="col-sm-3">
@@ -36,7 +36,7 @@
                 <label class="col-sm-1 control-label">Date</label>
                 <div class="col-sm-3">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" value="@ViewBag.CREATEDON" />
+                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" value="@ViewBag.CREATEDON" placeholder="MM/DD/YYYY" />
 
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>

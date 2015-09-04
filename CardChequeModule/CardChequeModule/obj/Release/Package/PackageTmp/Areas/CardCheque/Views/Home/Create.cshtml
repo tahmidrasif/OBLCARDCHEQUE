@@ -29,7 +29,7 @@
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Leaf Number</label>
                 <div class="col-lg-4">
-                    @Html.TextBox("leafNo", null, new { @class = "form-control" })
+                    @Html.TextBox("leafNo", null, new { @class = "form-control", @placeholder = "Please enter 7 digit leaf number and press TAB" })
                 </div>
                 <label for="name" class="col-lg-2 control-label">Card Number</label>
                 <div class="col-lg-4">
@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Pay To</label>
                 <div class="col-lg-10">
-                    @Html.TextBoxFor(x => x.BENEFICIARINFO, new { @class = "form-control" })
+                    @Html.TextBoxFor(x => x.BENEFICIARINFO, new { @class = "form-control", @placeholder = "Beneficiary  Information" })
                 </div>
 
 
@@ -61,20 +61,20 @@
 
                 <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
                 <div class="col-lg-4">
-                    @Html.DropDownList("CURRENCY", null, "Select Currency", new { @class = "form-control" })
+                    @Html.DropDownList("CURRENCY", null, null, new { @class = "form-control" })
                 </div>
             </div>
 
 
             <div class="form-group">
-                <label for="birthday" class="col-lg-2 control-label">Card Holder Name</label>
+                <label for="birthday" class="col-lg-2 control-label">Card Holder's Name</label>
                 <div class="col-lg-4">
                     @Html.TextBoxFor(x => x.CARDHOLDERNAME, new { @class = "form-control", @placeholder = "Name", @readonly = true })
 
                 </div>
                 <label for="name" class="col-lg-2 control-label">Signature Verified</label>
                 <div class="col-lg-4" id="checkerror">
-                    @Html.CheckBoxFor(x => x.ISSIGNATUREVERIFIED)
+                    @Html.CheckBoxFor(x => x.ISSIGNATUREVERIFIED, new { Style = "margin-top:10px" })
                 </div>
 
             </div>
@@ -86,7 +86,7 @@
                 <label for="name" class="col-lg-2 control-label">Date</label>
                 <div class="col-lg-4">
                     <div class='input-group date' id='datetimepicker1'>
-                        @Html.TextBoxFor(x => x.REQUESTDATE, new { @class = "form-control", @placeholder = "MM-DD-YYYY" })
+                        @Html.TextBoxFor(x => x.REQUESTDATE, new { @class = "form-control", @placeholder = "MM/DD/YYYY" })
 
                         <span class="input-group-addon" id="mySpan">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -195,6 +195,7 @@
                 },
                 AMOUNT: {
                     required: true,
+                    number:true,
 
                 },
                 CURRENCY: {

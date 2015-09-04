@@ -23,7 +23,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
             user = (OCCUSER) Session["User"];
             try
             {
-                var list = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x=>x.ID).ToList();
+                var list = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).Where(x=>x.ISDELETE==false).OrderByDescending(x=>x.ID).ToList();
                 var branch = db.BRANCHINFO.Select(x => new {x.BRANCHNAME, x.ID}).OrderBy(x=>x.BRANCHNAME);
                 ViewBag.BRANCH = new SelectList(branch, "ID", "BRANCHNAME");
 

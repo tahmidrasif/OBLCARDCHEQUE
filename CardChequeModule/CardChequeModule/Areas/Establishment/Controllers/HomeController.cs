@@ -55,7 +55,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                 }
                 if (CREATEDON != null)
                 {
-                    List = List.Where(x => x.MODIFIEDON == CREATEDON).ToList();
+                    List = List.Where(x => x.AUTHORIZEDON == CREATEDON).ToList();
                     ViewBag.CREATEDON = CREATEDON;
                 }
                 if (BRANCH != null)
@@ -89,7 +89,12 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                 {
 
                     var cheque = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
-                    cheque.STATUS = 7;
+                    var statusId =
+                        db.OCCENUMERATION.Where(x => x.Type == "chequereq")
+                            .Where(x => x.Name == "received")
+                            .Select(x => x.ID)
+                            .FirstOrDefault();
+                    cheque.STATUS = statusId; 
                     if (IsLeafNoStartsWithZero())
                     {
                         cheque.LEAFFROM = "0000001";
@@ -99,7 +104,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
                     else
                     {
-                        var lastSavedchq = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).OrderByDescending(x => x.MODIFIEDON).FirstOrDefault();
+                        var lastSavedchq = db.CARDCHEREUISITION.Where(x => x.STATUS == statusId).OrderByDescending(x => x.AUTHORIZEDON).FirstOrDefault();
                         var leafnext = (int)lastSavedchq.LEAFNEXT;
                         if (leafnext + 10 > 9999999)
                         {
@@ -126,7 +131,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                     cheque.ESTABLISHMENTBY = user.ID;
                     cheque.ESTABLISHMENTON = DateTime.Now.Date;
                     db.Entry(cheque).State = EntityState.Modified;
-                   // db.SaveChanges();
+                    db.SaveChanges();
 
                 }
                 DownloadFile(idList);
@@ -202,6 +207,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                     var buffer = exportData.GetBuffer();
                     Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                     Response.BinaryWrite(buffer);
+
                     Response.End();
 
                     //string saveAsFileName = string.Format("Cheque_Requisition{0:d}.xls", DateTime.Now).Replace("/", "-");

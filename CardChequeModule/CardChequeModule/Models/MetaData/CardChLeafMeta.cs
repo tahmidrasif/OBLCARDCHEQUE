@@ -8,6 +8,7 @@ using System.Web;
 namespace CardChequeModule.Models.MetaData
 {
 
+    
     public class CardChLeafMeta
     {
         [DisplayName("Cheque Id")]
@@ -33,7 +34,12 @@ namespace CardChequeModule.Models.MetaData
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime CREATEDON { get; set; }
+
+         [DisplayName("Modified By")]
         public Nullable<long> MODIFIEDBY { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
     }
 }

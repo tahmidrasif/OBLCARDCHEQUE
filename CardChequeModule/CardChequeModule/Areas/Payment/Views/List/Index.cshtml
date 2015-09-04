@@ -35,7 +35,7 @@
                 <label class="col-sm-1 control-label">Date</label>
                 <div class="col-sm-3">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type="text" id="CREATEDON" name="CREATEDON" class="form-control" value="@ViewBag.CREATEDON" />
+                        <input type="text" id="CREATEDON" name="CREATEDON" placeholder="MM/DD/YYYY" class="form-control" value="@ViewBag.CREATEDON" />
 
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -67,9 +67,9 @@
 <div class="panel panel-default">
     <table class="table table-striped">
         <tr class="success">
-            <th>
+            @*<th>
                 Serial Number
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.CARDNUMBER)
             </th>
@@ -95,11 +95,12 @@
         {
 
             <tr class="active">
-                <td>
+                @*<td>
                     @Html.ActionLink(@Html.DisplayFor(modelItem => item.Index).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
-                </td>
+                </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.Data.CARDNUMBER)
+                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Data.CARDNUMBER).ToString(), "Edit", "Edit", new { Area = "Payment", id = item.Data.ID }, new { @id = item.Data.ID })
+                    @*@Html.DisplayFor(modelItem => item.Data.CARDNUMBER)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Data.AMOUNT)

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="OBLCARDCHEQUEModelStoreContainer" CdmEntityContainer="Entities">
+  <EntityContainerMapping StorageEntityContainer="OBLCARCHEQUE_1ModelStoreContainer" CdmEntityContainer="Entities">
     <EntitySetMapping Name="BRANCHINFO">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.BRANCHINFO">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.BRANCHINFO">
         <MappingFragment StoreEntitySet="BRANCHINFO">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
@@ -11,7 +11,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CARDCHEREUISITION">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHEREUISITION">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.CARDCHEREUISITION">
         <MappingFragment StoreEntitySet="CARDCHEREUISITION">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CARDNO" ColumnName="CARDNO" />
@@ -33,13 +33,15 @@
           <ScalarProperty Name="CALLCENTERBY" ColumnName="CALLCENTERBY" />
           <ScalarProperty Name="CALLCENTERON" ColumnName="CALLCENTERON" />
           <ScalarProperty Name="ISDELETE" ColumnName="ISDELETE" />
-          <ScalarProperty Name="MODIFIDBY" ColumnName="MODIFIDBY" />
+          <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
           <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
+          <ScalarProperty Name="DELIVEREDBY" ColumnName="DELIVEREDBY" />
+          <ScalarProperty Name="DELIVEREDON" ColumnName="DELIVEREDON" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CARDCHLEAF">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHLEAF">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.CARDCHLEAF">
         <MappingFragment StoreEntitySet="CARDCHLEAF">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CHEQUEID" ColumnName="CHEQUEID" />
@@ -56,7 +58,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CARDCHTRAN">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHTRAN">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.CARDCHTRAN">
         <MappingFragment StoreEntitySet="CARDCHTRAN">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CHEQUELEAFID" ColumnName="CHEQUELEAFID" />
@@ -81,7 +83,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DEPOSIT">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.DEPOSIT">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.DEPOSIT">
         <MappingFragment StoreEntitySet="DEPOSIT">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CARDNUMBER" ColumnName="CARDNUMBER" />
@@ -105,11 +107,12 @@
           <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
           <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
           <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
+          <ScalarProperty Name="EXCHANGERATE" ColumnName="EXCHANGERATE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OCCENUMERATION">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCENUMERATION">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.OCCENUMERATION">
         <MappingFragment StoreEntitySet="OCCENUMERATION">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Type" ColumnName="Type" />
@@ -120,7 +123,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OCCEVENTLOG">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCEVENTLOG">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.OCCEVENTLOG">
         <MappingFragment StoreEntitySet="OCCEVENTLOG">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Controller" ColumnName="Controller" />
@@ -133,7 +136,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OCCUSER">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCUSER">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.OCCUSER">
         <MappingFragment StoreEntitySet="OCCUSER">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="EMPLOYEEID" ColumnName="EMPLOYEEID" />
@@ -149,7 +152,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.sysdiagrams">
+      <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.sysdiagrams">
         <MappingFragment StoreEntitySet="sysdiagrams">
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />

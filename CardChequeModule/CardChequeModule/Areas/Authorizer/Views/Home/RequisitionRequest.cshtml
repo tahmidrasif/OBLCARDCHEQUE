@@ -26,7 +26,7 @@
                 <label class="col-sm-1 control-label">Status</label>
                 <div class="col-sm-3">
 
-                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select Value", new { @class = "form-control" })
+                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select All", new { @class = "form-control" })
                 </div>
                 <label class="col-sm-1 control-label">Card Number</label>
                 <div class="col-sm-3">
@@ -102,7 +102,7 @@
                         @Html.DisplayNameFor(model => model.STATUS)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.OCCUSER.USERNAME)
+                        @Html.DisplayName("Applied By")
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.CREATEDON)
@@ -147,7 +147,7 @@
                             @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.OCCUSER.USERNAME)
+                            @Html.DisplayFor(modelItem => item.OCCUSER1.USERNAME)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CREATEDON, new { @Value = item.CREATEDON.ToString("dd-MM-yyyy") })

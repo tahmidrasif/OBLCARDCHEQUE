@@ -14,7 +14,6 @@ namespace CardChequeModule.Models
     
     public partial class CARDCHLEAF
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CARDCHLEAF()
         {
             this.CARDCHTRAN = new HashSet<CARDCHTRAN>();
@@ -36,7 +35,6 @@ namespace CardChequeModule.Models
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }
         public virtual OCCUSER OCCUSER1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace CardChequeModule.Models
     
     public partial class OCCENUMERATION
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OCCENUMERATION()
         {
             this.CARDCHEREUISITION = new HashSet<CARDCHEREUISITION>();
@@ -29,13 +28,9 @@ namespace CardChequeModule.Models
         public string Value { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHEREUISITION> CARDCHEREUISITION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHLEAF> CARDCHLEAF { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARDCHTRAN> CARDCHTRAN { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OCCUSER> OCCUSER { get; set; }
     }
 }

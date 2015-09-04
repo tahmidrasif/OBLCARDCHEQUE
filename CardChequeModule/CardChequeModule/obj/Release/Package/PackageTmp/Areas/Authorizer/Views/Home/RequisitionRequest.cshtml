@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<CardChequeModule.Models.CARDCHEREUISITION>
 
+@using CardChequeModule.Models
 @using PagedList
 @using PagedList.Mvc
 
@@ -7,6 +8,7 @@
 
 @{
     ViewBag.Title = "Index";
+    OCCUSER user = (OCCUSER)Session["User"];
 }
 
 
@@ -24,7 +26,7 @@
                 <label class="col-sm-1 control-label">Status</label>
                 <div class="col-sm-3">
 
-                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select Value", new { @class = "form-control" })
+                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select All", new { @class = "form-control" })
                 </div>
                 <label class="col-sm-1 control-label">Card Number</label>
                 <div class="col-sm-3">
@@ -100,7 +102,7 @@
                         @Html.DisplayNameFor(model => model.STATUS)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.OCCUSER.USERNAME)
+                        @Html.DisplayName("Applied By")
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.CREATEDON)
@@ -128,7 +130,15 @@
                         }
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.CARDNO)
+                            @if (user.TYPE == 1)
+                            {
+                                @Html.ActionLink(Html.DisplayFor(modelItem => item.CARDNO).ToString(), "Details", "Requisition",new { Area = "Admin", id = item.ID }, new { @id = item.ID })
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.CARDNO)
+                            }
+
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.BRANCHINFO.BRANCHNAME)
@@ -137,7 +147,7 @@
                             @Html.DisplayFor(modelItem => item.OCCENUMERATION.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.OCCUSER.USERNAME)
+                            @Html.DisplayFor(modelItem => item.OCCUSER1.USERNAME)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CREATEDON, new { @Value = item.CREATEDON.ToString("dd-MM-yyyy") })

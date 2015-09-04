@@ -4,37 +4,43 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a53f8fe418ed4805926680589b83e84b" Name="Diagram1">
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.BRANCHINFO" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHEREUISITION" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHLEAF" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.CARDCHTRAN" Width="1.5" PointX="10.5" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.DEPOSIT" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCENUMERATION" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCEVENTLOG" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.BRANCHINFO_V" Width="1.5" PointX="8.75" PointY="8.875" IsExpanded="true" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_BRANCHINFO" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_BRANCHINFO" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_BRANCHINFO1" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_DEPOSIT_BRANCHINFO" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCENUMERATION" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCENUMERATION" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CHEQUETRAN_OBLCHEQUELEAF" ManuallyRouted="false" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCENUMERATION" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="OBLCARDCHEQUEModel.OCCUSER" Width="1.5" PointX="3" PointY="2" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_OCCUSER_BRANCHINFO" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHEREUISITION_OCCUSER1" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHLEAF_OCCUSER1" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_CARDCHTRAN_OCCUSER1" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_DEPOSIT_OCCUSER" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_OCCUSER_OCCENUMERATION" />
-        <AssociationConnector Association="OBLCARDCHEQUEModel.FK_OCCEVENTLOG_OCCUSER" />
-        </Diagram>
+      <Diagram DiagramId="fd4d0084cfd248afafde9dba9002e282" Name="Diagram1">
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.BRANCHINFO" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.CARDCHEREUISITION" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.CARDCHLEAF" Width="1.5" PointX="14.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.CARDCHTRAN" Width="1.5" PointX="16.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.DEPOSIT" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.OCCENUMERATION" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.OCCEVENTLOG" Width="1.5" PointX="11.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.OCCUSER" Width="1.5" PointX="9" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_BRANCHINFO" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHTRAN_BRANCHINFO" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHTRAN_BRANCHINFO1" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_DEPOSIT_BRANCHINFO" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_OCCUSER_BRANCHINFO" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_OCCENUMERATION" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_OCCUSER" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_OCCUSER1" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_OCCUSER6" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_OCCUSER7" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_OCCUSER8" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHEREUISITION_OCCUSER9" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHLEAF_OCCENUMERATION" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHLEAF_OCCUSER" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHLEAF_OCCUSER1" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CHEQUETRAN_OBLCHEQUELEAF" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHTRAN_OCCENUMERATION" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHTRAN_OCCUSER" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHTRAN_OCCUSER1" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_CARDCHTRAN_OCCUSER2" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_DEPOSIT_OCCUSER" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_DEPOSIT_OCCUSER1" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_DEPOSIT_OCCUSER2" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_OCCUSER_OCCENUMERATION" ManuallyRouted="false" />
+        <AssociationConnector Association="OBLCARCHEQUE_1Model.FK_OCCEVENTLOG_OCCUSER" ManuallyRouted="false" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

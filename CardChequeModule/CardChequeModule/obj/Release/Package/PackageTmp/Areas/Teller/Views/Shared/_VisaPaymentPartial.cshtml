@@ -1,0 +1,48 @@
+﻿@using CardChequeModule.Models
+@model CardChequeModule.Areas.Teller.Models.TellerDashBoardVM
+
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Visa Payment</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" type="button">
+                        <strong>Total Visa Payment</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPayment)</span>
+                    </button>
+                </div>
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" type="button">
+                        <strong>Total Collection</strong> <span class="badge">@Html.DisplayFor(x => x.TotalVisaPaymentCollection)</span>
+                    </button>
+
+                </div>
+              
+            </div>
+            <div class="col-lg-12">
+                <table>
+                    @foreach (DEPOSIT deposit in Model.Deposits)
+                    {
+                        <tr>
+                            <td>@deposit.CARDNUMBER</td>
+                            <td>@deposit.PAYMENTTYPE</td>
+                            <td>@deposit.CREATEDON</td>
+                            <td>@deposit.AMOUNT</td>
+                        </tr>
+                    }
+                   
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <button name="btnName" value="visa" class="btn btn-info">Search</button>
+    </div>
+</div>

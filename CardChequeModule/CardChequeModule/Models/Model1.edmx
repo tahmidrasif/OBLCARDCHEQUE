@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OBLCARDCHEQUEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="OBLCARCHEQUE_1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BRANCHINFO">
           <Key>
             <PropertyRef Name="ID" />
@@ -35,10 +35,12 @@
           <Property Name="ESTABLISHMENTBY" Type="bigint" />
           <Property Name="ESTABLISHMENTON" Type="datetime" />
           <Property Name="CALLCENTERBY" Type="bigint" />
-          <Property Name="CALLCENTERON" Type="date" />
+          <Property Name="CALLCENTERON" Type="datetime" />
           <Property Name="ISDELETE" Type="bit" />
-          <Property Name="MODIFIDBY" Type="bigint" />
-          <Property Name="MODIFIEDON" Type="date" />
+          <Property Name="MODIFIEDBY" Type="bigint" />
+          <Property Name="MODIFIEDON" Type="datetime" />
+          <Property Name="DELIVEREDBY" Type="bigint" />
+          <Property Name="DELIVEREDON" Type="datetime" />
         </EntityType>
         <EntityType Name="CARDCHLEAF">
           <Key>
@@ -106,6 +108,7 @@
           <Property Name="MODIFIEDON" Type="datetime" />
           <Property Name="AUTHORIZEDBY" Type="bigint" />
           <Property Name="AUTHORIZEDON" Type="datetime" />
+          <Property Name="EXCHANGERATE" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="OCCENUMERATION">
           <Key>
@@ -179,6 +182,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CARDCHEREUISITION_OCCUSER">
+          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+          <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHEREUISITION">
+              <PropertyRef Name="DELIVEREDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -190,7 +205,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER6">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -202,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER3">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER7">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -214,7 +229,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER4">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER8">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -226,7 +241,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER5">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER9">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -234,7 +249,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="CARDCHEREUISITION">
-              <PropertyRef Name="MODIFIDBY" />
+              <PropertyRef Name="MODIFIEDBY" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -454,7 +469,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="OBLCARDCHEQUEModelStoreContainer">
+        <EntityContainer Name="OBLCARCHEQUE_1ModelStoreContainer">
           <EntitySet Name="BRANCHINFO" EntityType="Self.BRANCHINFO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARDCHEREUISITION" EntityType="Self.CARDCHEREUISITION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARDCHLEAF" EntityType="Self.CARDCHLEAF" Schema="dbo" store:Type="Tables" />
@@ -480,15 +495,19 @@
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER3" Association="Self.FK_CARDCHEREUISITION_OCCUSER3">
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER6" Association="Self.FK_CARDCHEREUISITION_OCCUSER6">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER4" Association="Self.FK_CARDCHEREUISITION_OCCUSER4">
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER7" Association="Self.FK_CARDCHEREUISITION_OCCUSER7">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER5" Association="Self.FK_CARDCHEREUISITION_OCCUSER5">
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER8" Association="Self.FK_CARDCHEREUISITION_OCCUSER8">
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+            <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER9" Association="Self.FK_CARDCHEREUISITION_OCCUSER9">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
@@ -569,7 +588,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="OBLCARDCHEQUEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="OBLCARCHEQUE_1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="BRANCHINFO">
           <Key>
             <PropertyRef Name="ID" />
@@ -605,17 +624,20 @@
           <Property Name="ESTABLISHMENTBY" Type="Int64" />
           <Property Name="ESTABLISHMENTON" Type="DateTime" Precision="3" />
           <Property Name="CALLCENTERBY" Type="Int64" />
-          <Property Name="CALLCENTERON" Type="DateTime" Precision="0" />
+          <Property Name="CALLCENTERON" Type="DateTime" Precision="3" />
           <Property Name="ISDELETE" Type="Boolean" />
-          <Property Name="MODIFIDBY" Type="Int64" />
-          <Property Name="MODIFIEDON" Type="DateTime" Precision="0" />
+          <Property Name="MODIFIEDBY" Type="Int64" />
+          <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
+          <Property Name="DELIVEREDBY" Type="Int64" />
+          <Property Name="DELIVEREDON" Type="DateTime" Precision="3" />
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_CARDCHEREUISITION_BRANCHINFO" FromRole="CARDCHEREUISITION" ToRole="BRANCHINFO" />
           <NavigationProperty Name="OCCENUMERATION" Relationship="Self.FK_CARDCHEREUISITION_OCCENUMERATION" FromRole="CARDCHEREUISITION" ToRole="OCCENUMERATION" />
           <NavigationProperty Name="OCCUSER" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
           <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER1" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
-          <NavigationProperty Name="OCCUSER2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER3" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
-          <NavigationProperty Name="OCCUSER3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER4" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
-          <NavigationProperty Name="OCCUSER4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER5" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER6" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER7" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER8" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
+          <NavigationProperty Name="OCCUSER5" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER9" FromRole="CARDCHEREUISITION" ToRole="OCCUSER" />
           <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_OBLCHEQUELEAF_OBLCHEQUEREUISITION" FromRole="CARDCHEREUISITION" ToRole="CARDCHLEAF" />
         </EntityType>
         <EntityType Name="CARDCHLEAF">
@@ -696,6 +718,7 @@
           <Property Name="MODIFIEDON" Type="DateTime" Precision="3" />
           <Property Name="AUTHORIZEDBY" Type="Int64" />
           <Property Name="AUTHORIZEDON" Type="DateTime" Precision="3" />
+          <Property Name="EXCHANGERATE" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_DEPOSIT_BRANCHINFO" FromRole="DEPOSIT" ToRole="BRANCHINFO" />
           <NavigationProperty Name="OCCUSER" Relationship="Self.FK_DEPOSIT_OCCUSER" FromRole="DEPOSIT" ToRole="OCCUSER" />
           <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_DEPOSIT_OCCUSER1" FromRole="DEPOSIT" ToRole="OCCUSER" />
@@ -745,9 +768,10 @@
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_OCCUSER_BRANCHINFO" FromRole="OCCUSER" ToRole="BRANCHINFO" />
           <NavigationProperty Name="CARDCHEREUISITION" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
           <NavigationProperty Name="CARDCHEREUISITION1" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-          <NavigationProperty Name="CARDCHEREUISITION2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER3" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-          <NavigationProperty Name="CARDCHEREUISITION3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER4" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
-          <NavigationProperty Name="CARDCHEREUISITION4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER5" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+          <NavigationProperty Name="CARDCHEREUISITION2" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER6" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+          <NavigationProperty Name="CARDCHEREUISITION3" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER7" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+          <NavigationProperty Name="CARDCHEREUISITION4" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER8" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
+          <NavigationProperty Name="CARDCHEREUISITION5" Relationship="Self.FK_CARDCHEREUISITION_OCCUSER9" FromRole="OCCUSER" ToRole="CARDCHEREUISITION" />
           <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CARDCHLEAF_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
           <NavigationProperty Name="CARDCHLEAF1" Relationship="Self.FK_CARDCHLEAF_OCCUSER1" FromRole="OCCUSER" ToRole="CARDCHLEAF" />
           <NavigationProperty Name="CARDCHTRAN" Relationship="Self.FK_CARDCHTRAN_OCCUSER" FromRole="OCCUSER" ToRole="CARDCHTRAN" />
@@ -842,6 +866,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CARDCHEREUISITION_OCCUSER">
+          <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
+          <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OCCUSER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CARDCHEREUISITION">
+              <PropertyRef Name="DELIVEREDBY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -853,7 +889,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER1">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER6">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -865,7 +901,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER3">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER7">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -877,7 +913,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER4">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER8">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -889,7 +925,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CARDCHEREUISITION_OCCUSER5">
+        <Association Name="FK_CARDCHEREUISITION_OCCUSER9">
           <End Role="OCCUSER" Type="Self.OCCUSER" Multiplicity="0..1" />
           <End Role="CARDCHEREUISITION" Type="Self.CARDCHEREUISITION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -897,7 +933,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="CARDCHEREUISITION">
-              <PropertyRef Name="MODIFIDBY" />
+              <PropertyRef Name="MODIFIEDBY" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1111,15 +1147,19 @@
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER3" Association="Self.FK_CARDCHEREUISITION_OCCUSER3">
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER6" Association="Self.FK_CARDCHEREUISITION_OCCUSER6">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER4" Association="Self.FK_CARDCHEREUISITION_OCCUSER4">
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER7" Association="Self.FK_CARDCHEREUISITION_OCCUSER7">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
-          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER5" Association="Self.FK_CARDCHEREUISITION_OCCUSER5">
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER8" Association="Self.FK_CARDCHEREUISITION_OCCUSER8">
+            <End Role="OCCUSER" EntitySet="OCCUSER" />
+            <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARDCHEREUISITION_OCCUSER9" Association="Self.FK_CARDCHEREUISITION_OCCUSER9">
             <End Role="OCCUSER" EntitySet="OCCUSER" />
             <End Role="CARDCHEREUISITION" EntitySet="CARDCHEREUISITION" />
           </AssociationSet>
@@ -1185,9 +1225,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="OBLCARDCHEQUEModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="OBLCARCHEQUE_1ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="BRANCHINFO">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.BRANCHINFO">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.BRANCHINFO">
               <MappingFragment StoreEntitySet="BRANCHINFO">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="BRANCHCODE" ColumnName="BRANCHCODE" />
@@ -1196,7 +1236,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CARDCHEREUISITION">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHEREUISITION">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.CARDCHEREUISITION">
               <MappingFragment StoreEntitySet="CARDCHEREUISITION">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CARDNO" ColumnName="CARDNO" />
@@ -1218,13 +1258,15 @@
                 <ScalarProperty Name="CALLCENTERBY" ColumnName="CALLCENTERBY" />
                 <ScalarProperty Name="CALLCENTERON" ColumnName="CALLCENTERON" />
                 <ScalarProperty Name="ISDELETE" ColumnName="ISDELETE" />
-                <ScalarProperty Name="MODIFIDBY" ColumnName="MODIFIDBY" />
+                <ScalarProperty Name="MODIFIEDBY" ColumnName="MODIFIEDBY" />
                 <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
+                <ScalarProperty Name="DELIVEREDBY" ColumnName="DELIVEREDBY" />
+                <ScalarProperty Name="DELIVEREDON" ColumnName="DELIVEREDON" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CARDCHLEAF">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHLEAF">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.CARDCHLEAF">
               <MappingFragment StoreEntitySet="CARDCHLEAF">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CHEQUEID" ColumnName="CHEQUEID" />
@@ -1241,7 +1283,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CARDCHTRAN">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.CARDCHTRAN">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.CARDCHTRAN">
               <MappingFragment StoreEntitySet="CARDCHTRAN">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CHEQUELEAFID" ColumnName="CHEQUELEAFID" />
@@ -1266,7 +1308,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DEPOSIT">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.DEPOSIT">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.DEPOSIT">
               <MappingFragment StoreEntitySet="DEPOSIT">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CARDNUMBER" ColumnName="CARDNUMBER" />
@@ -1290,11 +1332,12 @@
                 <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
                 <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
                 <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
+                <ScalarProperty Name="EXCHANGERATE" ColumnName="EXCHANGERATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OCCENUMERATION">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCENUMERATION">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.OCCENUMERATION">
               <MappingFragment StoreEntitySet="OCCENUMERATION">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -1305,7 +1348,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OCCEVENTLOG">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCEVENTLOG">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.OCCEVENTLOG">
               <MappingFragment StoreEntitySet="OCCEVENTLOG">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Controller" ColumnName="Controller" />
@@ -1318,7 +1361,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OCCUSER">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.OCCUSER">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.OCCUSER">
               <MappingFragment StoreEntitySet="OCCUSER">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EMPLOYEEID" ColumnName="EMPLOYEEID" />
@@ -1334,7 +1377,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="OBLCARDCHEQUEModel.sysdiagrams">
+            <EntityTypeMapping TypeName="OBLCARCHEQUE_1Model.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
