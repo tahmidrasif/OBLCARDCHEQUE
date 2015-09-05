@@ -22,43 +22,61 @@ namespace CardChequeModule.Areas.Admin.Controllers
         OBLCARDCHEQUEEntities db = new OBLCARDCHEQUEEntities();
         public ActionResult Index()
         {
-            OCCUSER user = (OCCUSER)Session["User"];
-            AdminDashboardVM aVm = new AdminDashboardVM();
-
-            var visaList = db.DEPOSIT.Where(x => x.ISDELETE == false).OrderByDescending(x => x.ID).ToList();
-            aVm.TotalVisaPayment = visaList.Count;
-            aVm.TotalVisaPaymentCollection = (decimal)visaList.Sum(x => x.AMOUNT);
-            visaList = visaList.Take(5).ToList();
-
-
-            var requisitionList = db.CARDCHEREUISITION.OrderByDescending(x => x.ID).ToList();
-            aVm.TotalReqisitionRequest = requisitionList.Count;
-            requisitionList = requisitionList.Take(5).ToList();
-
-
-            var cardchtanList = db.CARDCHTRAN.OrderByDescending(x => x.ID).ToList();
-            aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
-            aVm.TotalChequePaymentNumber = cardchtanList.Count;
-            cardchtanList = cardchtanList.Take(5).ToList();
-
-            WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
-            DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
-            foreach (DataRow dataRow in dt.Rows)
+            try
             {
-                aVm.EmployeeInfoVm.BranchName = (string)dataRow[21];
-                aVm.EmployeeInfoVm.Email = (string)dataRow[9];
-                aVm.EmployeeInfoVm.EmployeeId = (string)dataRow[2];
-                aVm.EmployeeInfoVm.JobTitle = (string)dataRow[7];
-                aVm.EmployeeInfoVm.Name = (string)dataRow[3];
-                aVm.EmployeeInfoVm.PreDeptName = (string)dataRow[17];
 
+
+
+                OCCUSER user = (OCCUSER) Session["User"];
+                AdminDashboardVM aVm = new AdminDashboardVM();
+
+                var visaList = db.DEPOSIT.Where(x => x.ISDELETE == false).OrderByDescending(x => x.ID).ToList();
+                aVm.TotalVisaPayment = visaList.Count;
+                aVm.TotalVisaPaymentCollection = (decimal) visaList.Sum(x => x.AMOUNT);
+                visaList = visaList.Take(5).ToList();
+
+
+                var requisitionList = db.CARDCHEREUISITION.OrderByDescending(x => x.ID).ToList();
+                aVm.TotalReqisitionRequest = requisitionList.Count;
+                requisitionList = requisitionList.Take(5).ToList();
+
+
+                var cardchtanList = db.CARDCHTRAN.OrderByDescending(x => x.ID).ToList();
+                aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
+                aVm.TotalChequePaymentNumber = cardchtanList.Count;
+                cardchtanList = cardchtanList.Take(5).ToList();
+
+                //Tahmid
+                //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                //DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
+                //foreach (DataRow dataRow in dt.Rows)
+                //{
+                //    aVm.EmployeeInfoVm.BranchName = (string) dataRow[21];
+                //    aVm.EmployeeInfoVm.Email = (string) dataRow[9];
+                //    aVm.EmployeeInfoVm.EmployeeId = (string) dataRow[2];
+                //    aVm.EmployeeInfoVm.JobTitle = (string) dataRow[7];
+                //    aVm.EmployeeInfoVm.Name = (string) dataRow[3];
+                //    aVm.EmployeeInfoVm.PreDeptName = (string) dataRow[17];
+
+                //}
+                aVm.EmployeeInfoVm.BranchName = "Hrllo";
+                aVm.EmployeeInfoVm.Email = "Hrllo";
+                aVm.EmployeeInfoVm.EmployeeId = "Hrllo";
+                aVm.EmployeeInfoVm.JobTitle = "Hrllo";
+                aVm.EmployeeInfoVm.Name = "Hrllo";
+                aVm.EmployeeInfoVm.PreDeptName = "Hrllo";
+
+
+                aVm.Deposits = visaList;
+                aVm.Requisitions = requisitionList;
+                aVm.ChequeTrans = cardchtanList;
+
+                return View(aVm);
             }
-
-            aVm.Deposits = visaList;
-            aVm.Requisitions = requisitionList;
-            aVm.ChequeTrans = cardchtanList;
-
-            return View(aVm);
+            catch (Exception exception)
+            {
+                return RedirectToAction("Error", "Home", new { Area = "" });
+            }
         }
 
         [HttpPost]
