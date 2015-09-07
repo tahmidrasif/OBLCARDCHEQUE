@@ -107,6 +107,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
                     deposit.CREATEDBY = user.ID;
                     deposit.ISACTIVE = true;
                     deposit.ISDELETE = false;
+                    deposit.ISDOWNLOAD = false;
                     var refNo = DateTime.Now.ToString("ddMMyyHHmmssfff");
                     //refNo += deposit.CARDNUMBER.Substring(deposit.CARDNUMBER.Length - 4);
                     deposit.REFERENCENUMBER = refNo;
@@ -128,6 +129,7 @@ namespace CardChequeModule.Areas.Payment.Controllers
                         deposit.CREATEDBY = user.ID;
                         deposit.ISACTIVE = true;
                         deposit.ISDELETE = false;
+                        deposit.ISDOWNLOAD = false;
 
                         db.Entry(deposit).State = EntityState.Modified;
                         if (user.TYPE == 1)
@@ -162,22 +164,22 @@ namespace CardChequeModule.Areas.Payment.Controllers
             {
                 if (!String.IsNullOrEmpty(cardno))
                 {
-                    //Tahmid
-                    //OraDBCardInfo.OradbaccessSoap client = new OradbaccessSoapClient();
-                    //DataTable details = client.GetCCardDetail(cardno);
 
-                    //string clientName = "";
+                    OraDBCardInfo.OradbaccessSoap client = new OradbaccessSoapClient();
+                    DataTable details = client.GetCCardDetail(cardno);
 
-                    //if (details != null)
-                    //{
-                    //    foreach (DataRow row in details.Rows)
-                    //    {
-                    //        clientName = (string)row[2];
-                    //        return Json(clientName, JsonRequestBehavior.AllowGet);
-                    //    }
-                    //    Json(null, JsonRequestBehavior.AllowGet);
-                    //}
-                    return Json("SOgir", JsonRequestBehavior.AllowGet);
+                    string clientName = "";
+
+                    if (details != null)
+                    {
+                        foreach (DataRow row in details.Rows)
+                        {
+                            clientName = (string)row[2];
+                            return Json(clientName, JsonRequestBehavior.AllowGet);
+                        }
+                        Json(null, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(null, JsonRequestBehavior.AllowGet);
                     
                 }
                 return Json(null, JsonRequestBehavior.AllowGet);

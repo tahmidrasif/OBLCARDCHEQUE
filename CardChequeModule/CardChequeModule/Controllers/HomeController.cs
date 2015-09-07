@@ -81,15 +81,14 @@ namespace CardChequeModule.Controllers
             WebRef.OBLAPP oblApp=new WebRef.OBLAPP();
             try
             {
-                //TAHMID
               
-                //var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, PASSWORD);
+                var isValid = oblApp.GetByUserIDCheck(aUser.EMPLOYEEID, PASSWORD);
                 
-                //if (isValid == "Valid")
-                //{
-                    //ViewBag.flag = "";
-                    //if (IsUserInSystem(aUser.EMPLOYEEID))
-                    //{
+                if (isValid == "Valid")
+                {
+                    ViewBag.flag = "";
+                    if (IsUserInSystem(aUser.EMPLOYEEID))
+                    {
                         var user = GetByEmpId(aUser.EMPLOYEEID);
                         if (user != null)
                         {
@@ -117,24 +116,24 @@ namespace CardChequeModule.Controllers
                             }
                         }
 
-                //    }
-                //    else
-                //    {
-                //        ViewBag.flag = "User is not in the system";
-                //    }
+                    }
+                    else
+                    {
+                        ViewBag.flag = "User is not in the system";
+                    }
 
 
-                //}
-                //else if (isValid == "Invalid")
-                //{
-                //    ViewBag.flag = "Invalid User";
-                //    return View();
-                //}
-                //else if (isValid == "NotFound")
-                //{
-                //    ViewBag.flag = "User Not Found";
-                //    return View();
-                //}
+                }
+                else if (isValid == "Invalid")
+                {
+                    ViewBag.flag = "Invalid User";
+                    return View();
+                }
+                else if (isValid == "NotFound")
+                {
+                    ViewBag.flag = "User Not Found";
+                    return View();
+                }
                 return View();
             }
             catch (Exception exception)

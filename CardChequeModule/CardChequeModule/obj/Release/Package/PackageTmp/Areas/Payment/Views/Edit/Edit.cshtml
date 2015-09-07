@@ -126,13 +126,18 @@
             <div class="form-group" id="amountDiv">
 
                 @Html.LabelFor(model => model.AMOUNT, new { @class = "col-xs-2 col-sm-2 control-label" })
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     @Html.TextBoxFor(model => model.AMOUNT, new { @class = "form-control col-sm-10" })
                 </div>
 
-                <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
-                <div class="col-lg-4">
-                    @Html.DropDownList("CURRENCY", null, null, new { @class = "form-control" })
+                <label for="amount" class="col-xs-1 col-sm-1 control-label" style="font-size: 20px; margin-top: -5px"><strong>@@</strong></label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" placeholder="Exchange Rate" id="EXCANGERATE" name="EXCANGERATE" />
+                </div>
+
+                <label for="currency" class="col-xs-1 col-sm-1 control-label">Currency</label>
+                <div class="col-lg-3">
+                    @Html.DropDownList("CURRENCY", null, "Select Currency", new { @class = "form-control" })
                 </div>
             </div>
 
@@ -266,7 +271,7 @@
 
         $(function () {
             var paymentType = $('#PAYMENTTYPE').val();
-            console.log(paymentType);
+
             if (paymentType == 'Cash') {
                 $('#accdebitDiv *').attr('disabled', true);
                 $('#pdcDiv *').attr('disabled', true);

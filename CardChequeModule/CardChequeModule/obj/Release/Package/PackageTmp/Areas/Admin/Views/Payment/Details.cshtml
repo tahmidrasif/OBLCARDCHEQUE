@@ -104,18 +104,26 @@
                     <label class="radio-inline"><input type="radio" name="PAYMENTTYPE" id="PAYMENTTYPE" value="ADI">Account Debit Instruction</label>
                 </div>
             </div>
+
             <div class="form-group" id="amountDiv">
 
                 @Html.LabelFor(model => model.AMOUNT, new { @class = "col-xs-2 col-sm-2 control-label" })
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     @Html.TextBoxFor(model => model.AMOUNT, new { @class = "form-control col-sm-10" })
                 </div>
 
-                <label for="currency" class="col-xs-2 col-sm-2 control-label">Currency</label>
-                <div class="col-lg-4">
-                    @Html.DropDownList("CURRENCY", null, null, new { @class = "form-control" })
+                <label for="amount" class="col-xs-1 col-sm-1 control-label" style="font-size: 20px; margin-top: -5px"><strong>@@</strong></label>
+                <div class="col-lg-3">
+                    @*<input type="text" class="form-control" placeholder="Exchange Rate" id="EXCANGERATE" name="EXCANGERATE" />*@
+                    @Html.TextBoxFor(model => model.EXCHANGERATE, new { @class = "form-control", @placeholder = "Exchange Rate" })
+                </div>
+
+                <label for="currency" class="col-xs-1 col-sm-1 control-label">Currency</label>
+                <div class="col-lg-3">
+                    @Html.DropDownList("CURRENCY", null, "Select Currency", new { @class = "form-control" })
                 </div>
             </div>
+
             <div class="form-group" id="accdebitDiv">
                 <label class="col-xs-2 col-sm-2 control-label">Account Debit Instruction</label>
                 <div class="col-lg-10">
@@ -217,8 +225,29 @@
             $('#myModalBody').html(response);
             $('#myModal').modal('show');
         }
+        
+        $(function () {
+            $("#CURRENCY").change(function () {
+                var currency = $("#CURRENCY option:selected").text();
+                if (currency == 'USD') {
+
+                    $('#EXCHANGERATE').prop('disabled', false);
+                } else {
+                    $('#EXCHANGERATE').prop('disabled', true);
+                }
+            });
+        });
 
         $(function () {
+            
+            var currency = $("#CURRENCY option:selected").text();
+            if (currency == 'USD') {
+
+                $('#EXCHANGERATE').prop('disabled', false);
+            } else {
+                $('#EXCHANGERATE').prop('disabled', true);
+            }
+
             $('#saveButton').prop('disabled', true);
             var paymentType = $('#PAYMENTTYPE').val();
             console.log(paymentType);
@@ -340,6 +369,10 @@
                 },
                 PAYMENTTYPE: {
                     required: true,
+                },
+                EXCHANGERATE: {
+                    required: true,
+                    number: true,
                 },
                 BRANCH: {
                     required: true,

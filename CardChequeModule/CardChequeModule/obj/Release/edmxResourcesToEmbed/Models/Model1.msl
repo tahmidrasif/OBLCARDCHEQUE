@@ -107,6 +107,7 @@
           <ScalarProperty Name="MODIFIEDON" ColumnName="MODIFIEDON" />
           <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
           <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
+          <ScalarProperty Name="EXCHANGERATE" ColumnName="EXCHANGERATE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

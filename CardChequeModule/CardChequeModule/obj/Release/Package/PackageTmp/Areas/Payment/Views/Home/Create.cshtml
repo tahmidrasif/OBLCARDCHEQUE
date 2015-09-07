@@ -68,7 +68,7 @@
 
                 @Html.LabelFor(model => model.MOBILE, new { @class = "col-lg-2 control-label" })
                 <div class="col-lg-4">
-                    @Html.TextBoxFor(model => model.MOBILE, new { @class = "form-control col-sm-10" , @placeholder="11 digits Ex 01XXXXXXXXX"})
+                    @Html.TextBoxFor(model => model.MOBILE, new { @class = "form-control col-sm-10", @placeholder = "11 digits Ex 01XXXXXXXXX" })
                 </div>
             </div>
 
@@ -76,7 +76,7 @@
 
                 @Html.LabelFor(model => model.CARDHOLDERNAME, new { @class = "col-lg-2 control-label" })
                 <div class="col-lg-10">
-                    @Html.TextBoxFor(model => model.CARDHOLDERNAME, new { @class = "form-control col-sm-10" , @placeholder="Name will be appeared automatically if card number is valid"})
+                    @Html.TextBoxFor(model => model.CARDHOLDERNAME, new { @class = "form-control col-sm-10", @placeholder = "Name will be appeared automatically if card number is valid" })
                 </div>
             </div>
 
@@ -315,7 +315,7 @@
                 //var currency = $("#CURRENCY option:selected").text();
                 //alert(currency);
                 //if (currency == 'USD') {
-                    
+
                 //    $('#EXCANGERATE').prop('disabled', false);
                 //} else {
                 //    $('#EXCANGERATE').prop('disabled', true);
@@ -395,11 +395,11 @@
                     digits: true,
                     maxlength: 18,
                 },
-                MOBILE: {                  
+                MOBILE: {
                     digits: true,
                     minlength: 11,
                     maxlength: 11,
-                    
+
                 },
                 CURRENCY: {
                     required: true,

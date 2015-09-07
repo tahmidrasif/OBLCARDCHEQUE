@@ -1,0 +1,142 @@
+﻿@model IEnumerable<CardChequeModule.Models.DEPOSIT>
+
+@{
+    ViewBag.Title = "VisaXmlDownload";
+}
+
+@using (Html.BeginForm("DownloadXml", "Home", new {area = "Authorizer", id = "userDetailForm", @class = "form-horizontal"}))
+{
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="form-group">
+                <h3 class="panel-title col-sm-6"><span class="glyphicon glyphicon-list"> <strong>List</strong></span> </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-body">
+
+            <div class="row form-group">
+                <div class="col-lg-6">
+
+                    <div class="col-lg-3">
+                        @Html.DropDownList("CURRENCY", null, null, new {@class = "form-control"})
+                    </div>
+            
+                
+                </div>
+                <div class="col-lg-6 text-right">
+                    <button class="btn btn-danger" type="submit" name="btnName" value="delete">Download</button>
+                </div>
+            </div>
+
+            <table class="table table-striped">
+                <tr class="success">
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.CARDNUMBER)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AMOUNT)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CREATEDON)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.REFERENCENUMBER)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CURRENCY)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PAYMENTTYPE)
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr class="active">
+
+                        <td>
+                           @Html.DisplayFor(modelItem => item.CARDNUMBER)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AMOUNT)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CREATEDON)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.REFERENCENUMBER)
+                        </td>
+                        @if (item.CURRENCY == "USD")
+                        {
+                            <td class="info">
+                                @Html.DisplayFor(modelItem => item.CURRENCY)
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="danger">
+                                @Html.DisplayFor(modelItem => item.CURRENCY)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BRANCHINFO.BRANCHNAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PAYMENTTYPE)
+                        </td>
+                    </tr>
+
+                }
+
+
+            </table>
+        </div>
+
+    </div>
+}
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Messege</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
+
+        @*function OnSuccess(response) {
+
+            $('#myModalBody').html(response);
+            $('#myModal').modal('show');
+
+        }
+
+        function OnFailure(response) {
+            window.location.href = '@Url.Action("Error", "Home", new { area = "" })';
+
+        }*@
+    </script>
+}

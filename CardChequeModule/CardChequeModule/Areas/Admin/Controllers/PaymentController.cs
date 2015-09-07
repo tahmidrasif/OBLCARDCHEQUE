@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Xml;
 using CardChequeModule.Models;
 using Microsoft.SqlServer.Server;
 using PagedList;
@@ -22,15 +24,15 @@ namespace CardChequeModule.Areas.Admin.Controllers
         // GET: Admin/Payment
         public ActionResult Index(int? BRANCH, string CARDNO, DateTime? CREATEDON, int? page, int? serial)
         {
-           // var dEPOSIT = db.DEPOSIT.Include(d => d.BRANCHINFO).Include(d => d.OCCUSER);
-         //   return View(dEPOSIT.ToList());
+            // var dEPOSIT = db.DEPOSIT.Include(d => d.BRANCHINFO).Include(d => d.OCCUSER);
+            //   return View(dEPOSIT.ToList());
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
             OCCUSER user = (OCCUSER)Session["User"];
             try
             {
-                var list = db.DEPOSIT.Where(x=>x.ISDELETE==false).OrderByDescending(x => x.ID).ToList();
+                var list = db.DEPOSIT.Where(x => x.ISDELETE == false).OrderByDescending(x => x.ID).ToList();
                 var branch = db.BRANCHINFO.Select(x => new { x.BRANCHNAME, x.ID }).OrderBy(x => x.BRANCHNAME);
                 ViewBag.BRANCH = new SelectList(branch, "ID", "BRANCHNAME");
 
@@ -67,8 +69,8 @@ namespace CardChequeModule.Areas.Admin.Controllers
             catch (Exception exception)
             {
                 return RedirectToAction("Error", "Home", new { Area = "" });
-            }     
-            
+            }
+
         }
 
         // GET: Admin/Payment/Details/5
@@ -96,12 +98,8 @@ namespace CardChequeModule.Areas.Admin.Controllers
             {
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
-      
+
         }
-
-
-
-
 
         [HttpPost]
         public ActionResult Details(DEPOSIT deposit, string btnName)
@@ -112,7 +110,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 if (String.Equals(btnName, "update"))
                 {
                     DEPOSIT deposits = db.DEPOSIT.Find(deposit.ID);
-                    
+
                     deposit.CREATEDBY = deposits.CREATEDBY;
                     deposit.CREATEDON = deposits.CREATEDON;
                     deposit.MODIFIEDBY = user.ID;
@@ -146,6 +144,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
 
         }
 
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

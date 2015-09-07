@@ -24,7 +24,7 @@
                 <label class="col-sm-1 control-label">Role</label>
                 <div class="col-sm-3">
 
-                    @Html.DropDownList("TYPE", ViewBag.TYPE as SelectList, "Select Role", new { @class = "form-control" })
+                    @Html.DropDownList("TYPE", ViewBag.TYPE as SelectList, "Select All", new { @class = "form-control" })
                 </div>
                 <label class="col-sm-1 control-label">Employee Id</label>
                 <div class="col-sm-3">
@@ -65,9 +65,7 @@
             @Html.DisplayNameFor(model => model.USERNAME)
         </th>
         
-        <th>
-            @Html.DisplayNameFor(model => model.CREATEDBY)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.CREATEDON)
         </th>
@@ -91,9 +89,7 @@
                 @Html.DisplayFor(modelItem => item.USERNAME)
             </td>
           
-            <td>
-                @Html.DisplayFor(modelItem => item.CREATEDBY)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.CREATEDON)
             </td>

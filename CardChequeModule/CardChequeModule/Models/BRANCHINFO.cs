@@ -7,11 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using CardChequeModule.Models.MetaData;
+
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
     
+    [MetadataType(typeof(BranchMeta))]
     public partial class BRANCHINFO
     {
         public BRANCHINFO()

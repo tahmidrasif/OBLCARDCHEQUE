@@ -62,9 +62,24 @@
 
 
 <div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="form-group">
+            <h3 class="panel-title col-sm-6"><span class="glyphicon glyphicon-list"> <strong>List</strong></span> </h3>
+            <h3 class="panel-title col-sm-6 text-right">
+                <span class="glyphicon glyphicon-download">
+                    <strong>
+                        <a href="@Url.Action("DownloadXml", "Home", new { Area = "Establishment" })">
+                            Download Xml
+                        </a>
+                    </strong>
+                </span>
+            </h3>
+        </div>
+
+    </div>
     <table class="table table-striped">
         <tr class="success">
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.CARDNUMBER)
             </th>
@@ -90,9 +105,9 @@
         {
 
             <tr class="active">
-                
+
                 <td>
-                   @Html.ActionLink(@Html.DisplayFor(modelItem => item.Data.CARDNUMBER).ToString(), "Details", "Payment", new { Area = "Admin", id = item.Data.ID }, new { @id = item.Data.ID })
+                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Data.CARDNUMBER).ToString(), "Details", "Payment", new { Area = "Admin", id = item.Data.ID }, new { @id = item.Data.ID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Data.AMOUNT)
@@ -124,7 +139,7 @@
 
 
 @section scripts{
-    
+
 }
 
 @section DatetimeCss{

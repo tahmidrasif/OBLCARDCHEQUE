@@ -42,25 +42,20 @@ namespace CardChequeModule.Areas.Teller.Controllers
                 aVm.TotalChequePaymentNumber = cardchtanList.Count;
                 cardchtanList = cardchtanList.Take(5).ToList();
 
-               
-                //WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
-                //DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
-                //foreach (DataRow dataRow in dt.Rows)
-                //{
-                //    aVm.EmployeeInfoVm.BranchName = (string)dataRow[21];
-                //    aVm.EmployeeInfoVm.Email = (string)dataRow[9];
-                //    aVm.EmployeeInfoVm.EmployeeId = (string)dataRow[2];
-                //    aVm.EmployeeInfoVm.JobTitle = (string)dataRow[7];
-                //    aVm.EmployeeInfoVm.Name = (string)dataRow[3];
-                //    aVm.EmployeeInfoVm.PreDeptName = (string)dataRow[17];
 
-                //}
-                aVm.EmployeeInfoVm.BranchName = "Hrllo";
-                aVm.EmployeeInfoVm.Email = "Hrllo";
-                aVm.EmployeeInfoVm.EmployeeId = "Hrllo";
-                aVm.EmployeeInfoVm.JobTitle = "Hrllo";
-                aVm.EmployeeInfoVm.Name = "Hrllo";
-                aVm.EmployeeInfoVm.PreDeptName = "Hrllo";
+                WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
+                DataTable dt = oblApp.GetByUserID(user.EMPLOYEEID);
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    aVm.EmployeeInfoVm.BranchName = (string)dataRow[21];
+                    aVm.EmployeeInfoVm.Email = (string)dataRow[9];
+                    aVm.EmployeeInfoVm.EmployeeId = (string)dataRow[2];
+                    aVm.EmployeeInfoVm.JobTitle = (string)dataRow[7];
+                    aVm.EmployeeInfoVm.Name = (string)dataRow[3];
+                    aVm.EmployeeInfoVm.PreDeptName = (string)dataRow[17];
+
+                }
+               
                 
                 //var visaPaymentList = db.DEPOSIT.Where(x => x.CREATEDBY == user.ID).ToList();
                 aVm.Deposits = visaList;

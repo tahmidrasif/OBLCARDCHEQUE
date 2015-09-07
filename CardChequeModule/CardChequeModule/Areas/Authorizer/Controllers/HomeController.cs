@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 using CardChequeModule.Areas.Admin.Models;
 using CardChequeModule.Areas.Authorizer.Models;
 using CardChequeModule.Models;
@@ -332,10 +334,6 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
 
         #endregion
 
-
-
-
-
         #region Cheque CardCheque Authorization
         public ActionResult CardChequePendingRequest(string CARDNO, DateTime? CREATEDON, int? page, int? STATUS)
         {
@@ -438,7 +436,110 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
 
         #endregion
 
-        
+
+        #region Download Visa Xml
+
+        public ActionResult VisaXmlDownload()
+        {
+            var List = db.DEPOSIT.Where(x => x.ISDOWNLOAD == false && x.ISDELETE == false).ToList();
+            List<string> currencyList = new List<string>() { "USD", "BDT" };
+            ViewBag.CURRENCY = new SelectList(currencyList);
+            return View(List);
+        }
+        public ActionResult DownloadXml(string CURRENCY)
+        {
+            try
+            {
+               // int flag = 0;
+                if (String.IsNullOrEmpty(CURRENCY))
+                {
+                    return RedirectToAction("VisaXmlDownload");
+                }
+                //Create Memory Stream to store XML Data
+                MemoryStream ms = new MemoryStream();
+                //Use a writer to greate the XML
+                using (XmlWriter writer = XmlWriter.Create(ms))
+                {
+                    writer.WriteStartElement("Visa");
+                    var list = db.DEPOSIT.Where(x => x.ISDOWNLOAD == false && x.ISDELETE == false);
+                    if (CURRENCY=="USD")
+                    {
+                        list= list.Where(x => x.CURRENCY == "USD");
+                      //  flag = 1;
+                    }
+                    else if (CURRENCY == "BDT")
+                    {
+                         list = list.Where(x => x.CURRENCY == "BDT");
+                       // flag = 0;
+                    }
+                                     
+                    foreach (var aList in list.ToList())
+                    {
+                        writer.WriteStartElement("Visa_Payment");
+                        writer.WriteElementString("SBK_PAN", aList.CARDNUMBER);
+                        writer.WriteElementString("MBR", "0");
+                        writer.WriteElementString("SBK_SUM", aList.AMOUNT.ToString());
+                        writer.WriteElementString("SBK_UDT",
+                            aList.PAYMENTTYPE == "Cash"
+                                ? "Payment Received Cash - Thank You."
+                                : aList.PAYMENTTYPE == "Cheque"
+                                    ? "Payment Received Cheque - Thank You."
+                                    : "Payment Received Account Debit Instruction - Thank You.");
+                        writer.WriteEndElement();
+                        aList.ISDOWNLOAD= true;
+                        db.Entry(aList).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+                    writer.WriteEndElement();
+                    writer.Close();
+                    //writer.Flush();
+
+                    //Convert Memory Stream to Byte Array
+                    byte[] data = ms.ToArray();
+
+                    //The Proposed FileName that will show when the 
+                    //user is prompted to save the file
+                    string xmlFileName = "";
+                    if (CURRENCY == "USD")
+                    {
+                        xmlFileName = "Visa_USD_" + DateTime.Today.Year.ToString() +
+                                         DateTime.Today.Month.ToString("00") +
+                                         DateTime.Today.Day.ToString("00");
+                    }
+                    else if(CURRENCY=="BDT")
+                    {
+                        xmlFileName = "Visa_BDT_" + DateTime.Today.Year.ToString() +
+                                        DateTime.Today.Month.ToString("00") +
+                                        DateTime.Today.Day.ToString("00");
+                    }
+
+                    //Creating the Context
+                    Response.Clear();
+
+                    //Heads up browser, here comes some XML
+                    Response.ContentType = "text/xml";
+                    Response.AddHeader("Content-Disposition:",
+                        "attachment;filename=" + HttpUtility.UrlEncode(xmlFileName));
+
+
+                    //Download the file and prompt the user to save
+                    Response.BinaryWrite(data);
+                    Response.End();
+                    ms.Flush();
+                    ms.Close();
+                }
+                return RedirectToAction("VisaXmlDownload");
+            }
+            catch (Exception exception)
+            {
+                var a = exception.Message;
+                return RedirectToAction("VisaXmlDownload");
+            }
+        }
+
+
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

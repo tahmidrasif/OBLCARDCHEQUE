@@ -109,6 +109,7 @@
           <Property Name="AUTHORIZEDBY" Type="bigint" />
           <Property Name="AUTHORIZEDON" Type="datetime" />
           <Property Name="EXCHANGERATE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ISDOWNLOAD" Type="bit" />
         </EntityType>
         <EntityType Name="OCCENUMERATION">
           <Key>
@@ -719,6 +720,7 @@
           <Property Name="AUTHORIZEDBY" Type="Int64" />
           <Property Name="AUTHORIZEDON" Type="DateTime" Precision="3" />
           <Property Name="EXCHANGERATE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ISDOWNLOAD" Type="Boolean" />
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_DEPOSIT_BRANCHINFO" FromRole="DEPOSIT" ToRole="BRANCHINFO" />
           <NavigationProperty Name="OCCUSER" Relationship="Self.FK_DEPOSIT_OCCUSER" FromRole="DEPOSIT" ToRole="OCCUSER" />
           <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_DEPOSIT_OCCUSER1" FromRole="DEPOSIT" ToRole="OCCUSER" />
@@ -1333,6 +1335,7 @@
                 <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
                 <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
                 <ScalarProperty Name="EXCHANGERATE" ColumnName="EXCHANGERATE" />
+                <ScalarProperty Name="ISDOWNLOAD" ColumnName="ISDOWNLOAD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

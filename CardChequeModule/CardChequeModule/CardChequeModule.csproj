@@ -678,6 +678,8 @@
     <Content Include="Areas\Teller\Views\Shared\_UserInfoPartial.cshtml" />
     <Content Include="Areas\Teller\Views\Shared\_VisaPaymentPartial.cshtml" />
     <Content Include="Areas\Authorizer\Views\Home\DelivaryChequeBook.cshtml" />
+    <Content Include="Areas\Payment\Views\Home\Form.cshtml" />
+    <Content Include="Areas\Payment\Views\Home\Create.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -695,12 +697,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\Payment\Views\Home\Create.cshtml" />
-    <Content Include="Areas\Payment\Views\Home\Form.cshtml" />
-    <None Include="Properties\PublishProfiles\CCM.pubxml" />
-    <None Include="Properties\PublishProfiles\Hello.pubxml" />
-    <None Include="Properties\PublishProfiles\MyObl.pubxml" />
-    <None Include="Properties\PublishProfiles\OblCardCheque.pubxml" />
+    <Content Include="Areas\Authorizer\Views\Home\VisaXmlDownload.cshtml" />
+    <None Include="Properties\PublishProfiles\OBLCCM.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

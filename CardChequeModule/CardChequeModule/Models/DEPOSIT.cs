@@ -7,11 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using CardChequeModule.Models.MetaData;
+
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
+    [MetadataType(typeof(DepositMeta))]
     public partial class DEPOSIT
     {
         public long ID { get; set; }
@@ -37,6 +41,7 @@ namespace CardChequeModule.Models
         public Nullable<long> AUTHORIZEDBY { get; set; }
         public Nullable<System.DateTime> AUTHORIZEDON { get; set; }
         public Nullable<decimal> EXCHANGERATE { get; set; }
+        public Nullable<bool> ISDOWNLOAD { get; set; }
     
         public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }

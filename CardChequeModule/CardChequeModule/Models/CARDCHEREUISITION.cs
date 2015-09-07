@@ -7,11 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using CardChequeModule.Models.MetaData;
+
 namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
+    [MetadataType(typeof(ChequeRequisitionMeta))]
     public partial class CARDCHEREUISITION
     {
         public CARDCHEREUISITION()

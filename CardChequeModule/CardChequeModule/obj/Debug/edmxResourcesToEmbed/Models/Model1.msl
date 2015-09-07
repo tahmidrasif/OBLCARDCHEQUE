@@ -108,6 +108,7 @@
           <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
           <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
           <ScalarProperty Name="EXCHANGERATE" ColumnName="EXCHANGERATE" />
+          <ScalarProperty Name="ISDOWNLOAD" ColumnName="ISDOWNLOAD" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
