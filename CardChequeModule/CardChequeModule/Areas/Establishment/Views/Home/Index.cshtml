@@ -46,7 +46,7 @@
         <div class="form-group">
             <label class="col-sm-11 control-label"></label>
             <div class="col-sm-1">
-                <button class="btn btn-info" type="submit">Search</button>
+                <button class="btn btn-info text-right" type="submit">Search</button>
             </div>
         </div>
         }
@@ -55,9 +55,7 @@
 
 
 
-@*<div id="partialChange">
-        @Html.Partial("_AuthorizedList", Model)
-    </div>*@
+
 
 
 @using (Html.BeginForm("Post", "Home", new { area = "Establishment" }, FormMethod.Post, new { @class = "form-horizontal", id = "downloadForm" }))
@@ -147,9 +145,9 @@
             @if (Model.Any())
             {
             <div class="form-group">
-                <label class="col-sm-11 control-label"></label>
-                <div class="col-sm-1" style="margin-left: -15px">
-                    <button class="btn btn-danger" type="submit" id="Assign">Save</button>
+                @*<label class="col-sm-11 control-label"></label>*@
+                <div class="col-lg-12  text-right">
+                    <button class="btn btn-danger" type="submit" id="Assign">Export</button>
                 </div>
 
             </div>

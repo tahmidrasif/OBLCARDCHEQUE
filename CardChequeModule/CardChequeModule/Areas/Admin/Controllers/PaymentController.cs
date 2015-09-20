@@ -114,7 +114,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     deposit.CREATEDBY = deposits.CREATEDBY;
                     deposit.CREATEDON = deposits.CREATEDON;
                     deposit.MODIFIEDBY = user.ID;
-                    deposit.MODIFIEDON = DateTime.Now.Date;
+                    deposit.MODIFIEDON = DateTime.Now;
                     deposit.ISACTIVE = true;
                     deposit.ISDELETE = false;
                     //db.Entry(deposit).State = EntityState.Modified;

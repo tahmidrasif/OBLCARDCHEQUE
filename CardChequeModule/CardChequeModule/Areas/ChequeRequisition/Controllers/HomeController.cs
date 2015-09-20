@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CardChequeModule.Models;
@@ -71,31 +72,46 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
             string name = "";
             string msg = "";
             DateTime dob = DateTime.Now;
-            int flag = 0;
-
+         //   int flag = 0;
+           // cardNo.Trim(' ')
             try
             {
-                DataTable dt = cardApi.GetCCardDetail(cardNo);
-
-                if (dt.Rows.Count > 0)
+                if (!(cardNo.All(c => c >= '0' && c <= '9')))
                 {
-
-                    foreach (DataRow dataRow in dt.Rows)
-                    {
-                        name = (string)dataRow[2];
-                        dob = (DateTime)dataRow[3];
-                    }
-                    string userName = "User Name: " + name;
-                    String userDob = "Date of Birth: " + dob.Date.ToShortDateString();
-                    return Json(new { userName, userDob, flag = 1 }, JsonRequestBehavior.AllowGet);
+                    msg = "Please Enter Digit only";
+                    return Json(new { msg, flag = 0 }, JsonRequestBehavior.AllowGet);
                 }
-                msg = "Invalid Card Number. Please Recheck";
-                return Json(new { msg, flag }, JsonRequestBehavior.AllowGet);
+                if (cardNo.Length>18)
+                {
+                    msg = "Card Number should not be more than 18 digit";
+                    return Json(new { msg, flag = 0 }, JsonRequestBehavior.AllowGet);
+                }
+                if (!String.IsNullOrEmpty(cardNo))
+                {
+                    DataTable dt = cardApi.GetCCardDetail(cardNo.Trim(' '));
+
+                    if (dt.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow dataRow in dt.Rows)
+                        {
+                            name = (string)dataRow[2];
+                            dob = (DateTime)dataRow[3];
+                        }
+                        string userName = "User Name: " + name;
+                        String userDob = "Date of Birth: " + dob.Date.ToShortDateString();
+                        return Json(new { userName, userDob, flag = 1 }, JsonRequestBehavior.AllowGet);
+                    }
+                    msg = "Invalid Card Number. Please Recheck";
+                    return Json(new { msg, flag = 0 }, JsonRequestBehavior.AllowGet);
+                }
+                msg = "Card Number Can Not Be empty";
+                return Json(new { msg, flag = 0 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
 
-                return Json(exception.Message, JsonRequestBehavior.AllowGet);
+                return Json(new{msg=exception.Message,flag=2}, JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -116,7 +132,7 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                     long status = db.OCCENUMERATION.Where(x => x.Name == "applied").Select(x => x.ID).FirstOrDefault();
                     ViewBag.STATUSID = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "chequereq"), "ID", "Name", status);
                     ViewBag.STATUS = status;
-                    ccreq.CREATEDON = DateTime.Now.Date;
+                    ccreq.CREATEDON = DateTime.Now;
                     return View(ccreq);
                 }
                 CARDCHEREUISITION cardchereuisition = db.CARDCHEREUISITION.Find(id);
@@ -183,24 +199,17 @@ namespace CardChequeModule.Areas.ChequeRequisition.Controllers
                 {
                     var modifiedcardCheque = db.CARDCHEREUISITION.Find(cardchereuisition.ID);
 
-                    //
-                    if (ModelState.IsValid)
-                    {
+                   
                         modifiedcardCheque.REMARKS = cardchereuisition.REMARKS;
                         modifiedcardCheque.REFERENCENO = cardchereuisition.REFERENCENO;
                         modifiedcardCheque.MODIFIEDBY = user.ID;
-                        modifiedcardCheque.MODIFIEDON = DateTime.Now.Date;
+                        modifiedcardCheque.MODIFIEDON = DateTime.Now;
                         db.Entry(modifiedcardCheque).State = EntityState.Modified;
                         db.SaveChanges();
                         string msg = "Successfully Updated";
                         return Json(new { msg, adminFlag }, JsonRequestBehavior.AllowGet);
 
-                    }
-                    ViewBag.BRANCH = new SelectList(db.BRANCHINFO, "ID", "BRANCHNAME", cardchereuisition.BRANCHCODE);
-
-                    ViewBag.STATUSID = new SelectList(db.OCCENUMERATION.Where(x => x.Type == "chequereq"), "ID", "Name", cardchereuisition.STATUS);
-
-                    return View(cardchereuisition);
+                    
                 }
 
             }

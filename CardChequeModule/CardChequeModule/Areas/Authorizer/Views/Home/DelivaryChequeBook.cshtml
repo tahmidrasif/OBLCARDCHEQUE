@@ -93,17 +93,15 @@
                     </th>
                     <th>
                         @Html.DisplayName("Establishment DL Date")
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.REFERENCENO)
-                    </th>
+                    </th>                   
                     <th>
                         @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
                     </th>
-
-
                     <th>
-                        @Html.DisplayName("Authorized By")
+                        @Html.DisplayName("Leaf")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Downloaded By")
                     </th>
                     <th>
                         <input type="checkbox" id="checkall" />
@@ -125,19 +123,21 @@
                             @Html.DisplayFor(modelItem => item.ESTABLISHMENTON)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.REFERENCENO)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.BRANCHINFO.BRANCHNAME)
                         </td>
-
+                        <td>
+                            @Html.Label(item.LEAFFROM+"-"+item.LEAFTO)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.OCCUSER3.USERNAME)
                         </td>
-
-
                         <td>
-                            <input type="checkbox" class="checkBoxClass" name="idList" id="idList" value="@item.ID" />
+                            @if (item.STATUS == 7)
+                            {
+
+                                <input type="checkbox" class="checkBoxClass" name="idList" id="idList" value="@item.ID" />
+
+                            }
                         </td>
 
                     </tr>

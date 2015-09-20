@@ -26,7 +26,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
             try
             {
                 OCCUSER user = (OCCUSER)Session["User"];
-                var List = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                var List = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.CREATEDBY == user.ID).Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                 var status = db.OCCENUMERATION.Where(x => x.Type == "cardcheque");
                 ViewBag.STATUS = new SelectList(status, "ID", "Name");
 
@@ -82,8 +82,18 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
                         string clientname = "";
                         foreach (DataRow dataRow in dt.Rows)
                         {
-                            userPhoto = Convert.ToBase64String((byte[]) dataRow[4]);
-                            signature = Convert.ToBase64String((byte[]) dataRow[5]);
+                         //   var signatureByte = (byte[]) dataRow[5];
+                         //   var userPhotoByte = (byte[]) dataRow[4];
+                            if (dataRow[5] != null)
+                            {
+                                signature = Convert.ToBase64String((byte[])dataRow[5]);
+                            }
+                            if (dataRow[4] != null)
+                            {
+                                userPhoto = Convert.ToBase64String((byte[])dataRow[4]);
+                            }
+                          
+                            
                             clientname = (string)dataRow[2];
                         }
 
@@ -99,7 +109,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
                 }
                 return Json("invalid");
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return Json("invalid");
             }
@@ -137,6 +147,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
                 cardchtran.CREATEDON = DateTime.Now.Date;
                 cardchtran.STATUS = 13;
                 cardchtran.ISACTIVE = true;
+                cardchtran.ISDELETE = false;
 
                 var leaf=db.CARDCHLEAF.FirstOrDefault(x => x.ID == cardchtran.CHEQUELEAFID);
                 
@@ -177,29 +188,7 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
            
         }
 
-        public ActionResult SearchResult(string CARDNO, int? STATUS, DateTime? CREATEDON)
-        {
-
-            OCCUSER user = (OCCUSER) Session["User"];
-            var searchResult =
-                db.CARDCHTRAN.Include(c => c.BRANCHINFO)
-                    .Include(c => c.CARDCHLEAF)
-                    .Include(c => c.OCCENUMERATION).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID)
-                    .ToList();
-            if (!String.IsNullOrEmpty(CARDNO))
-            {
-                searchResult = searchResult.Where(x => x.CARDNO == CARDNO).ToList();
-            }
-            if (STATUS != null)
-            {
-                searchResult = searchResult.Where(x => x.STATUS == STATUS).ToList();
-            }
-            if (CREATEDON != null)
-            {
-                searchResult = searchResult.Where(x => x.REQUESTDATE == CREATEDON).ToList();
-            }
-            return PartialView("_CardChAppliedList",searchResult);
-        }
+    
     
         protected override void Dispose(bool disposing)
         {

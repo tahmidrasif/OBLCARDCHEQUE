@@ -104,6 +104,7 @@
     <Property Name="AUTHORIZEDBY" Type="bigint" />
     <Property Name="AUTHORIZEDON" Type="datetime" />
     <Property Name="EXCHANGERATE" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ISDOWNLOAD" Type="bit" />
   </EntityType>
   <EntityType Name="OCCENUMERATION">
     <Key>

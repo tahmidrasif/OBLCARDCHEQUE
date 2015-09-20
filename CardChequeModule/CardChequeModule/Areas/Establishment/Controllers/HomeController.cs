@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using CardChequeModule.Areas.Establishment.Models;
 using CardChequeModule.Models;
 //using CardChequeModule.WebReference;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 //using Microsoft.Office.Interop.Excel;
-
-using NPOI.HSSF.Model; // InternalWorkbook
-using NPOI.HSSF.UserModel; // HSSFWorkbook, HSSFSheet
+// InternalWorkbook
+// HSSFWorkbook, HSSFSheet
 using NPOI.XSSF.UserModel;
 using PagedList;
 
@@ -55,7 +49,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                 }
                 if (CREATEDON != null)
                 {
-                    List = List.Where(x => x.AUTHORIZEDON == CREATEDON).ToList();
+                    List = List.Where(x => x.AUTHORIZEDON.Value.Date == CREATEDON.Value.Date).ToList();
                     ViewBag.CREATEDON = CREATEDON;
                 }
                 if (BRANCH != null)
@@ -82,10 +76,10 @@ namespace CardChequeModule.Areas.Establishment.Controllers
         {
 
             OCCUSER user = (OCCUSER)Session["User"];
-
+            var aList = idList.OrderBy(x => x);
             try
             {
-                foreach (var id in idList)
+                foreach (var id in aList)
                 {
 
                     var cheque = db.CARDCHEREUISITION.FirstOrDefault(x => x.ID == id);
@@ -104,7 +98,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
                     else
                     {
-                        var lastSavedchq = db.CARDCHEREUISITION.Where(x => x.STATUS == statusId).OrderByDescending(x => x.AUTHORIZEDON).FirstOrDefault();
+                        var lastSavedchq = db.CARDCHEREUISITION.Where(x => x.ESTABLISHMENTBY!=null).OrderByDescending(x => x.LEAFNEXT).OrderByDescending(x=>x.ESTABLISHMENTON).FirstOrDefault();
                         var leafnext = (int)lastSavedchq.LEAFNEXT;
                         if (leafnext + 10 > 9999999)
                         {
@@ -129,7 +123,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
                         }
                     }
                     cheque.ESTABLISHMENTBY = user.ID;
-                    cheque.ESTABLISHMENTON = DateTime.Now.Date;
+                    cheque.ESTABLISHMENTON = DateTime.Now;
                     db.Entry(cheque).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -145,7 +139,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
         private bool IsLeafNoStartsWithZero()
         {
-            var downloadlist = db.CARDCHEREUISITION.Where(x => x.STATUS == 7).ToList();
+            var downloadlist = db.CARDCHEREUISITION.Where(x=>x.ESTABLISHMENTBY!=null).ToList();
             var savelistcount = downloadlist.Count;
             if (savelistcount == 0)
             {
@@ -233,26 +227,7 @@ namespace CardChequeModule.Areas.Establishment.Controllers
 
         }
 
-        [HttpPost]
-        public PartialViewResult SearchResult(string CARDNO, DateTime? CREATEDON, int? BRANCH)
-        {
-            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 5).ToList();
-
-            if (!String.IsNullOrEmpty(CARDNO))
-            {
-                List = List.Where(x => x.CARDNO == CARDNO).ToList();
-            }
-            if (CREATEDON != null)
-            {
-                List = List.Where(x => x.MODIFIEDON == CREATEDON).ToList();
-            }
-            if (BRANCH != null)
-            {
-                List = List.Where(x => x.BRANCHCODE == BRANCH).ToList();
-            }
-
-            return PartialView("_AuthorizedList", List);
-        }
+        
 
 
 

@@ -80,7 +80,7 @@
 
             <a href=@Url.Action("CardChequePendingRequest", "Home", new { area = "Authorizer" }, null)>
                 <i class="fa fa-dashboard"></i>
-                <span>Card Cheque Payment</span>
+                <span>Card Cheque Request</span>
             </a>
 
         </li>
@@ -95,6 +95,13 @@
             <a href=@Url.Action("DelivaryChequeBook", "Home", new { area = "Authorizer" }, null)>
                 <i class="fa fa-cogs"></i>
                 <span>Cheque Book Delivary</span>
+            </a>
+
+        </li>
+     <li class="sub-menu">
+            <a href=@Url.Action("VisaXmlDownload", "Home", new { area = "Authorizer" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Visa Payment XML</span>
             </a>
 
         </li>

@@ -32,12 +32,12 @@ namespace CardChequeModule.Areas.Teller.Controllers
                 visaList = visaList.Take(5).ToList();
 
 
-                var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                 aVm.TotalReqisitionRequest = requisitionList.Count;
                 requisitionList = requisitionList.Take(5).ToList();
 
 
-                var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                 aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
                 aVm.TotalChequePaymentNumber = cardchtanList.Count;
                 cardchtanList = cardchtanList.Take(5).ToList();
@@ -83,18 +83,18 @@ namespace CardChequeModule.Areas.Teller.Controllers
                     OCCUSER user = (OCCUSER)Session["User"];
                     TellerDashBoardVM aVm = new TellerDashBoardVM();
 
-                    var visaList = db.DEPOSIT.Where(x => x.ISDELETE == false).Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                    var visaList = db.DEPOSIT.Where(x => x.ISDELETE == false).Where(x => x.CREATEDBY == user.ID).Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                     aVm.TotalVisaPayment = visaList.Count;
                     aVm.TotalVisaPaymentCollection = (decimal)visaList.Sum(x => x.AMOUNT);
                     visaList = visaList.Take(5).ToList();
 
 
-                    var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                    var requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDBY == user.ID).Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                     aVm.TotalReqisitionRequest = requisitionList.Count;
                     requisitionList = requisitionList.Take(5).ToList();
 
 
-                    var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).OrderByDescending(x => x.ID).ToList();
+                    var cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDBY == user.ID).Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                     aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
                     aVm.TotalChequePaymentNumber = cardchtanList.Count;
                     cardchtanList = cardchtanList.Take(5).ToList();
@@ -115,20 +115,20 @@ namespace CardChequeModule.Areas.Teller.Controllers
                    
                     if (btnName == "visa")
                     {
-                        visaList = db.DEPOSIT.Where(x => x.ISDELETE == false).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
+                        visaList = db.DEPOSIT.Where(x => x.ISDELETE != false).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
                         aVm.TotalVisaPayment = visaList.Count;
                         aVm.TotalVisaPaymentCollection = (decimal)visaList.Sum(x => x.AMOUNT);
                         //aVm.Deposits = List;
                     }
                     else if (btnName == "requisition")
                     {
-                        requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
+                        requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDON >= startDate).Where(x=>x.ISDELETE!=true).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
                         aVm.TotalReqisitionRequest = requisitionList.Count;
 
                     }
                     else if (btnName == "cardcheque")
                     {
-                        cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
+                        cardchtanList = db.CARDCHTRAN.Where(x=>x.ISDELETE!=true).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).Where(x => x.CREATEDBY == user.ID).ToList();
                         aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
                         aVm.TotalChequePaymentNumber = cardchtanList.Count;
 

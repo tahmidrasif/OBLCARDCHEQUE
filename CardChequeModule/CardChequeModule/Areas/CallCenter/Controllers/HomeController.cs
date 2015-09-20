@@ -28,7 +28,7 @@ namespace CardChequeModule.Areas.CallCenter.Controllers
                         .Select(x => x.ID)
                         .FirstOrDefault();
                 OCCUSER user = (OCCUSER)Session["User"];
-                var cardchereuisition = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.STATUS == checkSts && x.ISACTIVE == false).ToList();
+                var cardchereuisition = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x => x.STATUS == checkSts && x.ISACTIVE == false).Where(x=>x.ISDELETE==false).ToList();
                 //var status = db.OCCENUMERATION.Where(x => x.Type == "chequereq").Where(x => x.IsActive == true).ToList();
                 var status = new Dictionary<int, string>() { { 16, "delivered" },{0,"Active"} };
 

@@ -5,6 +5,22 @@
 }
 
 
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-lg-3 col-sm-3">
+            <img src="~/assets/img/obl.jpg" class="" alt="Responsive image">
+
+        </div>
+        <div class="col-lg-6 text-center col-sm-3">
+            <h3>CARD CHEQUE PAYMENT</h3>
+        </div>
+        <div class="col-lg-3 col-sm-3" align="right">
+            <img src="~/assets/img/visa.jpg" class="" alt="Responsive image">
+        </div>
+    </div>
+</div>
+
+
 
 @using (Ajax.BeginForm("Details", "CardCheque",
     new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { area = "Admin", id = "cardchequeForm", @class = "form-horizontal" }))

@@ -5,12 +5,6 @@
 }
 
 
-@*<div class="alert alert-warning alert-dismissible" role="alert" id="MyAlrt">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> Better check yourself, you're not looking too good.
-    </div>*@
-@*<div id="result"></div>*@
-
 @using (Ajax.BeginForm("Form", "Home", 
     new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { @class = "form-horizontal", id = "chequeReqForm", area = "ChequeRequisition" }))
 {
@@ -89,7 +83,7 @@
             <div class="form-group">
                 <label class="col-sm-11 control-label"></label>
                 <div class="col-sm-1">
-                    @if (Model.ID!=null)
+                    @if (Model.ID==0)
                     {
                         <button class="btn btn-info" type="submit" id="saveButton">Save</button>
                     }
@@ -204,7 +198,18 @@
                         $('#myModalBody2').html(msg);
                         $('#myModal2').modal('show');
 
-                    } else {
+                    }
+                    else if(result.flag==0){
+                        $('#saveButton').prop('disabled', true);
+                        $('#modalBody').html('<strong>'+result.msg+'</strong>');
+                        $('#myModal').modal('show');
+                    }
+                    else if (result.flag == 2) {
+                        $('#saveButton').prop('disabled', true);
+                        $('#modalBody').html('<strong>' + result.msg + '</strong>');
+                        $('#myModal').modal('show');
+                    }
+                    else {
                         $('#saveButton').prop('disabled', true);
                         $('#modalBody').html('<strong>Error</strong>');
                         $('#myModal').modal('show');
@@ -228,7 +233,7 @@
                     required: true,
 
                 },
-                BRANCH: {
+                BRANCHCODE: {
                     required: true,
 
                 },

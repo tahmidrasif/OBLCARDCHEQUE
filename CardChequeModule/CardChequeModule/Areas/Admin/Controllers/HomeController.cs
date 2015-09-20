@@ -24,9 +24,6 @@ namespace CardChequeModule.Areas.Admin.Controllers
         {
             try
             {
-
-
-
                 OCCUSER user = (OCCUSER) Session["User"];
                 AdminDashboardVM aVm = new AdminDashboardVM();
 
@@ -36,12 +33,12 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 visaList = visaList.Take(5).ToList();
 
 
-                var requisitionList = db.CARDCHEREUISITION.OrderByDescending(x => x.ID).ToList();
+                var requisitionList = db.CARDCHEREUISITION.Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                 aVm.TotalReqisitionRequest = requisitionList.Count;
                 requisitionList = requisitionList.Take(5).ToList();
 
 
-                var cardchtanList = db.CARDCHTRAN.OrderByDescending(x => x.ID).ToList();
+                var cardchtanList = db.CARDCHTRAN.Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                 aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
                 aVm.TotalChequePaymentNumber = cardchtanList.Count;
                 cardchtanList = cardchtanList.Take(5).ToList();
@@ -89,12 +86,12 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     visaList = visaList.Take(5).ToList();
 
 
-                    var requisitionList = db.CARDCHEREUISITION.OrderByDescending(x => x.ID).ToList();
+                    var requisitionList = db.CARDCHEREUISITION.Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                     aVm.TotalReqisitionRequest = requisitionList.Count;
                     requisitionList = requisitionList.Take(5).ToList();
 
 
-                    var cardchtanList = db.CARDCHTRAN.OrderByDescending(x => x.ID).ToList();
+                    var cardchtanList = db.CARDCHTRAN.Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                     aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
                     aVm.TotalChequePaymentNumber = cardchtanList.Count;
                     cardchtanList = cardchtanList.Take(5).ToList();
@@ -115,20 +112,20 @@ namespace CardChequeModule.Areas.Admin.Controllers
 
                     if (btnName == "visa")
                     {
-                        visaList = db.DEPOSIT.Where(x => x.ISDELETE == false).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
+                        visaList = db.DEPOSIT.Where(x => x.ISDELETE == false).Where(x => x.CREATEDON.Value.Date >= startDate.Value.Date).Where(x => x.CREATEDON.Value.Date <= endDate.Value.Date).ToList();
                         aVm.TotalVisaPayment = visaList.Count;
                         aVm.TotalVisaPaymentCollection = (decimal)visaList.Sum(x => x.AMOUNT);
                         //aVm.Deposits = List;
                     }
                     else if (btnName == "requisition")
                     {
-                        requisitionList = db.CARDCHEREUISITION.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
+                        requisitionList = db.CARDCHEREUISITION.Where(x=>x.ISDELETE!=true).Where(x => x.CREATEDON.Date >= startDate.Value.Date).Where(x => x.CREATEDON.Date <= endDate.Value.Date).ToList();
                         aVm.TotalReqisitionRequest = requisitionList.Count;
 
                     }
                     else if (btnName == "cardcheque")
                     {
-                        cardchtanList = db.CARDCHTRAN.Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
+                        cardchtanList = db.CARDCHTRAN.Where(x=>x.ISDELETE!=true).Where(x => x.CREATEDON >= startDate).Where(x => x.CREATEDON <= endDate).ToList();
                         aVm.TotalCardPayment = cardchtanList.Sum(x => x.AMOUNT);
                         aVm.TotalChequePaymentNumber = cardchtanList.Count;
 
@@ -145,8 +142,10 @@ namespace CardChequeModule.Areas.Admin.Controllers
             {
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
-            return View();
+          //  return View();
         }
+
+
         public ActionResult UserCreation()
         {
             ViewBag.BRANCH = new SelectList(db.BRANCHINFO.ToList(), "ID", "BRANCHNAME");
@@ -154,8 +153,8 @@ namespace CardChequeModule.Areas.Admin.Controllers
             return View();
         }
 
-
         public ActionResult UserInfoByEmpId(string empId)
+        
         {
             string userName = "";
             string branchCode = "";
@@ -166,6 +165,10 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 WebRef.OBLAPP oblApp = new WebRef.OBLAPP();
                 DataTable dt = oblApp.GetByUserID(empId);
 
+                if (dt.Rows.Count > 0)
+                {
+
+               
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     userName = (string)dataRow[3];
@@ -176,13 +179,14 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 long branchId = db.BRANCHINFO.Where(x => x.BRANCHCODE == branchCode).Select(x => x.ID).FirstOrDefault();
                 //return Json(new { userName = "Rasif", branchId = 5, branchName = "Khatungonj" }, JsonRequestBehavior.AllowGet);
 
-                return Json(new { userName, branchId, branchName }, JsonRequestBehavior.AllowGet);
-
+                return Json(new {flag=0, userName, branchId, branchName }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new{flag=1}, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exception)
             {
 
-                return Json("null", JsonRequestBehavior.DenyGet);
+                return Json(new {flag=2,msg=exception.Message}, JsonRequestBehavior.DenyGet);
             }
 
 
@@ -197,7 +201,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 {
                     OCCUSER user = (OCCUSER)Session["User"];
                     occuser.CREATEDBY = user.ID;
-                    occuser.CREATEDON = DateTime.Now.Date;
+                    occuser.CREATEDON = DateTime.Now;
                     occuser.ISACTIVE = true;
                     occuser.BRANCH = BranchId;
                     if (ModelState.IsValid)
@@ -217,10 +221,10 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 var mymsg = "User Already Exists";
                 return Json(mymsg, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                return RedirectToAction("Error", "Home", new { Area = "" });
+                
+                return Json(exception.Message,JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -300,7 +304,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 {
 
                     aUser.MODIFIEDBY = user.ID;
-                    aUser.MODIFIEDON = DateTime.Now.Date;
+                    aUser.MODIFIEDON = DateTime.Now;
                     db.Entry(aUser).State = EntityState.Modified;
                     db.SaveChanges();
                     var msg = "Successfully Updated";
@@ -309,7 +313,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 if (String.Equals(btnName, "delete"))
                 {
                     aUser.MODIFIEDBY = user.ID;
-                    aUser.MODIFIEDON = DateTime.Now.Date;
+                    aUser.MODIFIEDON = DateTime.Now;
                     aUser.ISACTIVE = false;
                     db.Entry(aUser).State = EntityState.Modified;
                     db.SaveChanges();

@@ -23,7 +23,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
             try
             {
                 OCCUSER user = (OCCUSER)Session["User"];
-                var List = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).OrderByDescending(x => x.ID).ToList();
+                var List = db.CARDCHTRAN.Include(c => c.CARDCHLEAF).Include(c => c.OCCUSER).Include(c => c.OCCUSER1).Where(x=>x.ISDELETE!=true).OrderByDescending(x => x.ID).ToList();
                 var status = db.OCCENUMERATION.Where(x => x.Type == "cardcheque");
                 ViewBag.STATUS = new SelectList(status, "ID", "Name");
 
@@ -103,7 +103,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     updatedTrn.REQUESTDATE = tran.REQUESTDATE;
 
                     updatedTrn.MODIFIEDBY = user.ID;
-                    updatedTrn.MODIFIEDON = DateTime.Now.Date;
+                    updatedTrn.MODIFIEDON = DateTime.Now;
                    // updatedTrn.ISACTIVE = true;
                     db.Entry(updatedTrn).State = EntityState.Modified;
                     db.SaveChanges();
@@ -113,20 +113,25 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 if (String.Equals(btnName, "delete"))
                 {
                     //aUser.MODIFIEDBY = user.ID;
-                    //aUser.MODIFIEDON = DateTime.Now.Date;
+                    //aUser.MODIFIEDON = DateTime.Now;
                     //aUser.ISACTIVE = false;
                     //db.Entry(aUser).State = EntityState.Modified;
                     //db.SaveChanges();
+                    var updatedTrn = db.CARDCHTRAN.Find(tran.ID);
+                    updatedTrn.ISDELETE = true;
+                    db.Entry(updatedTrn).State = EntityState.Modified;
+                    db.SaveChanges();
                     var msg = "Successfully Removed";
-                    return Json(msg, JsonRequestBehavior.DenyGet);
+                    return Json(msg, JsonRequestBehavior.AllowGet);
                 }
-                return Json("", JsonRequestBehavior.DenyGet);
-                return View(tran);
+                var msg1 = "Error in operation";
+                return Json(msg1, JsonRequestBehavior.DenyGet);
+              //  return View(tran);
             }
             catch (Exception exception)
             {
-                return Json("Exception", JsonRequestBehavior.DenyGet);
-                return RedirectToAction("Error", "Home", new { Area = "" });
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
+                //return RedirectToAction("Error", "Home", new { Area = "" });
             }
 
         }

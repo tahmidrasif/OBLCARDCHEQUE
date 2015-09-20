@@ -130,6 +130,7 @@
     <Property Name="AUTHORIZEDBY" Type="Int64" />
     <Property Name="AUTHORIZEDON" Type="DateTime" Precision="3" />
     <Property Name="EXCHANGERATE" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ISDOWNLOAD" Type="Boolean" />
     <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_DEPOSIT_BRANCHINFO" FromRole="DEPOSIT" ToRole="BRANCHINFO" />
     <NavigationProperty Name="OCCUSER" Relationship="Self.FK_DEPOSIT_OCCUSER" FromRole="DEPOSIT" ToRole="OCCUSER" />
     <NavigationProperty Name="OCCUSER1" Relationship="Self.FK_DEPOSIT_OCCUSER1" FromRole="DEPOSIT" ToRole="OCCUSER" />
