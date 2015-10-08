@@ -315,12 +315,10 @@
 
         $(function () {
             // subscribe to the keydown event
-            $('#CARDNUMBER').keydown(function (e) {
-                // when a key is pressed check if its code was 9 (TAB)
-                if (e.which == 9) {
-
+            $('#CARDNUMBER').blur(function (e) {
+                
                     $.ajax({
-                        url: '@Url.Action("GetCardInfo", "Paymentslip", new { area = "Payment" })',
+                        url: '@Url.Action("GetCardInfo", "Home", new { area = "Payment" })',
                         type: 'POST',
                         data: { cardNo: $(this).val() },
                         beforeSend: function () { $('#spinner').show(); },
@@ -347,7 +345,7 @@
                             alert("Something is wrong");
                         }
                     });
-                }
+       
             });
         });
         $("#paymentForm").validate({

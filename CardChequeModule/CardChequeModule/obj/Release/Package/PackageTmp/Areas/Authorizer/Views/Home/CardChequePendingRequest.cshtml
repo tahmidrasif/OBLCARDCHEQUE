@@ -23,7 +23,7 @@
                 <label class="col-sm-1 control-label">Status</label>
                 <div class="col-sm-3">
 
-                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select Status", new { @class = "form-control" })
+                    @Html.DropDownList("STATUS", ViewBag.STATUS as SelectList, "Select All", new { @class = "form-control" })
                 </div>
                 <label class="col-sm-1 control-label">Card Number</label>
                 <div class="col-sm-3">
@@ -58,7 +58,7 @@
 {
     @*@Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true)*@
+        @Html.ValidationSummary(true)*@
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -85,7 +85,8 @@
                         }
 
                         <th>
-                            @Html.DisplayNameFor(model => model.CARDNO)
+
+                            @Html.DisplayNameFor(model => model.CARDCHLEAF.LEAFNO)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.BRANCHINFO.BRANCHNAME)
@@ -93,9 +94,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.AMOUNT)
                         </th>
-                        <th>
-                            @Html.DisplayName("Issued By")
-                        </th>
+                       
                         <th>
                             @Html.DisplayNameFor(model => model.REQUESTDATE)
                         </th>
@@ -103,13 +102,17 @@
                             @Html.DisplayNameFor(model => model.BENEFICIARINFO)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.CARDCHLEAF.LEAFNO)
+                            @Html.DisplayNameFor(model => model.CARDNO)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.APPROVALNO)
+                            @Html.DisplayName("Approval/Decline Code")
                         </th>
-
-
+                        <th>
+                            @Html.DisplayName("Status")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Remarks")
+                        </th>
                     </tr>
 
                 </thead>
@@ -119,11 +122,11 @@
                     @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
                     {
 
-                        <tr class="@( item.Data.STATUS == 13  ? "danger" : "success")">
+                        <tr class="@( item.Data.STATUS == 13 ? "danger" : item.Data.STATUS == 18?"warning":"success")">
                             @if (item.Data.STATUS == 13)
                             {
                                 <td>
-                                     <input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />
+                                    <input type="checkbox" class="checkBoxClass" name="ID[@item.Index]" id="@item.Index+ID" value="@item.Data.ID" />
                                 </td>
                             }
                             else
@@ -132,7 +135,8 @@
                             }
 
                             <td>
-                                @Html.DisplayFor(modelItem => item.Data.CARDNO)
+
+                                <strong> @Html.DisplayFor(modelItem => item.Data.CARDCHLEAF.LEAFNO)</strong>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Data.BRANCHINFO.BRANCHNAME)
@@ -140,9 +144,7 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Data.AMOUNT)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Data.OCCUSER.USERNAME)
-                            </td>
+                          
                             <td>
                                 @Html.DisplayFor(modelItem => item.Data.REQUESTDATE, new { @Value = item.Data.CREATEDON.ToString("dd-MM-yyyy") })
                             </td>
@@ -150,19 +152,47 @@
                                 @Html.DisplayFor(modelItem => item.Data.BENEFICIARINFO)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Data.CARDCHLEAF.LEAFNO)
+                                @Html.DisplayFor(modelItem => item.Data.CARDNO)
                             </td>
 
                             @if (item.Data.STATUS == 13)
                             {
                                 <td>
-                                    <input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />                                  
-                                 </td>
+                                    <input type="text" class="form-control approvalClass" id="@item.Index+APPROVALNO" name="APPROVALNO[@item.Index]" />
+                                </td>
                             }
                             else
                             {
                                 <td>
                                     @Html.DisplayFor(x => item.Data.APPROVALNO)
+                                </td>
+                            }
+                            @if (item.Data.STATUS == 13)
+                            {
+                                <td>
+                                    <select class="form-control chqStatusCls" name="CHQSTATUS[@item.Index]">
+                                        <option value=14>approved</option>
+                                        <option value=18>declined</option>
+                                    </select>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.DisplayFor(x => item.Data.OCCENUMERATION.Name)
+                                </td>
+                            }
+
+                            @if (item.Data.STATUS == 13)
+                            {
+                                <td>
+                                    <textarea class="form-control remarksClass" name="REMARKS[@item.Index]" rows="2"></textarea>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.DisplayFor(x => item.Data.REMARKS)
                                 </td>
                             }
 
@@ -178,9 +208,9 @@
             @if (Model.Any())
             {
                 <div class="form-group">
-                    <label class="col-sm-11 control-label"></label>
-                    <div class="col-sm-1">
-                        <button class="btn btn-success" type="submit" id="Assign">Save</button>
+
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-success" type="submit" id="Assign">Submit</button>
                     </div>
                 </div>
             }
@@ -209,14 +239,27 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script>
 
-        $('.checkBoxClass').change(function() {
+        $('.checkBoxClass').change(function () {
             var isChecked = this.checked;
 
             if (isChecked) {
                 $(this).parents("tr").find("input:text").prop("disabled", false);
+                $(this).parents("tr").find("select").prop("disabled", false);
+                $(this).parents("tr").find("textarea").prop("disabled", false);
+                
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth() + 1) + "/"
+                    + currentdate.getFullYear() + " ";
+                           
+                
+                $(this).parents("tr").find("textarea").val('Approved on ' + datetime);
 
             } else {
                 $(this).parents("tr").find("input:text").prop("disabled", true);
+                $(this).parents("tr").find("select").prop("disabled", true);
+                $(this).parents("tr").find("textarea").prop("disabled", true);
+                
                 $(this).parents("tr").find("input:text").val('');
             }
 
@@ -225,37 +268,51 @@
         //intial button & Textbox disabled
         $('#Assign').prop("disabled", true);
         $("#myTable tbody tr input:text").prop("disabled", true);
+        //$("#myTable tbody tr input:text").prop("disabled", true);
+        $('.chqStatusCls').prop('disabled', true);
+        $('.remarksClass').prop('disabled', true);
 
         //select all
-        $("#checkall").change(function() {
+        $("#checkall").change(function () {
             $("input:checkbox").prop('checked', $(this).prop("checked"));
 
         });
 
-        //check box click button enable disable
-        $(function() {
-            var checkboxes = $(':checkbox:not(#checkall)').click(function(event) {
+        //check box all click button enable disable
+        $(function () {
+            var checkboxes = $(':checkbox:not(#checkall)').click(function (event) {
                 $('#Assign').prop("disabled", checkboxes.filter(':checked').length == 0);
 
 
             });
 
-            $('#checkall').click(function(event) {
+            $('#checkall').click(function (event) {
                 checkboxes.prop('checked', this.checked);
                 $('#Assign').prop("disabled", !this.checked);
                 $("tr td input:text").prop('disabled', !this.checked);
+                $("tr td select").prop('disabled', !this.checked);
+                $("tr td textarea").prop('disabled', !this.checked);
+                
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth() + 1) + "/"
+                    + currentdate.getFullYear() + " ";
+                $("tr td textarea").val('Approved On ' + datetime);
             });
         });
 
-  
+
         jQuery.validator.addClassRules({
             approvalClass: {
                 required: true
             },
+            remarksClass: {
+                required: true
+            },
         });
-             
+
         $('#cardChequeAuthForm').validate();
-       
+
 
     </script>
 }

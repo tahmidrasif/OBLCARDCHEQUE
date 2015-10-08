@@ -37,6 +37,7 @@ namespace CardChequeModule.Models
         public Nullable<bool> ISDELETE { get; set; }
         public Nullable<long> AUTHORIZEDBY { get; set; }
         public Nullable<System.DateTime> AUTHORIZEDON { get; set; }
+        public string REMARKS { get; set; }
     
         public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual BRANCHINFO BRANCHINFO1 { get; set; }

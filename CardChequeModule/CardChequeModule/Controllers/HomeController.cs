@@ -114,6 +114,10 @@ namespace CardChequeModule.Controllers
                             {
                                 return RedirectToAction("Index", "Home", new { Area = "CallCenter" });
                             }
+                            if (user.TYPE == 17)
+                            {
+                                return RedirectToAction("Index", "Home", new { Area = "Dispatcher" });
+                            }
                         }
 
                     }
@@ -138,7 +142,7 @@ namespace CardChequeModule.Controllers
             }
             catch (Exception exception)
             {
-                ViewBag.flag = "Something is wrong";
+                ViewBag.flag = "Something is wrong "+exception.Message;
                 return View();
             }
             

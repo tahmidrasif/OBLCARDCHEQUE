@@ -203,14 +203,14 @@
                 <div class="col-lg-12 text-right">
                     @if (Model.ID == 0)
                     {
-                        <input type="submit" value="Save" class="btn btn-info" id="saveButton" />
+                        <input type="submit" value="Apply" class="btn btn-info" id="saveButton" />
 
                     }
                     else
                     {
                         if (Model.CREATEDON == DateTime.Now.Date)
                         {
-                            <input type="submit" value="Edit" class="btn btn-success" id="editButton" />
+                            <input type="submit" value="Update" class="btn btn-success" id="editButton" />
                         }
                     }
 

@@ -76,6 +76,7 @@
     <Property Name="ISDELETE" Type="bit" />
     <Property Name="AUTHORIZEDBY" Type="bigint" />
     <Property Name="AUTHORIZEDON" Type="datetime" />
+    <Property Name="REMARKS" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="DEPOSIT">
     <Key>

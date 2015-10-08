@@ -238,7 +238,7 @@ namespace CardChequeModule.Areas.Admin.Controllers
         }
         private OCCUSER GetByEmpId(string employeeid)
         {
-            var user = db.OCCUSER.FirstOrDefault(x => x.EMPLOYEEID == employeeid);
+            var user = db.OCCUSER.Where(x=>x.ISACTIVE!=false).FirstOrDefault(x => x.EMPLOYEEID == employeeid);
             return user;
         }
 

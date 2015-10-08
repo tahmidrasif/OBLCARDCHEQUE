@@ -67,52 +67,9 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
 
-                    <p class="centered"><a href="profile.html"><img src="~/assets/img/default.png" class="img-circle" width="60"></a></p>
-   
+                     @Html.Partial("_SideBarLayoutPartial")
 
-                    @Html.Partial("_SideBarLayoutPartial")
-
-                    @*<li class="sub-menu">
-
-                        <a href=@Url.Action("Index", "Home", new { area = "Admin" }, null)>
-                            <i class="fa fa-dashboard"></i>
-                            <span>Dashboard</span>
-                        </a>
-
-                    </li>
-                    <li class="sub-menu">
-                        <a href=@Url.Action("Index", "Home", new { area = "CardCheque" }, null)>
-                            <i class="fa fa-cogs"></i>
-                            <span>Card Cheque</span>
-                        </a>
-
-                    </li>
-                    <li class="sub-menu">
-                        <a href=@Url.Action("DepositShow", "Home", new { area = "CardCheque" }, null)>
-                            <i class="fa fa-file"></i>
-                            <span>List of Deposits</span>
-                        </a>
-
-                    </li>*@
-                    
-                    
-
-                    @*<li class="sub-menu">
-
-                        <a href=@Url.Action("Index", "Home", new { area = "" }, null)>
-                            <i class="fa fa-desktop"></i>
-                            <span>Home</span>
-                        </a>
-
-                    </li>*@
-
-                    @*<li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>Task Review</span>
-                        </a>
-
-                    </li>*@
+                 
 
 
                 </ul>

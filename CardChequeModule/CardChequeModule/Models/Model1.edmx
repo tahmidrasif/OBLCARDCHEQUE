@@ -81,6 +81,7 @@
           <Property Name="ISDELETE" Type="bit" />
           <Property Name="AUTHORIZEDBY" Type="bigint" />
           <Property Name="AUTHORIZEDON" Type="datetime" />
+          <Property Name="REMARKS" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="DEPOSIT">
           <Key>
@@ -685,6 +686,7 @@
           <Property Name="ISDELETE" Type="Boolean" />
           <Property Name="AUTHORIZEDBY" Type="Int64" />
           <Property Name="AUTHORIZEDON" Type="DateTime" Precision="3" />
+          <Property Name="REMARKS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BRANCHINFO" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO" FromRole="CARDCHTRAN" ToRole="BRANCHINFO" />
           <NavigationProperty Name="BRANCHINFO1" Relationship="Self.FK_CARDCHTRAN_BRANCHINFO1" FromRole="CARDCHTRAN" ToRole="BRANCHINFO" />
           <NavigationProperty Name="CARDCHLEAF" Relationship="Self.FK_CHEQUETRAN_OBLCHEQUELEAF" FromRole="CARDCHTRAN" ToRole="CARDCHLEAF" />
@@ -1306,6 +1308,7 @@
                 <ScalarProperty Name="ISDELETE" ColumnName="ISDELETE" />
                 <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
                 <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

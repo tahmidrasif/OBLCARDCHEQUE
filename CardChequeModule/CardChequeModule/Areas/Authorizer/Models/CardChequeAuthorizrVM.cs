@@ -7,7 +7,9 @@ namespace CardChequeModule.Areas.Authorizer.Models
 {
     public class CardChequeAuthorizrVM
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string APPROVALNO { get; set; }
+        public int ChqStatus { get; set; }
+        public string REMARKS { get; set; }
     }
 }

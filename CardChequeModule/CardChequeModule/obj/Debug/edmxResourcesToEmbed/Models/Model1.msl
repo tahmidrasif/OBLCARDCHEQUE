@@ -79,6 +79,7 @@
           <ScalarProperty Name="ISDELETE" ColumnName="ISDELETE" />
           <ScalarProperty Name="AUTHORIZEDBY" ColumnName="AUTHORIZEDBY" />
           <ScalarProperty Name="AUTHORIZEDON" ColumnName="AUTHORIZEDON" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

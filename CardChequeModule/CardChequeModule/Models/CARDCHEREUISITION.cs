@@ -18,11 +18,12 @@ namespace CardChequeModule.Models
     [MetadataType(typeof(ChequeRequisitionMeta))]
     public partial class CARDCHEREUISITION
     {
+
         public CARDCHEREUISITION()
         {
             this.CARDCHLEAF = new HashSet<CARDCHLEAF>();
         }
-    
+
         public long ID { get; set; }
         public string CARDNO { get; set; }
         public long BRANCHCODE { get; set; }
@@ -47,7 +48,7 @@ namespace CardChequeModule.Models
         public Nullable<System.DateTime> MODIFIEDON { get; set; }
         public Nullable<long> DELIVEREDBY { get; set; }
         public Nullable<System.DateTime> DELIVEREDON { get; set; }
-    
+
         public virtual BRANCHINFO BRANCHINFO { get; set; }
         public virtual OCCENUMERATION OCCENUMERATION { get; set; }
         public virtual OCCUSER OCCUSER { get; set; }

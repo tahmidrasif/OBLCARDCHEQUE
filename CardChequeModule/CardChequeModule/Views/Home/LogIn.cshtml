@@ -11,19 +11,14 @@
 <div id="login-page">
     <div class="container">
 
-        <form class="form-login" action="~/Home/LogIn" method="POST">
+        <form class="form-login" action="~/Home/LogIn" method="POST" id="logInForm">
             <h2 class="form-login-heading">sign in now</h2>
             <div class="login-wrap">
                 @Html.TextBoxFor(model => model.EMPLOYEEID,new {@class="form-control", @placeholder="Employee Id"})
                 <br>
 
                 @Html.Password("PASSWORD",null, new { @class = "form-control", @placeholder = "Password" })
-                <label class="checkbox">
-                    <span class="pull-right">
-                        <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
-
-                    </span>
-                </label>
+                <br/>
                 <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> Log In</button>
                 <hr>
                 @*<div class="alert alert-warning" role="alert">@ViewBag.flag</div>*@
@@ -39,3 +34,20 @@
 
     </div>
 </div>
+@section logInScripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
+        $("#logInForm").validate({
+            rules: {
+                EMPLOYEEID: {
+                    required: true,                    
+                },
+                PASSWORD: {
+                    required: true,
+                },               
+            }            
+        });
+    </script>
+}

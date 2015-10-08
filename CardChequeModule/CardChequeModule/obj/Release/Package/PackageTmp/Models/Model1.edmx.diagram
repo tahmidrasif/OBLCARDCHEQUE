@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5fc2aee1eea04d0b895061b5f1376b66" Name="Diagram1">
+      <Diagram DiagramId="878082a2fff04772a1805e05a52ad66d" Name="Diagram1">
         <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.BRANCHINFO" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.CARDCHEREUISITION" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="OBLCARCHEQUE_1Model.CARDCHLEAF" Width="1.5" PointX="14.25" PointY="9.375" IsExpanded="true" />

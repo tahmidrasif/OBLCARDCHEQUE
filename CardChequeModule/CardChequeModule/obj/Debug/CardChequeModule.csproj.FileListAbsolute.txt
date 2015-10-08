@@ -194,6 +194,5 @@ D:\Projects\CardChequeModule\CardChequeModule\bin\System.Web.WebPages.xml
 D:\Projects\CardChequeModule\CardChequeModule\bin\System.Web.WebPages.Deployment.xml
 D:\Projects\CardChequeModule\CardChequeModule\bin\System.Web.WebPages.Razor.xml
 D:\Projects\CardChequeModule\CardChequeModule\bin\System.Web.Optimization.xml
-D:\Projects\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.csprojResolveAssemblyReference.cache
 D:\Projects\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.dll
 D:\Projects\CardChequeModule\CardChequeModule\obj\Debug\CardChequeModule.pdb

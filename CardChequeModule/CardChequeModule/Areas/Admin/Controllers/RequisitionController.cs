@@ -100,15 +100,14 @@ namespace CardChequeModule.Areas.Admin.Controllers
                 {
                     CARDCHEREUISITION ccr = db.CARDCHEREUISITION.Find(cardchereuisition.ID);
                     ccr.ISDELETE = true;
-                    db.Entry(ccr).State = EntityState.Modified;
+                    //db.Entry(ccr).State = EntityState.Modified;
                     db.SaveChanges();
                     var msg = "Successfully Removed";
                     return Json(msg, JsonRequestBehavior.AllowGet);
                 }
                 if (String.Equals(btnName, "update"))
                 {
-                    //Tahmid
-                    //Edit Option e vul ase.....
+                    
                     var updatedModel = db.CARDCHEREUISITION.Find(cardchereuisition.ID);
                     updatedModel.CARDNO = cardchereuisition.CARDNO;
                     updatedModel.CREATEDON = cardchereuisition.CREATEDON;
@@ -116,14 +115,14 @@ namespace CardChequeModule.Areas.Admin.Controllers
                     updatedModel.STATUS = cardchereuisition.STATUS;
                     updatedModel.REFERENCENO = cardchereuisition.REFERENCENO;
                     updatedModel.REMARKS = cardchereuisition.REMARKS;
-                    if (cardchereuisition.ISACTIVE)
-                    {
-                        updatedModel.ISACTIVE = cardchereuisition.ISACTIVE;
-                    }
+                    //if (cardchereuisition.ISACTIVE)
+                    //{
+                    //    updatedModel.ISACTIVE = cardchereuisition.ISACTIVE;
+                    //}
                     //if (ModelState.IsValid)
                     //{
 
-                        db.Entry(updatedModel).State = EntityState.Modified;
+                        //db.Entry(cardchereuisition).State = EntityState.Modified;
                         db.SaveChanges();
                     //}
 

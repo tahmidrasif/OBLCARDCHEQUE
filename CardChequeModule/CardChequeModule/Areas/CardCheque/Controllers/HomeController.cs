@@ -141,7 +141,8 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
             List<string> currencyList;
            
             try
-            { 
+            {
+                int adminFlag = 0;
                 OCCUSER user = (OCCUSER) Session["User"];
                 cardchtran.CREATEDBY = user.ID;
                 cardchtran.CREATEDON = DateTime.Now.Date;
@@ -158,9 +159,13 @@ namespace CardChequeModule.Areas.CardCheque.Controllers
                 {
                     db.CARDCHTRAN.Add(cardchtran);
                     db.SaveChanges();
+                    if (user.TYPE == 1)
+                    {
+                        adminFlag = 1;
+                    }
                     var msg = "Data saved successfully. ";
 
-                    return Json(msg, JsonRequestBehavior.AllowGet);
+                    return Json(new { msg, adminFlag }, JsonRequestBehavior.AllowGet);
                    
                 }
 

@@ -2,11 +2,15 @@
 @{
     ViewBag.Title = "_LinkPartial";
     OCCUSER aUser = (OCCUSER)Session["User"];
+    var imgUrl = "http://www.oblconnect.com/IntraImg/" + aUser.EMPLOYEEID + ".jpg";
 
 }
 
 @{
+       <p class="centered"><a href="profile.html"><img src=@imgUrl class="img-circle" width="60"></a></p>
+   
 
+                
     if (aUser.TYPE == 2)
     {
         <li class="sub-menu">
@@ -91,14 +95,14 @@
             </a>
 
         </li>
-        <li class="sub-menu">
-            <a href=@Url.Action("DelivaryChequeBook", "Home", new { area = "Authorizer" }, null)>
-                <i class="fa fa-cogs"></i>
-                <span>Cheque Book Delivary</span>
-            </a>
+        @*<li class="sub-menu">
+                <a href=@Url.Action("DelivaryChequeBook", "Home", new { area = "Authorizer" }, null)>
+                    <i class="fa fa-cogs"></i>
+                    <span>Cheque Book Delivary</span>
+                </a>
 
-        </li>
-     <li class="sub-menu">
+            </li>*@
+        <li class="sub-menu">
             <a href=@Url.Action("VisaXmlDownload", "Home", new { area = "Authorizer" }, null)>
                 <i class="fa fa-cogs"></i>
                 <span>Visa Payment XML</span>
@@ -130,6 +134,19 @@
 
         </li>
     }
+
+    else if (aUser.TYPE == 17)
+    {
+
+        <li class="sub-menu">
+            <a href=@Url.Action("Index", "Home", new { area = "Dispatcher" }, null)>
+                <i class="fa fa-cogs"></i>
+                <span>Pending Delivary</span>
+            </a>
+
+        </li>
+    }
+
     else if (aUser.TYPE == 1)
     {
 
@@ -149,41 +166,53 @@
 
         </li>
         <li class="sub-menu">
-            <a href=@Url.Action("Index", "Payment", new { area = "Admin" }, null)>
-                <i class="fa fa-cogs"></i>
+            <a href="javascript:;">
+                <i class="fa fa-book"></i>
                 <span>Credit/Prepaid Card</span>
             </a>
-
+            <ul class="sub">
+                <li><a href=@Url.Action("Index", "Payment", new { area = "Admin" }, null)>Credit/Prepaid Card List</a></li>
+                <li><a href=@Url.Action("VisaXmlDownload", "Home", new { area = "Authorizer" }, null)>Download XML</a></li>
+            </ul>
         </li>
-        <li class="sub-menu">
-            <a href=@Url.Action("Index", "Requisition", new { area = "Admin" }, null)>
-                <i class="fa fa-cogs"></i>
-                <span>Cheque Book Requistions</span>
-            </a>
 
-        </li>
         <li class="sub-menu">
-            <a href=@Url.Action("Index", "CardCheque", new { area = "Admin" }, null)>
-                <i class="fa fa-cogs"></i>
-                <span>Cheque Request </span>
+            <a href="javascript:;">
+                <i class="fa fa-tasks"></i>
+                <span>Cheque Book Requistion</span>
             </a>
-
+            <ul class="sub">
+                <li><a href=@Url.Action("Index", "Requisition", new { area = "Admin" }, null)>Requistion List</a></li>
+                <li><a href=@Url.Action("RequisitionRequest", "Home", new { area = "Authorizer" }, null)>Authorize Requisition</a></li>
+                <li><a href=@Url.Action("Index", "Home", new { area = "Establishment" }, null)>Export Requisition</a></li>
+                <li><a href=@Url.Action("Index", "Home", new { area = "Dispatcher" }, null)>Deliver Cheque Book</a></li>
+                <li><a href=@Url.Action("Index", "Home", new { area = "CallCenter" }, null)>Active Cheque Book</a></li>
+            </ul>
         </li>
 
         @*<li class="sub-menu">
-                <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
+                <a href=@Url.Action("Index", "Requisition", new { area = "Admin" }, null)>
                     <i class="fa fa-cogs"></i>
-                    <span>Authorized Requistion</span>
-                </a>
-
-            </li>
-            <li class="sub-menu">
-                <a href=@Url.Action("UserCreation", "Home", new { area = "Admin" }, null)>
-                    <i class="fa fa-cogs"></i>
-                    <span>Authorized Cheque Payment</span>
+                    <span>Cheque Book Requistions</span>
                 </a>
 
             </li>*@
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-th"></i>
+                <span>Cheque Request</span>
+            </a>
+            <ul class="sub">
+                <li><a href=@Url.Action("Index", "CardCheque", new { area = "Admin" }, null)>Cheque List</a></li>
+                <li><a href=@Url.Action("CardChequePendingRequest", "Home", new { area = "Authorizer" }, null)>Cheque Authorize</a></li>
+            </ul>
+            @*<a href=@Url.Action("Index", "CardCheque", new { area = "Admin" }, null)>
+                <i class="fa fa-th"></i>
+                <span>Cheque Request </span>
+            </a>*@
+
+        </li>
+
 
     }
 }

@@ -250,87 +250,7 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
 
         }
 
-        #endregion
-
-        #region Delivary Report
-
-
-
-        public ActionResult DelivaryChequeBook(int? STATUS, string CARDNO, DateTime? CREATEDON, int? page)
-        {
-            Dictionary<int, string> statusID;
-            OCCUSER user = (OCCUSER)Session["User"];
-            if (user.TYPE == 1)
-            {
-                statusID = new Dictionary<int, string>() { { 4, "applied" }, { 5, "authorized" }, { 7, "received" }, { 8, "deny" }, { 16, "delivered" } };
-            }
-            else
-            {
-                statusID = new Dictionary<int, string>() { { 4, "applied" }, { 5, "authorized" }, { 7, "received" }, { 16, "delivered" } };
-            }
-
-            ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
-            var statusId =
-                        db.OCCENUMERATION.Where(x => x.Type == "chequereq")
-                            .Where(x => x.Name == "received")
-                            .Select(x => x.ID)
-                            .FirstOrDefault();
-
-            var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.ISDELETE != true).Where(x => x.STATUS == statusId).OrderByDescending(x => x.ID).ToList();
-            if (STATUS != null)
-            {
-                List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.ISDELETE != true).Where(x => x.STATUS == STATUS).OrderByDescending(x => x.ID).ToList();
-                ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
-                ViewBag.currsts = STATUS;
-                // ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
-            }
-           
-            if (!String.IsNullOrEmpty(CARDNO))
-            {
-                CARDNO = CARDNO.Trim();
-                List = List.Where(x => x.CARDNO.Contains(CARDNO)).Where(x => x.ISDELETE != true).ToList();
-                ViewBag.CARDNO = CARDNO;
-            }
-            if (CREATEDON != null)
-            {
-                List = List.Where(x => x.ESTABLISHMENTON.Value.Date == CREATEDON).Where(x => x.ISDELETE != true).ToList();
-                ViewBag.CREATEDON = CREATEDON;
-            }
-
-            int pageSize = ConstantConfig.PageSizes;
-            int pageNumber = ((page ?? 1));
-            return View(List.ToPagedList(pageNumber, pageSize));
-        }
-
-
-        public ActionResult DelivaryPost(IEnumerable<long> idList)
-        {
-            OCCUSER user = (OCCUSER) Session["User"];
-
-            try
-            {
-                foreach (var id in idList)
-                {
-                    var chequereq = db.CARDCHEREUISITION.Find(id);
-                    var statusId= db.OCCENUMERATION.Where(x => x.Type == "chequereq")
-                            .Where(x => x.Name == "delivered")
-                            .Select(x => x.ID)
-                            .FirstOrDefault();
-                    chequereq.DELIVEREDBY = user.ID;
-                    chequereq.DELIVEREDON = DateTime.Now;
-                    chequereq.STATUS = statusId;
-                    db.Entry(chequereq).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                return RedirectToAction("DelivaryChequeBook");
-            }
-            catch (Exception exception)
-            {
-                return RedirectToAction("Error", "Home", new { Area = "" });
-            }
-        }
-
-        #endregion
+        #endregion       
 
         #region Cheque CardCheque Authorization
         public ActionResult CardChequePendingRequest(string CARDNO, DateTime? CREATEDON, int? page, int? STATUS)
@@ -343,22 +263,23 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
             if (STATUS != null)
             {
                // List = List.Where(x => x.STATUS == STATUS).ToList();
-                if (STATUS == 13)
-                {
+                //if (STATUS == 13)
+                //{
 
-                    List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 13).Where(x => x.ISDELETE != true).ToList();       
-                }
-                else
-                {
-                    List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 14).Where(x => x.ISDELETE != true).ToList();        
-                }
-              
+                //    List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 13).Where(x => x.ISDELETE != true).ToList();       
+                //}
+                //else
+                //{
+                //    List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 14).Where(x => x.ISDELETE != true).ToList();        
+                //}
+                List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == STATUS).Where(x => x.ISDELETE != true).OrderByDescending(x=>x.ID).ToList();       
+ 
                 ViewBag.currentStatus = STATUS;
                 ViewBag.STATUS = new SelectList(statusID, "ID", "Name", STATUS);
             }
             else 
             {
-                List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.STATUS == 13).Where(x=>x.ISDELETE!=true).ToList();       
+                List = db.CARDCHTRAN.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x=>x.ISDELETE!=true).OrderByDescending(x=>x.ID).ToList();       
             }
               
 
@@ -377,6 +298,8 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
            // int pageSize = 3;
             int pageSize = ConstantConfig.PageSizes;
             int pageNumber = ((page ?? 1));
+            //var chqSts = db.OCCENUMERATION.Where(x => x.Type == "cardcheque" && x.Name != "pending").ToList();
+            //ViewBag.CHQSTATUS = new SelectList (chqSts, "Id", "Name");
             return View(List.ToPagedList(pageNumber, pageSize));
         }
 
@@ -384,8 +307,10 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
         public ActionResult CardChAuthPost(FormCollection formCollection)
         
         {
-            List<int> ID=new List<int>();
+            List<long> ID=new List<long>();
             List<string> APPROVALNO=new List<string>();
+            List<int> CHQSTATUS = new List<int>();
+            List<string> REMARKSLIST = new List<string>();
             try
             {
                 OCCUSER user = (OCCUSER)Session["User"];
@@ -395,7 +320,7 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                 {
                     if (key.Contains("ID"))
                     {
-                        int id = (int) Convert.ToInt64(formCollection[key]);
+                        long id =  Convert.ToInt64(formCollection[key]);
                          ID.Add(id);
                     }
                     if (key.Contains("APPROVAL"))
@@ -403,19 +328,32 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
                         string approval = formCollection[key];
                         APPROVALNO.Add(approval);                        
                     }
+                    if (key.Contains("CHQSTATUS"))
+                    {
+                        int chqStatus = Convert.ToInt32(formCollection[key]);
+                        CHQSTATUS.Add(chqStatus);
+                    }
+                    if (key.Contains("REMARKS"))
+                    {
+                        string remarks = formCollection[key];
+                        REMARKSLIST.Add(remarks);
+                    }
+                    
                     var value = formCollection[key];
                 }
                 for (int i = 0; i < ID.Count; i++)
                 {
 
-                    var aVm = new CardChequeAuthorizrVM() {APPROVALNO = APPROVALNO[i], ID = ID[i]};
+                    var aVm = new CardChequeAuthorizrVM() { APPROVALNO = APPROVALNO[i], ID = ID[i], ChqStatus = CHQSTATUS[i], REMARKS = REMARKSLIST[i] };
                     vm.Add(aVm);
                 }
+               // var a = formCollection["CHQSTATUS"];
                 foreach (var aViewModel in vm)
                 {
                     var cardChq = db.CARDCHTRAN.FirstOrDefault(x => x.ID == aViewModel.ID);
                     cardChq.APPROVALNO = aViewModel.APPROVALNO;
-                    cardChq.STATUS = 14;
+                    cardChq.STATUS = aViewModel.ChqStatus;
+                    cardChq.REMARKS = aViewModel.REMARKS;
                     cardChq.AUTHORIZEDBY = user.ID;
                     cardChq.AUTHORIZEDON = DateTime.Now;
                     db.Entry(cardChq).State = EntityState.Modified;
@@ -433,7 +371,6 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
         }
 
         #endregion
-
 
         #region Download Visa Xml
 
@@ -549,3 +486,84 @@ namespace CardChequeModule.Areas.Authorizer.Controllers
         }
     }
 }
+
+
+//#region Delivary Report
+
+
+
+//public ActionResult DelivaryChequeBook(int? STATUS, string CARDNO, DateTime? CREATEDON, int? page)
+//{
+//    Dictionary<int, string> statusID;
+//    OCCUSER user = (OCCUSER)Session["User"];
+//    if (user.TYPE == 1)
+//    {
+//        statusID = new Dictionary<int, string>() { { 4, "applied" }, { 5, "authorized" }, { 7, "received" }, { 8, "deny" }, { 16, "delivered" } };
+//    }
+//    else
+//    {
+//        statusID = new Dictionary<int, string>() { { 4, "applied" }, { 5, "authorized" }, { 7, "received" }, { 16, "delivered" } };
+//    }
+
+//    ViewBag.STATUS = new SelectList(statusID, "Key", "Value");
+//    var statusId =
+//                db.OCCENUMERATION.Where(x => x.Type == "chequereq")
+//                    .Where(x => x.Name == "received")
+//                    .Select(x => x.ID)
+//                    .FirstOrDefault();
+
+//    var List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.ISDELETE != true).Where(x => x.STATUS == statusId).OrderByDescending(x => x.ID).ToList();
+//    if (STATUS != null)
+//    {
+//        List = db.CARDCHEREUISITION.Include(c => c.BRANCHINFO).Include(c => c.OCCENUMERATION).Include(c => c.OCCUSER).Where(x => x.ISDELETE != true).Where(x => x.STATUS == STATUS).OrderByDescending(x => x.ID).ToList();
+//        ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
+//        ViewBag.currsts = STATUS;
+//        // ViewBag.STATUS = new SelectList(statusID, "Key", "Value", statusID.Where(x => x.Key == STATUS));
+//    }
+
+//    if (!String.IsNullOrEmpty(CARDNO))
+//    {
+//        CARDNO = CARDNO.Trim();
+//        List = List.Where(x => x.CARDNO.Contains(CARDNO)).Where(x => x.ISDELETE != true).ToList();
+//        ViewBag.CARDNO = CARDNO;
+//    }
+//    if (CREATEDON != null)
+//    {
+//        List = List.Where(x => x.ESTABLISHMENTON.Value.Date == CREATEDON).Where(x => x.ISDELETE != true).ToList();
+//        ViewBag.CREATEDON = CREATEDON;
+//    }
+
+//    int pageSize = ConstantConfig.PageSizes;
+//    int pageNumber = ((page ?? 1));
+//    return View(List.ToPagedList(pageNumber, pageSize));
+//}
+
+
+//public ActionResult DelivaryPost(IEnumerable<long> idList)
+//{
+//    OCCUSER user = (OCCUSER) Session["User"];
+
+//    try
+//    {
+//        foreach (var id in idList)
+//        {
+//            var chequereq = db.CARDCHEREUISITION.Find(id);
+//            var statusId= db.OCCENUMERATION.Where(x => x.Type == "chequereq")
+//                    .Where(x => x.Name == "delivered")
+//                    .Select(x => x.ID)
+//                    .FirstOrDefault();
+//            chequereq.DELIVEREDBY = user.ID;
+//            chequereq.DELIVEREDON = DateTime.Now;
+//            chequereq.STATUS = statusId;
+//            db.Entry(chequereq).State = EntityState.Modified;
+//            db.SaveChanges();
+//        }
+//        return RedirectToAction("DelivaryChequeBook");
+//    }
+//    catch (Exception exception)
+//    {
+//        return RedirectToAction("Error", "Home", new { Area = "" });
+//    }
+//}
+
+//#endregion

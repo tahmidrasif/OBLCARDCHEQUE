@@ -14,7 +14,7 @@ namespace CardChequeModule.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     [MetadataType(typeof(BranchMeta))]
     public partial class BRANCHINFO
     {
